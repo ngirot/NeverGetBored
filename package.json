@@ -1,8 +1,8 @@
 {
-  "name": "electron-react-typescript-boilerplate",
-  "productName": "ElectronReactTypescript",
-  "version": "0.10.0",
-  "description": "Electron application boilerplate based on TypeScript, React, React Router, Webpack, React Hot Loader for rapid application development",
+  "name": "never-get-bored",
+  "productName": "NeverGetBored",
+  "version": "0.1.0",
+  "description": "Entertainment aggregator",
   "main": "main.js",
   "scripts": {
     "test": "cross-env NODE_ENV=test node --trace-warnings ./test/runTests.js",
@@ -46,8 +46,8 @@
     ]
   },
   "build": {
-    "productName": "ElectronReactTypescript",
-    "appId": "io.github.irath96.ElectronReactTypescript",
+    "productName": "NeverGetBored",
+    "appId": "com.github.ngirot.NeverGetBored",
     "dmg": {
       "contents": [
         {
@@ -90,27 +90,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/irath96/electron-react-typescript-boilerplate.git"
+    "url": "git+https://github.com/ngirot/NeverGetBored.git"
   },
   "author": {
-    "name": "Alexander Rath",
-    "email": "irath96@gmail.com",
-    "url": "https://github.com/irath96"
+    "name": "Nicolas Girot",
+    "email": "ngirot@hotmail.com",
+    "url": "https://github.com/ngirot"
   },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/irath96/electron-react-typescript-boilerplate/issues"
-  },
-  "keywords": [
-    "electron",
-    "boilerplate",
-    "react",
-    "react-router",
-    "flux",
-    "webpack",
-    "react-hot"
-  ],
-  "homepage": "https://github.com/irath96/electron-react-typescript-boilerplate#readme",
+  "homepage": "https://github.com/ngirot/NeverGetBored.git#readme",
   "devDependencies": {
     "@types/enzyme": "^3.1.1",
     "@types/history": "^4.5.2",
