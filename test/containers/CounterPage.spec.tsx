@@ -6,6 +6,7 @@ import {Provider} from 'react-redux';
 import {ConnectedRouter} from 'react-router-redux';
 import CounterPage from '../../app/containers/CounterPage';
 import {IState} from '../../app/reducers';
+import {PlatformState} from "../../app/reducers/platforms";
 
 const CounterPageAny = CounterPage as any;
 let {configureStore, history} = require('../../app/store/configureStore');
@@ -52,7 +53,7 @@ describe('containers', () => {
         });
 
         it('should change if odd and if odd button clicked', () => {
-            const {buttons, p} = setup({counter: 1});
+            const {buttons, p} = setup({counter: 1, platform: new PlatformState()});
             buttons.at(2).simulate('click');
             expect(p.text()).toMatch(/^2$/);
         });
