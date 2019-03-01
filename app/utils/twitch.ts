@@ -1,9 +1,14 @@
+import {Entertainment} from "../reducers/platforms";
+
 const electron = require('electron');
 const BrowserWindow = electron.remote.BrowserWindow;
 
 const {OAuth2Provider} = require("electron-oauth-helper");
+const api = require('twitch-api-v5');
 
-export default function generateToken(): Promise<string> {
+api.clientID = 'uviersrira44oauqh1n6bdw8h0f0jw';
+
+export function generateToken(): Promise<string> {
     const window = new BrowserWindow({
         width: 600,
         height: 800,
@@ -14,7 +19,7 @@ export default function generateToken(): Promise<string> {
     });
 
     const config = {
-        client_id: "uviersrira44oauqh1n6bdw8h0f0jw",
+        client_id: api.clientID,
         client_secret: "t71vqgy5y4gmjimrfpr2yr2lixcumx",
         authorize_url: "https://id.twitch.tv/oauth2/authorize",
         response_type: "token",
@@ -32,4 +37,17 @@ export default function generateToken(): Promise<string> {
             }
         )
         .catch((error: any) => console.error(error));
+}
+
+export function entertainments(token: string): Promise<Entertainment[]> {
+    return new Promise((resolve, reject) => {
+        const map = (error: any, api: any) => {
+            const streams: any[] = api.streams;
+            const result = streams.map((stream: any) => {
+               return new Entertainment(stream.channel.status, stream.channel.display_name);
+            });
+            resolve(result);
+        }
+        api.streams.followed({auth: token, stream_type: 'live'}, map);
+    });
 }
