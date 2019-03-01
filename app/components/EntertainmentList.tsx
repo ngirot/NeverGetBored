@@ -13,12 +13,12 @@ interface DispatchProps {
 
 type Props = StateProps & DispatchProps;
 
-class MyComponent extends React.Component<Props> {
+class EntertainmentList extends React.Component<Props> {
     render() {
         return (
             <div>
                 {this.props.entertainments.map(e => {
-                    return <div>{e.title} from {e.user}</div>;
+                    return <div key={e.title}>{e.title} from {e.user}</div>;
                 })}
             </div>
         );
@@ -33,4 +33,4 @@ function mapDispatchToProps(): DispatchProps {
     return {};
 }
 
-export default connect<StateProps, DispatchProps>(mapStateToProps, mapDispatchToProps)(MyComponent);
+export default connect<StateProps, DispatchProps>(mapStateToProps, mapDispatchToProps)(EntertainmentList);

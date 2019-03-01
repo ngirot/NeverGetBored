@@ -44,7 +44,7 @@ export function entertainments(token: string): Promise<Entertainment[]> {
         const map = (error: any, api: any) => {
             const streams: any[] = api.streams;
             const result = streams.map((stream: any) => {
-               return new Entertainment(stream.channel.status, stream.channel.display_name);
+               return new Entertainment(stream._id, stream.channel.status, stream.channel.display_name);
             });
             resolve(result);
         }

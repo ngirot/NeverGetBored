@@ -2,10 +2,12 @@ import {IAction} from "../actions/helpers";
 import {connect, load} from '../actions/platform';
 
 export class Entertainment {
+    public readonly id: string;
     public readonly title: string;
     public readonly user: string;
 
-    public constructor(title: string, user: string) {
+    public constructor(id: string, title: string, user: string) {
+        this.id = id;
         this.title = title;
         this.user = user;
     }
