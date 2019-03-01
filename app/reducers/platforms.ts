@@ -5,11 +5,15 @@ export class Entertainment {
     public readonly id: string;
     public readonly title: string;
     public readonly user: string;
+    public readonly url: string;
+    public readonly previewUrl?: string;
 
-    public constructor(id: string, title: string, user: string) {
+    public constructor(id: string, title: string, user: string, url: string, previewUrl?: string) {
         this.id = id;
         this.title = title;
         this.user = user;
+        this.url = url;
+        this.previewUrl = previewUrl;
     }
 }
 
