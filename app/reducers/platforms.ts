@@ -1,5 +1,5 @@
 import {IAction} from "../actions/helpers";
-import {connect, load} from '../actions/platform';
+import {connect, loaded, loading} from '../actions/platform';
 
 export class Entertainment {
     public readonly id: string;
@@ -21,21 +21,32 @@ export class PlatformState {
 
     public readonly twitchToken?: string;
 
+    public readonly twitchLoading: boolean;
+
     public readonly entertainments: Entertainment[];
 
-    constructor(entertainments: Entertainment[], twitchToken?: string, ) {
+    constructor(entertainments: Entertainment[], twitchLoading: boolean, twitchToken?: string) {
         this.twitchToken = twitchToken;
         this.entertainments = entertainments;
+        this.twitchLoading = twitchLoading;
     }
 }
 
-export default function platform(state: PlatformState = new PlatformState([]), action: IAction) {
+export default function platform(state: PlatformState = new PlatformState([], false), action: IAction) {
     if (connect.test(action)) {
-        return new PlatformState(state.entertainments, action.payload);
+        console.log('>>>1 ', state);
+        return new PlatformState(state.entertainments, state.twitchLoading, action.payload);
     }
-    if (load.test(action)) {
-        return new PlatformState(action.payload, state.twitchToken);
-    } else {
-        return state;
+
+    if (loaded.test(action)) {
+        console.log('>>>2 ', action);
+        return new PlatformState(action.payload, false, state.twitchToken);
     }
+
+    if (loading.test(action)) {
+        console.log('>>>3 ', state);
+        return new PlatformState(state.entertainments, true, state.twitchToken);
+    }
+
+    return state;
 }

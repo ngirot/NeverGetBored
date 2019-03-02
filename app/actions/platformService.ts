@@ -1,5 +1,13 @@
 import {entertainments, generateToken} from "../utils/twitch";
-import {connect, load} from "./platform";
+import {connect, loaded, loading} from "./platform";
+
+function loadEntertainments(dispatch: Function, token: string) {
+    dispatch(loading())
+    entertainments(token).then((e) => {
+        console.log('Streams', e);
+        dispatch(loaded(e));
+    });
+}
 
 export function connectToTwitch(): Function {
     console.log('Try to connect to Twitch');
@@ -7,10 +15,13 @@ export function connectToTwitch(): Function {
         generateToken().then((token => {
             console.log('Token generated', token);
             dispatch(connect(token));
-            entertainments(token).then((e) => {
-                console.log('Streams', e);
-                dispatch(load(e));
-            });
+            loadEntertainments(dispatch, token);
         }));
+    };
+}
+
+export function reloadAll(token: string): Function {
+    return (dispatch: Function) => {
+        loadEntertainments(dispatch, token);
     };
 }
