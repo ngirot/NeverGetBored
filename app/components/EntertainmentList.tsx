@@ -20,7 +20,7 @@ class EntertainmentList extends React.Component<Props> {
         return (
             <div className={"tiles-grid"}>
                 {this.props.entertainments.map(e => {
-                    return <div data-role="tile" data-size="medium" key={e.title}
+                    return <div data-role="tile" data-size="wide" key={e.title}
                                 onClick={() => this.props.open(e)}>
                         <span className="branding-bar">{e.title}</span>
                         <span className="badge-top">{e.user}</span>

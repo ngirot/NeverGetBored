@@ -34,17 +34,14 @@ export class PlatformState {
 
 export default function platform(state: PlatformState = new PlatformState([], false), action: IAction) {
     if (connect.test(action)) {
-        console.log('>>>1 ', state);
         return new PlatformState(state.entertainments, state.twitchLoading, action.payload);
     }
 
     if (loaded.test(action)) {
-        console.log('>>>2 ', action);
         return new PlatformState(action.payload, false, state.twitchToken);
     }
 
     if (loading.test(action)) {
-        console.log('>>>3 ', state);
         return new PlatformState(state.entertainments, true, state.twitchToken);
     }
 

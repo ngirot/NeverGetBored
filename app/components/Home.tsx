@@ -10,12 +10,11 @@ export default class Home extends React.Component {
         return (
             <div className={styles.container} data-tid="container">
                 <div className={styles.intro}>
-                    <h2>Entertain yourself !</h2>
                     <div className={"row"}>
                         <div className={"cell-8 offset-2"}>
                             <ConnectButton serviceName="Twitch" iconClass={"fa fa-twitch"}></ConnectButton>
                         </div>
-                        <div className={"cell-2"}>
+                        <div className={"cell-2 " + styles.actions}>
                             <ReloadButton/>
                         </div>
                     </div>

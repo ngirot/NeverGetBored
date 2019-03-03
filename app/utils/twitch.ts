@@ -44,11 +44,9 @@ export function entertainments(token: string): Promise<Entertainment[]> {
         const map = (error: any, api: any) => {
             const streams: any[] = api.streams;
             const result = streams.map((stream: any) => {
-                const previewUrl: string = stream.preview.template
-                    .replace('{width}', '150').replace('{height}', '150')
                 return new Entertainment(stream._id, stream.channel.status,
                     stream.channel.display_name, stream.channel.url,
-                    previewUrl);
+                    stream.preview.medium);
             });
             resolve(result);
         }
