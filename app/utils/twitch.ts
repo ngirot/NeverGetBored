@@ -1,22 +1,13 @@
 import {Entertainment} from "../reducers/platforms";
-
-const electron = require('electron');
-const BrowserWindow = electron.remote.BrowserWindow;
+import createWindow from "./window";
 
 const {OAuth2Provider} = require("electron-oauth-helper");
 const api = require('twitch-api-v5');
 
 api.clientID = 'uviersrira44oauqh1n6bdw8h0f0jw';
 
-export function generateToken(): Promise<string> {
-    const window = new BrowserWindow({
-        width: 600,
-        height: 800,
-        webPreferences: {
-            nodeIntegration: false, // We recommend disabling nodeIntegration for security.
-            contextIsolation: true // We recommend enabling contextIsolation for security.
-        },
-    });
+export function generateTokenTwitch(): Promise<string> {
+    const window = createWindow();
 
     const config = {
         client_id: api.clientID,
@@ -39,7 +30,7 @@ export function generateToken(): Promise<string> {
         .catch((error: any) => console.error(error));
 }
 
-export function entertainments(token: string): Promise<Entertainment[]> {
+export function entertainmentsTwitch(token: string): Promise<Entertainment[]> {
     return new Promise((resolve, reject) => {
         const map = (error: any, api: any) => {
             const streams: any[] = api.streams;
