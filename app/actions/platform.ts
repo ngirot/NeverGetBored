@@ -1,6 +1,27 @@
-import {actionCreator, actionCreatorVoid} from "./helpers";
+import {actionCreator} from "./helpers";
 import {Entertainment} from "../reducers/platforms";
+import {Provider} from "../utils/Provider";
 
-export const connect = actionCreator<string>('CONNECT_TO_TWITCH');
-export const loading = actionCreatorVoid('LOADING_ENTERTAINMENT_TWITCH');
-export const loaded = actionCreator<Entertainment[]>('LOADED_ENTERTAINMENT_TWITCH');
+export class ConnectionAction {
+    public readonly provider: Provider;
+    public readonly token: string;
+
+    constructor(provider: Provider, token: string) {
+        this.provider = provider;
+        this.token = token;
+    }
+}
+
+export class EntertainmentLoaded {
+    public readonly provider: Provider;
+    public readonly entertainments: Entertainment[];
+
+    constructor(provider: Provider, entertainments: Entertainment[]) {
+        this.provider = provider;
+        this.entertainments = entertainments;
+    }
+}
+
+export const connect = actionCreator<ConnectionAction>('CONNECT_TO_PROVIDER');
+export const loading = actionCreator<Provider>('LOADING_ENTERTAINMENT_FROM_PROVIDER');
+export const loaded = actionCreator<EntertainmentLoaded>('LOADED_ENTERTAINMENT_FROM_PROVIDER');

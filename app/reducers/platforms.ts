@@ -1,5 +1,18 @@
 import {IAction} from "../actions/helpers";
 import {connect, loaded, loading} from '../actions/platform';
+import {Provider} from "../utils/Provider";
+
+export class ProviderState {
+    public readonly provider: Provider;
+    public readonly token?: string;
+    public readonly loading: boolean;
+
+    public constructor(provider: Provider, loading: boolean, token?: string) {
+        this.provider = provider;
+        this.loading = loading;
+        this.token = token;
+    }
+}
 
 export class Entertainment {
     public readonly id: string;
@@ -19,30 +32,42 @@ export class Entertainment {
 
 export class PlatformState {
 
-    public readonly twitchToken?: string;
-
-    public readonly twitchLoading: boolean;
-
+    public readonly providers: ProviderState[];
     public readonly entertainments: Entertainment[];
 
-    constructor(entertainments: Entertainment[], twitchLoading: boolean, twitchToken?: string) {
-        this.twitchToken = twitchToken;
+    constructor(entertainments: Entertainment[], providers: ProviderState[]) {
+        this.providers = providers;
         this.entertainments = entertainments;
-        this.twitchLoading = twitchLoading;
     }
 }
 
-export default function platform(state: PlatformState = new PlatformState([], false), action: IAction) {
+export default function platform(state: PlatformState = new PlatformState([], []), action: IAction) {
     if (connect.test(action)) {
-        return new PlatformState(state.entertainments, state.twitchLoading, action.payload);
+        const listWithoutProvider = state.providers.filter(p => p.provider !== action.payload.provider);
+        listWithoutProvider.push(new ProviderState(action.payload.provider, false, action.payload.token));
+        return new PlatformState(state.entertainments, listWithoutProvider);
     }
 
     if (loaded.test(action)) {
-        return new PlatformState(action.payload, false, state.twitchToken);
+        const newList = state.providers.map(p => {
+            if (p.provider === action.payload.provider) {
+                return new ProviderState(p.provider, false, p.token);
+            } else {
+                return p;
+            }
+        });
+        return new PlatformState(action.payload.entertainments, newList);
     }
 
     if (loading.test(action)) {
-        return new PlatformState(state.entertainments, true, state.twitchToken);
+        const newList = state.providers.map(p => {
+            if (p.provider === action.payload) {
+                return new ProviderState(p.provider, true, p.token);
+            } else {
+                return p;
+            }
+        });
+        return new PlatformState(state.entertainments, newList);
     }
 
     return state;

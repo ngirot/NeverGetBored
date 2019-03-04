@@ -3,11 +3,13 @@ import * as Redux from 'redux';
 
 import {connect} from "react-redux";
 import {IState} from "../reducers";
-import {connectToTwitch} from "../actions/platformService";
+import {connectToProvider} from "../actions/platformService";
+import {Provider} from "../utils/Provider";
 
 export interface OwnProps {
     serviceName: string;
     iconClass: string;
+    type: Provider;
 }
 
 interface StateProps {
@@ -26,7 +28,7 @@ class MyComponent extends React.Component<Props> {
         return (
             <button onClick={() => this.props.onConnect(this.props.token)}
                     className={"rounded image-button " + (this.props.token ? 'success' : '')}>
-                <span className={this.props.iconClass + " icon"}></span>
+                <span className={this.props.iconClass + " icon"}/>
                 <span className={"caption"}>
                     {this.props.serviceName}
                     &nbsp;
@@ -51,17 +53,26 @@ class MyComponent extends React.Component<Props> {
 }
 
 function mapStateToProps(state: IState, ownProps: OwnProps): StateProps {
-    return {
-        token: state.platform.twitchToken,
-        loading: state.platform.twitchLoading
-    };
+    const providerState = state.platform.providers.find(p => p.provider === ownProps.type);
+
+    if (providerState) {
+        return {
+            token: providerState.token,
+            loading: providerState.loading
+        };
+    } else {
+        return {
+            token: '',
+            loading: false
+        };
+    }
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<any>, ownProps: OwnProps): DispatchProps {
     return {
         onConnect: (token?: string) => {
             if (!token) {
-                connectToTwitch()(dispatch);
+                connectToProvider(ownProps.type)(dispatch);
             }
         }
     };

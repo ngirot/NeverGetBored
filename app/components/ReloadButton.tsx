@@ -3,14 +3,14 @@ import {IState} from "../reducers";
 import * as Redux from "redux";
 import {reloadAll} from "../actions/platformService";
 import {connect} from "react-redux";
+import {ProviderState} from "../reducers/platforms";
 
 interface StateProps {
-    token?: string;
-    loading: boolean;
+    providerStates: ProviderState[];
 }
 
 interface DispatchProps {
-    onReload: (token?: string) => void;
+    onReload: (providerStates: ProviderState[]) => void;
 }
 
 type Props = StateProps & DispatchProps;
@@ -18,7 +18,8 @@ type Props = StateProps & DispatchProps;
 class ReloadButton extends React.Component<Props> {
     render() {
         return (
-            <button className={"button info square rounded"} onClick={() => this.props.onReload(this.props.token)}>
+            <button className={"button info square rounded"}
+                    onClick={() => this.props.onReload(this.props.providerStates)}>
                 <i className={"fa fa-refresh"}/>
             </button>
         );
@@ -27,17 +28,14 @@ class ReloadButton extends React.Component<Props> {
 
 function mapStateToProps(state: IState): StateProps {
     return {
-        token: state.platform.twitchToken,
-        loading: state.platform.twitchLoading
+        providerStates: state.platform.providers
     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<any>): DispatchProps {
     return {
-        onReload: (token?: string) => {
-            if (token) {
-                reloadAll(token)(dispatch);
-            }
+        onReload: (providerStates: ProviderState[]) => {
+            reloadAll(providerStates)(dispatch);
         }
     };
 }
