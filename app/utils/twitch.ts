@@ -1,5 +1,6 @@
 import {Entertainment} from "../reducers/platforms";
 import createWindow from "./window";
+import {Provider} from "./Provider";
 
 const {OAuth2Provider} = require("electron-oauth-helper");
 const api = require('twitch-api-v5');
@@ -35,7 +36,7 @@ export function entertainmentsTwitch(token: string): Promise<Entertainment[]> {
         const map = (error: any, api: any) => {
             const streams: any[] = api.streams;
             const result = streams.map((stream: any) => {
-                return new Entertainment(stream._id, stream.channel.status,
+                return new Entertainment(Provider.TWITCH, stream._id, stream.channel.status,
                     stream.channel.display_name, stream.channel.url,
                     stream.preview.medium);
             });

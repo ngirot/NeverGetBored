@@ -15,13 +15,15 @@ export class ProviderState {
 }
 
 export class Entertainment {
+    public readonly provider: Provider;
     public readonly id: string;
     public readonly title: string;
-    public readonly user: string;
-    public readonly url: string;
+    public readonly user?: string;
+    public readonly url?: string;
     public readonly previewUrl?: string;
 
-    public constructor(id: string, title: string, user: string, url: string, previewUrl?: string) {
+    public constructor(provider: Provider, id: string, title: string, user?: string, url?: string, previewUrl?: string) {
+        this.provider = provider;
         this.id = id;
         this.title = title;
         this.user = user;
@@ -56,7 +58,9 @@ export default function platform(state: PlatformState = new PlatformState([], []
                 return p;
             }
         });
-        return new PlatformState(action.payload.entertainments, newList);
+        const newEntertainments = state.entertainments.filter(e => e.provider !== action.payload.provider);
+        newEntertainments.push(...action.payload.entertainments);
+        return new PlatformState(newEntertainments, newList);
     }
 
     if (loading.test(action)) {

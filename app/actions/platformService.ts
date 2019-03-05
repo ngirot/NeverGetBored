@@ -1,5 +1,5 @@
 import {entertainmentsTwitch, generateTokenTwitch} from "../utils/twitch";
-import {generateTokenTodoist} from "../utils/todoist";
+import {entertainmentsTodoist, generateTokenTodoist} from "../utils/todoist";
 import {connect, ConnectionAction, EntertainmentLoaded, loaded, loading} from "./platform";
 import {Provider} from "../utils/Provider";
 import {Entertainment, ProviderState} from "../reducers/platforms";
@@ -47,6 +47,8 @@ function loadFunction(provider: Provider): (token: string) => Promise<Entertainm
     switch (provider) {
         case Provider.TWITCH:
             return entertainmentsTwitch;
+        case Provider.TODOIST:
+            return entertainmentsTodoist;
     }
 
     return () => {

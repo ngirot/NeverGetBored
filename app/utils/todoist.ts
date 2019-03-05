@@ -1,5 +1,8 @@
 import uuid = require("uuid");
 import createWindow from "./window";
+import {Entertainment} from "../reducers/platforms";
+import {Provider} from "./Provider";
+// import * as https from "https";
 
 const needle = require('needle');
 
@@ -45,4 +48,26 @@ export function generateTokenTodoist(): Promise<string> {
 
         window.loadURL('https://todoist.com/oauth/authorize?client_id=' + clientId + '&state=' + randomState + '&scope=data:read');
     });
+}
+
+export function entertainmentsTodoist(token: string): Promise<Entertainment[]> {
+    const url = 'https://todoist.com/api/v7/sync?token=' + token + '&sync_token=*&resource_types=[%22all%22]';
+
+    return new Promise((resolve, reject) => {
+        // The first call always fail, so I make it fail fast at least...
+        needle('get', url, {read_timeout: 100, open_timeout: 100}).then((r: any) => {
+            console.log('r1', r);
+            resolve(syncToEntertainments(r));
+        }).catch((err: any) => {
+            console.log('Retry todoist sync');
+            needle('get', url).then((r: any) => {
+                console.log('r2', r);
+                resolve(syncToEntertainments(r));
+            });
+        });
+    });
+}
+
+function syncToEntertainments(response: any): Entertainment[] {
+    return response.body.items.map((item: any) => new Entertainment(Provider.TODOIST, item.id, item.content));
 }
