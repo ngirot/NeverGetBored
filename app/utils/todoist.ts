@@ -2,7 +2,7 @@ import uuid = require("uuid");
 import createWindow from "./window";
 import {Entertainment} from "../reducers/platforms";
 import {Provider} from "./Provider";
-// import * as https from "https";
+import moment = require("moment");
 
 const needle = require('needle');
 
@@ -69,5 +69,14 @@ export function entertainmentsTodoist(token: string): Promise<Entertainment[]> {
 }
 
 function syncToEntertainments(response: any): Entertainment[] {
-    return response.body.items.map((item: any) => new Entertainment(Provider.TODOIST, item.id, item.content));
+    const end = moment().endOf('day');
+
+    return response.body.items
+        .filter((item: any) => {
+            const dueDate = item.due_date_utc;
+            let ok = dueDate !== null && moment(dueDate) < end;
+            console.log('dd => ' + ok, dueDate, end);
+            return ok;
+        })
+        .map((item: any) => new Entertainment(Provider.TODOIST, item.id, item.content));
 }

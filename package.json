@@ -151,12 +151,14 @@
     "webpack-merge": "^4.1.1"
   },
   "dependencies": {
+    "@types/moment": "^2.13.0",
     "@types/uuid": "^3.4.4",
     "electron-debug": "^1.1.0",
     "electron-oauth-helper": "^3.0.0",
     "electron-oauth2": "^3.0.0",
     "font-awesome": "^4.7.0",
     "history": "^4.6.1",
+    "moment": "^2.24.0",
     "needle": "^2.2.4",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
