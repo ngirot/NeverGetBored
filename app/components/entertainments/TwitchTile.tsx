@@ -5,6 +5,8 @@ import {Entertainment} from "../../reducers/platforms";
 import {openEntertainment} from "../../actions/entertainmentService";
 import {emptyFunction} from "../../utils/connectUtil";
 
+const styles = require('./TwitchTile.scss');
+
 interface OwnsProps {
     entertainment: Entertainment;
 }
@@ -22,9 +24,10 @@ class TwitchTile extends React.Component<Props> {
     render() {
         const e = this.props.entertainment;
         return (
-            <div data-role="tile" data-size="wide" onClick={() => this.props.open(e)}>
-                <span className="branding-bar">{e.title}</span>
-                <span className="badge-top">{e.user}</span>
+            <div data-role="tile" data-size="wide" onClick={() => this.props.open(e)}
+                 className={styles.tile}>
+                <span className={"branding-bar " + styles.streamname}>{e.title}</span>
+                <span className={"badge-top " + styles.username}>{e.user}</span>
                 <img src={e.previewUrl}/>
             </div>
         );

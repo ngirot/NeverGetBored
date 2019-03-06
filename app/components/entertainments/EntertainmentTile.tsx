@@ -4,6 +4,7 @@ import DefaultTile from "./DefaultTile";
 import {Provider} from "../../utils/Provider";
 import TwitchTile from "./TwitchTile";
 import {emptyConnect} from "../../utils/connectUtil";
+import TodoistTile from "./TodoistTile";
 
 export interface OwnProps {
     entertainment: Entertainment;
@@ -17,11 +18,11 @@ class EntertainmentTile extends React.Component<OwnProps> {
     }
 
     private tile(entertainment: Entertainment) {
-        console.log('enter', entertainment.provider);
         switch (entertainment.provider) {
             case Provider.TWITCH:
-                console.log('twitch');
                 return <TwitchTile entertainment={entertainment}/>;
+            case Provider.TODOIST:
+                return <TodoistTile entertainment={entertainment}/>
             default:
                 console.log('default');
                 return <DefaultTile entertainment={entertainment}/>;
