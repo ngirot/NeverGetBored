@@ -23,7 +23,7 @@ interface DispatchProps {
 
 type Props = StateProps & DispatchProps & OwnProps;
 
-class MyComponent extends React.Component<Props> {
+class ConnectButton extends React.Component<Props> {
     render() {
         return (
             <button onClick={() => this.props.onConnect(this.props.token)}
@@ -78,4 +78,4 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<any>, ownProps: OwnProps): 
     };
 }
 
-export default connect<StateProps, DispatchProps>(mapStateToProps, mapDispatchToProps)(MyComponent);
+export default connect<StateProps, DispatchProps>(mapStateToProps, mapDispatchToProps)(ConnectButton);
