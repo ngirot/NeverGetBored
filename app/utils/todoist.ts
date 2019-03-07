@@ -56,12 +56,10 @@ export function entertainmentsTodoist(token: string): Promise<Entertainment[]> {
     return new Promise((resolve, reject) => {
         // The first call always fail, so I make it fail fast at least...
         needle('get', url, {read_timeout: 100, open_timeout: 100}).then((r: any) => {
-            console.log('r1', r);
             resolve(syncToEntertainments(r));
         }).catch((err: any) => {
             console.log('Retry todoist sync');
             needle('get', url).then((r: any) => {
-                console.log('r2', r);
                 resolve(syncToEntertainments(r));
             });
         });
@@ -75,7 +73,6 @@ function syncToEntertainments(response: any): Entertainment[] {
         .filter((item: any) => {
             const dueDate = item.due_date_utc;
             let ok = dueDate !== null && moment(dueDate) < end;
-            console.log('dd => ' + ok, dueDate, end);
             return ok;
         })
         .map((item: any) => new Entertainment(Provider.TODOIST, item.id, item.content));
