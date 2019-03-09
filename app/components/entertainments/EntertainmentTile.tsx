@@ -5,6 +5,7 @@ import {Provider} from "../../utils/Provider";
 import TwitchTile from "./TwitchTile";
 import {emptyConnect} from "../../utils/connectUtil";
 import TodoistTile from "./TodoistTile";
+import FeedlyTile from "./FeedlyTile";
 
 export interface OwnProps {
     entertainment: Entertainment;
@@ -23,6 +24,8 @@ class EntertainmentTile extends React.Component<OwnProps> {
                 return <TwitchTile entertainment={entertainment}/>;
             case Provider.TODOIST:
                 return <TodoistTile entertainment={entertainment}/>
+            case Provider.FEEDLY:
+                return<FeedlyTile entertainment={entertainment}/>
             default:
                 console.log('default');
                 return <DefaultTile entertainment={entertainment}/>;

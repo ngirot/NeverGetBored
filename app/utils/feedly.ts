@@ -73,8 +73,7 @@ export function entertainmentsFeedly(token: string): Promise<Entertainment[]> {
                 , options).then((response: any) => {
                 const entertainments = response.body.items
                     .map((item: any) => {
-                        const previewUrl = item.thumbnail && item.thumbnail.length > 0 ? item.thumbnail[0] : null;
-                        return new Entertainment(Provider.FEEDLY, item.id, item.title, item.author, item.origin.htmlUrl, previewUrl);
+                        return new Entertainment(Provider.FEEDLY, item.id, item.title, item.origin.title, item.origin.htmlUrl, item.visual.url);
                     });
                 resolve(entertainments);
             }).catch(() => {
