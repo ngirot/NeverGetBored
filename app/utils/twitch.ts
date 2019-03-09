@@ -1,6 +1,6 @@
-import {Entertainment} from "../reducers/platforms";
 import createWindow from "./window";
 import {Provider} from "./Provider";
+import {Entertainment} from "../reducers/platforms";
 
 const {OAuth2Provider} = require("electron-oauth-helper");
 const api = require('twitch-api-v5');

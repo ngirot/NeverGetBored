@@ -1,3 +1,3 @@
 export enum Provider {
-    TWITCH, TODOIST
+    TWITCH, TODOIST, FEEDLY
 }

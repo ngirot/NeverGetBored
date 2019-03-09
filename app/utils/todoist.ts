@@ -1,8 +1,8 @@
 import uuid = require("uuid");
 import createWindow from "./window";
-import {Entertainment} from "../reducers/platforms";
 import {Provider} from "./Provider";
 import moment = require("moment");
+import {Entertainment} from "../reducers/platforms";
 
 const needle = require('needle');
 

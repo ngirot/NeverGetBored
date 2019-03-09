@@ -34,8 +34,10 @@ class MainView extends React.Component<Props> {
                         <div className={"cell-8 offset-2"}>
                             <ConnectButton serviceName="Twitch" iconClass={"fa fa-twitch"}
                                            type={Provider.TWITCH}/>
-                            <ConnectButton serviceName="Todoist" iconClass={"fa fa fa-check-square "}
+                            <ConnectButton serviceName="Todoist" iconClass={"fa fa-check-square "}
                                            type={Provider.TODOIST}/>
+                            <ConnectButton serviceName={"Feedly"} iconClass={"fa fa-rss"}
+                                           type={Provider.FEEDLY}/>
                         </div>
                         <div className={"cell-2 " + styles.actions}>
                             <ReloadButton/>

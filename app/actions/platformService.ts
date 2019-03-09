@@ -3,6 +3,7 @@ import {entertainmentsTodoist, generateTokenTodoist} from "../utils/todoist";
 import {connect, ConnectionAction, EntertainmentLoaded, loaded, loading} from "./platform";
 import {Provider} from "../utils/Provider";
 import {Entertainment, ProviderState} from "../reducers/platforms";
+import {entertainmentsFeedly, generateTokenFeedly} from "../utils/feedly";
 
 export function connectToProvider(provider: Provider): Function {
     console.log('Try to connect to ' + provider);
@@ -34,13 +35,15 @@ function connectFunction(provider: Provider): () => Promise<string> {
             return generateTokenTwitch;
         case Provider.TODOIST:
             return generateTokenTodoist;
+        case Provider.FEEDLY:
+            return generateTokenFeedly;
+        default:
+            return () => {
+                return new Promise((resolve, reject) => {
+                    reject('Provider unknown');
+                });
+            };
     }
-
-    return () => {
-        return new Promise((resolve, reject) => {
-            reject('Provider unknown');
-        });
-    };
 }
 
 function loadFunction(provider: Provider): (token: string) => Promise<Entertainment[]> {
@@ -49,13 +52,15 @@ function loadFunction(provider: Provider): (token: string) => Promise<Entertainm
             return entertainmentsTwitch;
         case Provider.TODOIST:
             return entertainmentsTodoist;
+        case Provider.FEEDLY:
+            return entertainmentsFeedly;
+        default:
+            return () => {
+                return new Promise((resolve, reject) => {
+                    reject('Provider unknown');
+                });
+            };
     }
-
-    return () => {
-        return new Promise((resolve, reject) => {
-            reject('Provider unknown');
-        });
-    };
 }
 
 function loadEntertainments(provider: Provider, dispatch: Function, loadingFunction: (token: string) => Promise<Entertainment[]>, token: string) {
