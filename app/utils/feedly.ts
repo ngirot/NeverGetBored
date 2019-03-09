@@ -2,13 +2,15 @@ import createWindow from "./window";
 import {Entertainment} from "../reducers/platforms";
 import {Provider} from "./Provider";
 import uuid = require("uuid");
+import Token from "./Token";
+import moment = require("moment");
 
 const needle = require('needle');
 
 const clientId = 'boutroue';
 const clientSecret = 'FE012EGICU4ZOBDRBEOVAJA1JZYH';
 
-export function generateTokenFeedly(): Promise<string> {
+export function generateTokenFeedly(): Promise<Token> {
 
     const redirectUrl = 'http://localhost';
 
@@ -36,7 +38,8 @@ export function generateTokenFeedly(): Promise<string> {
 
                 needle('post', tokenUrl)
                     .then(function (resp: any) {
-                        const token = resp.body.access_token;
+                        const expiration = moment().add(resp.body.expires_in, 'seconds');
+                        const token = new Token(resp.body.access_token, resp.body.refresh_token, expiration.toDate());
                         window.destroy();
                         resolve(token);
                     })
@@ -54,13 +57,12 @@ export function generateTokenFeedly(): Promise<string> {
             + '&scope=https://cloud.feedly.com/subscriptions'
             + "&redirect_uri=" + redirectUrl
             + "&response_type=code";
-        console.log('baseUrl = ' + baseUrl);
         window.loadURL(baseUrl);
     });
 }
 
-export function entertainmentsFeedly(token: string): Promise<Entertainment[]> {
-    const options = {headers: {'Authorization': 'OAuth ' + token}};
+export function entertainmentsFeedly(token: Token): Promise<Entertainment[]> {
+    const options = {headers: {'Authorization': 'OAuth ' + token.currentToken}};
 
     return new Promise((resolve, reject) => {
 

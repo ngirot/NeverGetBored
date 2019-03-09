@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import {IState} from "../reducers";
 import {connectToProvider} from "../actions/platformService";
 import {Provider} from "../utils/Provider";
+import Token from "../utils/Token";
 
 export interface OwnProps {
     serviceName: string;
@@ -13,12 +14,12 @@ export interface OwnProps {
 }
 
 interface StateProps {
-    token?: string;
+    token?: Token;
     loading: boolean;
 }
 
 interface DispatchProps {
-    onConnect: (token?: string) => void;
+    onConnect: (token?: Token) => void;
 }
 
 type Props = StateProps & DispatchProps & OwnProps;
@@ -39,7 +40,7 @@ class ConnectButton extends React.Component<Props> {
         );
     }
 
-    private icon(loading: boolean, token?: string) {
+    private icon(loading: boolean, token?: Token) {
         if (loading) {
             return <i className={"fa fa-spinner fa-spin"}/>;
         }
@@ -62,7 +63,7 @@ function mapStateToProps(state: IState, ownProps: OwnProps): StateProps {
         };
     } else {
         return {
-            token: '',
+            token: undefined,
             loading: false
         };
     }
@@ -70,7 +71,7 @@ function mapStateToProps(state: IState, ownProps: OwnProps): StateProps {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<any>, ownProps: OwnProps): DispatchProps {
     return {
-        onConnect: (token?: string) => {
+        onConnect: (token?: Token) => {
             if (!token) {
                 connectToProvider(ownProps.type)(dispatch);
             }

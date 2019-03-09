@@ -1,13 +1,14 @@
 import createWindow from "./window";
 import {Provider} from "./Provider";
 import {Entertainment} from "../reducers/platforms";
+import Token from "./Token";
 
 const {OAuth2Provider} = require("electron-oauth-helper");
 const api = require('twitch-api-v5');
 
 api.clientID = 'uviersrira44oauqh1n6bdw8h0f0jw';
 
-export function generateTokenTwitch(): Promise<string> {
+export function generateTokenTwitch(): Promise<Token> {
     const window = createWindow();
 
     const config = {
@@ -25,15 +26,19 @@ export function generateTokenTwitch(): Promise<string> {
         .then((token: any) => {
                 console.log('Token : ', token);
                 window.destroy();
-                return token.access_token;
+                return new Token(token.access_token);
             }
         )
         .catch((error: any) => console.error(error));
 }
 
-export function entertainmentsTwitch(token: string): Promise<Entertainment[]> {
+export function entertainmentsTwitch(token: Token): Promise<Entertainment[]> {
     return new Promise((resolve, reject) => {
         const map = (error: any, api: any) => {
+            if (error) {
+                console.log('error', error);
+                reject('Unable to load streams from Twitch');
+            }
             const streams: any[] = api.streams;
             const result = streams.map((stream: any) => {
                 return new Entertainment(Provider.TWITCH, stream._id, stream.channel.status,
@@ -41,7 +46,8 @@ export function entertainmentsTwitch(token: string): Promise<Entertainment[]> {
                     stream.preview.medium);
             });
             resolve(result);
-        }
-        api.streams.followed({auth: token, stream_type: 'live'}, map);
+        };
+        console.log('token => ', token);
+        api.streams.followed({auth: token.currentToken, stream_type: 'live'}, map);
     });
 }

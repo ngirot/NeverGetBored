@@ -1,3 +1,5 @@
+import Token from "./Token";
+
 const electron = require('electron');
 const app = electron.remote.app;
 
@@ -6,7 +8,7 @@ import * as fs from "fs";
 const encoding = 'UTF-8';
 
 export class TokenConfiguration {
-    token: string;
+    token: Token;
     provider: string;
 }
 
@@ -28,5 +30,5 @@ export function load(): Configuration {
 }
 
 function configurationFile(): string {
-    return app.getPath('userData') + '/token.json';
+    return app.getPath('userData') + '/tokens.json';
 }

@@ -3,10 +3,11 @@ import createWindow from "./window";
 import {Provider} from "./Provider";
 import moment = require("moment");
 import {Entertainment} from "../reducers/platforms";
+import Token from "./Token";
 
 const needle = require('needle');
 
-export function generateTokenTodoist(): Promise<string> {
+export function generateTokenTodoist(): Promise<Token> {
     const clientId = 'db3bc2e9c84941d1b7d8ef510055c4e7';
     const redirectUrl = 'http://localhost';
 
@@ -33,7 +34,7 @@ export function generateTokenTodoist(): Promise<string> {
 
                 needle('post', tokenUrl)
                     .then(function (resp: any) {
-                        const token = resp.body.access_token;
+                        const token = new Token(resp.body.access_token);
                         console.log('token => ' + token);
                         window.destroy();
                         resolve(token);
@@ -50,8 +51,8 @@ export function generateTokenTodoist(): Promise<string> {
     });
 }
 
-export function entertainmentsTodoist(token: string): Promise<Entertainment[]> {
-    const url = 'https://todoist.com/api/v7/sync?token=' + token + '&sync_token=*&resource_types=[%22all%22]';
+export function entertainmentsTodoist(token: Token): Promise<Entertainment[]> {
+    const url = 'https://todoist.com/api/v7/sync?token=' + token.currentToken + '&sync_token=*&resource_types=[%22all%22]';
 
     return new Promise((resolve, reject) => {
         // The first call always fail, so I make it fail fast at least...

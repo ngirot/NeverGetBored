@@ -3,13 +3,14 @@ import {connect, loaded, loading} from '../actions/platform';
 import {Provider} from "../utils/Provider";
 import {Configuration, save, TokenConfiguration} from "../utils/config";
 import {loadedConfiguration} from "../actions/configuration";
+import Token from "../utils/Token";
 
 export class ProviderState {
     public readonly provider: Provider;
-    public readonly token?: string;
+    public readonly token?: Token;
     public readonly loading: boolean;
 
-    public constructor(provider: Provider, loading: boolean, token?: string) {
+    public constructor(provider: Provider, loading: boolean, token?: Token) {
         this.provider = provider;
         this.loading = loading;
         this.token = token;
@@ -94,7 +95,10 @@ function convert(state: ProviderState[]) {
         .map(p => {
             let tokenConfiguration = new TokenConfiguration();
             tokenConfiguration.provider = Provider[p.provider];
-            tokenConfiguration.token = '' + p.token;
+            if (p.token) {
+                tokenConfiguration.token = p.token;
+            }
+
             return tokenConfiguration;
 
         });

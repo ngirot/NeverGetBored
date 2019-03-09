@@ -1,12 +1,13 @@
 import {actionCreator} from "./helpers";
 import {Entertainment} from "../reducers/platforms";
 import {Provider} from "../utils/Provider";
+import Token from "../utils/Token";
 
 export class ConnectionAction {
     public readonly provider: Provider;
-    public readonly token: string;
+    public readonly token: Token;
 
-    constructor(provider: Provider, token: string) {
+    constructor(provider: Provider, token: Token) {
         this.provider = provider;
         this.token = token;
     }
