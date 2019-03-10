@@ -1,16 +1,16 @@
-import {Provider} from "./Provider";
 import {Entertainment} from "../reducers/platforms";
 import Token from "./Token";
 import OauthTokenConfiguration from "./api/oauth/OauthTokenConfiguration";
 import {generateTokenWithToken} from "./api/oauth/OauthApi";
+import TwitchApi from "./api/twitch/twitchApi";
+import Stream from "./api/twitch/Stream";
+import {Provider} from "./Provider";
 
-const api = require('twitch-api-v5');
-
-api.clientID = 'uviersrira44oauqh1n6bdw8h0f0jw';
+const twitchClientId = 'uviersrira44oauqh1n6bdw8h0f0jw';
 
 export function generateTokenTwitch(): Promise<Token> {
     let configuration = new OauthTokenConfiguration(
-        api.clientID,
+        twitchClientId,
         "t71vqgy5y4gmjimrfpr2yr2lixcumx",
         "https://id.twitch.tv/oauth2/authorize",
         "http://localhost",
@@ -20,21 +20,13 @@ export function generateTokenTwitch(): Promise<Token> {
 }
 
 export function entertainmentsTwitch(token: Token): Promise<Entertainment[]> {
-    return new Promise((resolve, reject) => {
-        const map = (error: any, api: any) => {
-            if (error) {
-                console.log('error', error);
-                reject('Unable to load streams from Twitch');
-            }
-            const streams: any[] = api.streams;
-            const result = streams.map((stream: any) => {
-                return new Entertainment(Provider.TWITCH, stream._id, stream.channel.status,
-                    stream.channel.display_name, stream.channel.url,
-                    stream.preview.medium);
-            });
-            resolve(result);
-        };
-        console.log('token => ', token);
-        api.streams.followed({auth: token.currentToken, stream_type: 'live'}, map);
-    });
+    const api = new TwitchApi(token);
+    api.register(twitchClientId);
+    return api.entertainmentsTwitch()
+        .then((streams: Stream[]) => streams.map(convertStreamToEntertainment));
+}
+
+function convertStreamToEntertainment(stream: Stream): Entertainment {
+    return new Entertainment(Provider.TWITCH, stream._id, stream.channel.status, stream.channel.display_name,
+        stream.channel.url, stream.preview.large);
 }
