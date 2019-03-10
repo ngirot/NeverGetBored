@@ -1,53 +1,29 @@
-import uuid = require("uuid");
-import createOauthWindow from "./window";
 import {Provider} from "./Provider";
 import moment = require("moment");
 import {Entertainment} from "../reducers/platforms";
 import Token from "./Token";
+import OauthCodeConfiguration from "./api/oauth/OauthCodeConfiguration";
+import {generateTokenWithCode} from "./api/oauth/OauthApi";
 
 const needle = require('needle');
 
 export function generateTokenTodoist(): Promise<Token> {
-    const clientId = 'db3bc2e9c84941d1b7d8ef510055c4e7';
-    const redirectUrl = 'http://localhost';
+    const oauthConf = new OauthCodeConfiguration(
+        'https://todoist.com/oauth/authorize',
+        'https://todoist.com/oauth/access_token',
+        'http://localhost',
+        'db3bc2e9c84941d1b7d8ef510055c4e7',
+        '0d0bb3b20ee743a184a305d24000fbad',
+        'data:read');
 
-    const window = createOauthWindow();
-
-    const randomState = uuid();
     return new Promise((resolve, reject) => {
-        window.webContents.addListener('will-redirect', function (event: Event, urlAsString: string) {
-            if (urlAsString.startsWith(redirectUrl)) {
-                const url = new URL(urlAsString);
-                const code = url.searchParams.get('code');
-                const returnState = url.searchParams.get('state');
-                console.log('Code = ' + code);
-
-                if (returnState !== randomState) {
-                    reject('Security issue, state are not equals');
-                }
-
-                const tokenUrl = "https://todoist.com/oauth/access_token?"
-                    + "client_id=" + clientId
-                    + "&client_secret=0d0bb3b20ee743a184a305d24000fbad"
-                    + "&code=" + code
-                    + "&redirect_uri=" + redirectUrl;
-
-                needle('post', tokenUrl)
-                    .then(function (resp: any) {
-                        const token = new Token(resp.body.access_token);
-                        console.log('token => ' + token);
-                        window.destroy();
-                        resolve(token);
-                    })
-                    .catch(function (err: any) {
-                        console.error('e => ', err);
-                        window.destroy();
-                        reject(err);
-                    });
-            }
-        });
-
-        window.loadURL('https://todoist.com/oauth/authorize?client_id=' + clientId + '&state=' + randomState + '&scope=data:read');
+        generateTokenWithCode(oauthConf)
+            .then((token: Token) => {
+                resolve(token);
+            })
+            .catch((err: any) => {
+                reject(err);
+            });
     });
 }
 

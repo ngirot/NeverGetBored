@@ -1,63 +1,29 @@
-import createOauthWindow from "./window";
 import {Entertainment} from "../reducers/platforms";
 import {Provider} from "./Provider";
-import uuid = require("uuid");
 import Token from "./Token";
-import moment = require("moment");
+import OauthCodeConfiguration from "./api/oauth/OauthCodeConfiguration";
+import {generateTokenWithCode} from "./api/oauth/OauthApi";
 
 const needle = require('needle');
 
-const clientId = 'boutroue';
-const clientSecret = 'FE012EGICU4ZOBDRBEOVAJA1JZYH';
-
 export function generateTokenFeedly(): Promise<Token> {
+    const oauthConf = new OauthCodeConfiguration(
+        'https://cloud.feedly.com/v3/auth/auth',
+        'https://cloud.feedly.com/v3/auth/token',
+        'http://localhost',
+        'boutroue',
+        'FE012EGICU4ZOBDRBEOVAJA1JZYH',
+        'https://cloud.feedly.com/subscriptions',
+        'authorization_code');
 
-    const redirectUrl = 'http://localhost';
-
-    const window = createOauthWindow();
-
-    const randomState = uuid();
     return new Promise((resolve, reject) => {
-        window.webContents.addListener('will-redirect', function (event: Event, urlAsString: string) {
-            if (urlAsString.startsWith(redirectUrl)) {
-                const url = new URL(urlAsString);
-                const code = url.searchParams.get('code');
-                const returnState = url.searchParams.get('state');
-                console.log('Code = ' + code);
-
-                if (returnState !== randomState) {
-                    reject('Security issue, state are not equals');
-                }
-
-                const tokenUrl = "https://cloud.feedly.com/v3/auth/token?"
-                    + "client_id=" + clientId
-                    + "&client_secret=" + clientSecret
-                    + "&code=" + code
-                    + "&redirect_uri=" + redirectUrl
-                    + "&grant_type=authorization_code";
-
-                needle('post', tokenUrl)
-                    .then(function (resp: any) {
-                        const expiration = moment().add(resp.body.expires_in, 'seconds');
-                        const token = new Token(resp.body.access_token, resp.body.refresh_token, expiration.toDate());
-                        window.destroy();
-                        resolve(token);
-                    })
-                    .catch(function (err: any) {
-                        console.error('e => ', err);
-                        window.destroy();
-                        reject(err);
-                    });
-            }
-        });
-
-        let baseUrl = 'https://cloud.feedly.com/v3/auth/auth?'
-            + '&client_id=' + clientId
-            + '&state=' + randomState
-            + '&scope=https://cloud.feedly.com/subscriptions'
-            + "&redirect_uri=" + redirectUrl
-            + "&response_type=code";
-        window.loadURL(baseUrl);
+        generateTokenWithCode(oauthConf)
+            .then((token: Token) => {
+                resolve(token);
+            })
+            .catch((err: any) => {
+                reject(err);
+            });
     });
 }
 

@@ -1,35 +1,22 @@
-import createOauthWindow from "./window";
 import {Provider} from "./Provider";
 import {Entertainment} from "../reducers/platforms";
 import Token from "./Token";
+import OauthTokenConfiguration from "./api/oauth/OauthTokenConfiguration";
+import {generateTokenWithToken} from "./api/oauth/OauthApi";
 
-const {OAuth2Provider} = require("electron-oauth-helper");
 const api = require('twitch-api-v5');
 
 api.clientID = 'uviersrira44oauqh1n6bdw8h0f0jw';
 
 export function generateTokenTwitch(): Promise<Token> {
-    const window = createOauthWindow();
+    let configuration = new OauthTokenConfiguration(
+        api.clientID,
+        "t71vqgy5y4gmjimrfpr2yr2lixcumx",
+        "https://id.twitch.tv/oauth2/authorize",
+        "http://localhost",
+        'openid');
 
-    const config = {
-        client_id: api.clientID,
-        client_secret: "t71vqgy5y4gmjimrfpr2yr2lixcumx",
-        authorize_url: "https://id.twitch.tv/oauth2/authorize",
-        response_type: "token",
-        redirect_uri: "http://localhost",
-        scope: 'openid'
-    };
-
-    const provider = new OAuth2Provider(config);
-
-    return provider.perform(window)
-        .then((token: any) => {
-                console.log('Token : ', token);
-                window.destroy();
-                return new Token(token.access_token);
-            }
-        )
-        .catch((error: any) => console.error(error));
+    return generateTokenWithToken(configuration);
 }
 
 export function entertainmentsTwitch(token: Token): Promise<Entertainment[]> {
