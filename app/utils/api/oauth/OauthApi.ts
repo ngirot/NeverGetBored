@@ -1,11 +1,12 @@
 import uuid = require("uuid");
 import moment = require("moment");
 import Token from "../../Token";
-import createOauthWindow from "../../window";
 import OauthCodeConfiguration from "./OauthCodeConfiguration";
 import OauthTokenConfiguration from "./OauthTokenConfiguration";
-import {postTokenUrl} from "../http/HttpApi";
-import HttpResponseToken from "../http/HttpResponseToken";
+import createOauthWindow from "./window";
+import OauthResponseToken from "./OauthResponseToken";
+
+const needle = require('needle');
 
 const {OAuth2Provider} = require("electron-oauth-helper");
 
@@ -24,7 +25,7 @@ export function generateTokenWithToken(configuration: OauthTokenConfiguration): 
     const provider = new OAuth2Provider(config);
 
     return provider.perform(window)
-        .then((token: HttpResponseToken) => {
+        .then((token: OauthResponseToken) => {
                 console.log('Token : ', token);
                 window.destroy();
                 return new Token(token.access_token);
@@ -59,7 +60,7 @@ export function generateTokenWithCode(configuration: OauthCodeConfiguration): Pr
                     + (configuration.grantType ? "&grant_type=" + configuration.grantType : '');
 
                 postTokenUrl(tokenUrl)
-                    .then(function (resp: HttpResponseToken) {
+                    .then(function (resp: OauthResponseToken) {
                         window.destroy();
                         if (resp.expires_in) {
                             const expiration = moment().add(resp.expires_in, 'seconds');
@@ -83,5 +84,11 @@ export function generateTokenWithCode(configuration: OauthCodeConfiguration): Pr
             + "&redirect_uri=" + configuration.redirectUrl
             + "&response_type=code";
         window.loadURL(baseUrl);
+    });
+}
+
+function postTokenUrl(url: string): Promise<OauthResponseToken> {
+    return needle('post', url).then((response: any) => {
+        return response.body;
     });
 }
