@@ -44,7 +44,7 @@ class MainView extends React.Component<Props> {
                         </div>
                     </div>
                 </div>
-                <div>
+                <div className={styles.entertainments}>
                     <EntertainmentList/>
                 </div>
             </div>

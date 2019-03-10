@@ -1,4 +1,6 @@
 :local {
+  $intro-size: 3.5rem;
+
   .container {
     text-align: center;
   }
@@ -9,11 +11,22 @@
   }
 
   .intro {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2;
     background-color: #19171c;
     margin-bottom: 2rem;
     padding-bottom: 0.5rem;
     margin-top: 0;
     padding-top: 0.5rem;
+    height: $intro-size;
+  }
+
+  .entertainments {
+    z-index: 1;
+    margin-top: $intro-size + 1rem;
   }
 
   .actions {
