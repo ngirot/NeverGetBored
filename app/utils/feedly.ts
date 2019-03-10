@@ -39,9 +39,11 @@ export function entertainmentsFeedly(token: Token): Promise<Entertainment[]> {
                 'user/' + userId + '/category/global.all' +
                 '&unreadOnly=true'
                 , options).then((response: any) => {
+                console.log('Feedly response', response);
                 const entertainments = response.body.items
                     .map((item: any) => {
-                        return new Entertainment(Provider.FEEDLY, item.id, item.title, item.origin.title, item.origin.htmlUrl, item.visual.url);
+                        const url = item.alternate && item.alternate[0] ? item.alternate[0].href : null;
+                        return new Entertainment(Provider.FEEDLY, item.id, item.title, item.origin.title, url, item.visual.url);
                     });
                 resolve(entertainments);
             }).catch(() => {
