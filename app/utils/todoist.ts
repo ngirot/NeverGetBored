@@ -33,17 +33,17 @@ export function entertainmentsTodoist(token: Token): Promise<Entertainment[]> {
     return new Promise((resolve, reject) => {
         // The first call always fail, so I make it fail fast at least...
         needle('get', url, {read_timeout: 100, open_timeout: 100}).then((r: any) => {
-            resolve(syncToEntertainments(r));
+            resolve(convertSyncToEntertainments(r));
         }).catch((err: any) => {
             console.log('Retry todoist sync');
             needle('get', url).then((r: any) => {
-                resolve(syncToEntertainments(r));
+                resolve(convertSyncToEntertainments(r));
             });
         });
     });
 }
 
-function syncToEntertainments(response: any): Entertainment[] {
+function convertSyncToEntertainments(response: any): Entertainment[] {
     const end = moment().endOf('day');
 
     return response.body.items
