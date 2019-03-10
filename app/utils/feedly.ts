@@ -1,4 +1,4 @@
-import createWindow from "./window";
+import createOauthWindow from "./window";
 import {Entertainment} from "../reducers/platforms";
 import {Provider} from "./Provider";
 import uuid = require("uuid");
@@ -14,7 +14,7 @@ export function generateTokenFeedly(): Promise<Token> {
 
     const redirectUrl = 'http://localhost';
 
-    const window = createWindow();
+    const window = createOauthWindow();
 
     const randomState = uuid();
     return new Promise((resolve, reject) => {

@@ -1,7 +1,7 @@
 const electron = require('electron');
 const BrowserWindow = electron.remote.BrowserWindow;
 
-export default function createWindow() {
+export default function createOauthWindow() {
     return new BrowserWindow({
         width: 600,
         height: 800,

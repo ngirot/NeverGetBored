@@ -27,7 +27,7 @@ class FeedlyTile extends React.Component<Props> {
                  className={"d-flex flex-justify-center flex-align-center " + styles.tile}>
                 <span className={"branding-bar " + styles.feedname}>{e.title}</span>
                 <span className={"badge-top " + styles.sourcename}>{e.user}</span>
-                <img src={e.previewUrl} className={styles.thumbnail}/>
+                <img alt={e.title} src={e.previewUrl} className={styles.thumbnail}/>
             </div>
         );
     }

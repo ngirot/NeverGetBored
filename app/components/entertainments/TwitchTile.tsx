@@ -24,11 +24,11 @@ class TwitchTile extends React.Component<Props> {
     render() {
         const e = this.props.entertainment;
         return (
-            <div data-role="tile" data-size="wide" onClick={() => this.props.open(e)}
-                 className={styles.tile}>
+            <div data-role="tile" data-size="wide" className={styles.tile}
+                 onClick={() => this.props.open(e)}>
                 <span className={"branding-bar " + styles.streamname}>{e.title}</span>
                 <span className={"badge-top " + styles.username}>{e.user}</span>
-                <img src={e.previewUrl}/>
+                <img alt={e.title} src={e.previewUrl}/>
             </div>
         );
     }

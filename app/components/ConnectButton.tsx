@@ -35,7 +35,6 @@ class ConnectButton extends React.Component<Props> {
                     &nbsp;
                     {this.icon(this.props.loading, this.props.token)}
                 </span>
-
             </button>
         );
     }

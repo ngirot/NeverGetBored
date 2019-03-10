@@ -5,8 +5,9 @@ import {Provider} from "../utils/Provider";
 import {Entertainment, ProviderState} from "../reducers/platforms";
 import {entertainmentsFeedly, generateTokenFeedly} from "../utils/feedly";
 import Token from "../utils/Token";
+import {DispatcherFunction} from "./helpers";
 
-export function connectToProvider(provider: Provider): Function {
+export function connectToProvider(provider: Provider): DispatcherFunction {
     console.log('Try to connect to ' + provider);
     const c = connectFunction(provider);
     const l = loadFunction(provider);
@@ -20,7 +21,7 @@ export function connectToProvider(provider: Provider): Function {
     };
 }
 
-export function reloadAll(providerStates: ProviderState[]): Function {
+export function reloadAll(providerStates: ProviderState[]): DispatcherFunction {
     return (dispatch: Function) => {
         providerStates.forEach(ps => {
             if (ps.token) {

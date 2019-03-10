@@ -1,4 +1,4 @@
-import createWindow from "./window";
+import createOauthWindow from "./window";
 import {Provider} from "./Provider";
 import {Entertainment} from "../reducers/platforms";
 import Token from "./Token";
@@ -9,7 +9,7 @@ const api = require('twitch-api-v5');
 api.clientID = 'uviersrira44oauqh1n6bdw8h0f0jw';
 
 export function generateTokenTwitch(): Promise<Token> {
-    const window = createWindow();
+    const window = createOauthWindow();
 
     const config = {
         client_id: api.clientID,

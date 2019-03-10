@@ -1,5 +1,5 @@
 import uuid = require("uuid");
-import createWindow from "./window";
+import createOauthWindow from "./window";
 import {Provider} from "./Provider";
 import moment = require("moment");
 import {Entertainment} from "../reducers/platforms";
@@ -11,7 +11,7 @@ export function generateTokenTodoist(): Promise<Token> {
     const clientId = 'db3bc2e9c84941d1b7d8ef510055c4e7';
     const redirectUrl = 'http://localhost';
 
-    const window = createWindow();
+    const window = createOauthWindow();
 
     const randomState = uuid();
     return new Promise((resolve, reject) => {
