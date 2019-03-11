@@ -28,7 +28,7 @@ class TwitchTile extends React.Component<Props> {
                  onClick={() => this.props.open(e)}>
                 <span className={"branding-bar " + styles.streamname}>{e.title}</span>
                 <span className={"badge-top " + styles.username}>{e.user}</span>
-                <img alt={e.title} src={e.previewUrl}/>
+                <img alt={e.title} src={e.previewUrl} className={styles.thumbnail}/>
             </div>
         );
     }
