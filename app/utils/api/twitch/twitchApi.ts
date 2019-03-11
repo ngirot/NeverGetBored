@@ -19,7 +19,6 @@ export default class TwitchApi {
         return new Promise((resolve, reject) => {
 
             const streamCallback = (error: any, streamResult: StreamResult) => {
-                console.log('result', streamResult)
                 if (error) {
                     console.log('Unable to load streams from Twitch', error);
                     reject('Unable to load streams from Twitch');
