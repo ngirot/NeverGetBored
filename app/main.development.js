@@ -1,4 +1,5 @@
 const {app, BrowserWindow, Menu, shell} = require('electron');
+var path = require('path');
 
 let menu;
 let template;
@@ -42,7 +43,8 @@ app.on('ready', () =>
             mainWindow = new BrowserWindow({
                 show: false,
                 width: 1024,
-                height: 728
+                height: 728,
+                icon: path.join(__dirname, '/logo.png')
             });
 
             mainWindow.loadURL(`file://${__dirname}/app.html`);
