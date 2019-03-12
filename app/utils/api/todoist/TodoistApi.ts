@@ -3,8 +3,7 @@ import SyncResult from "./SyncResult";
 import Item from "./Item";
 import OauthCodeConfiguration from "../oauth/OauthCodeConfiguration";
 import {generateTokenWithCode} from "../oauth/OauthApi";
-
-const needle = require('needle');
+import HttpApi from "../http/HttpApi";
 
 export default class TodoistApi {
 
@@ -23,21 +22,23 @@ export default class TodoistApi {
     }
 
     entertainmentsTodoist(token: Token): Promise<Item[]> {
-        const url = this.baseUrl + '/api/v7/sync?token=' + token.currentToken + '&sync_token=*&resource_types=[%22all%22]';
+        const http = new HttpApi(this.baseUrl);
 
+        const syncPath = '/api/v7/sync?token=' + token.currentToken + '&sync_token=*&resource_types=[%22all%22]';
         return new Promise((resolve, reject) => {
             // The first call always fail, so I make it fail fast at least...
-            needle('get', url, {read_timeout: 100, open_timeout: 100}).then((response: any) => {
-                const syncResult = response.body as SyncResult;
-                resolve(syncResult.items);
-            }).catch(() => {
-                needle('get', url).then((response: any) => {
-                    const syncResult = response.body as SyncResult;
+            http.get(syncPath, {read_timeout: 100, open_timeout: 100})
+                .then((syncResult: SyncResult) => {
                     resolve(syncResult.items);
+                })
+                .catch(() => {
+                    http.get(syncPath)
+                        .then((syncResult: SyncResult) => {
+                            resolve(syncResult.items);
+                        })
+                        .catch(reject);
                 });
-            }).catch((error: any) => {
-                reject(error);
-            });
+
         });
     }
 }

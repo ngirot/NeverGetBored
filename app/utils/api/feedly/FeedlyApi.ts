@@ -4,8 +4,7 @@ import {generateTokenWithCode} from "../oauth/OauthApi";
 import Profile from "./Profile";
 import Contents from "./Contents";
 import Item from "./Item";
-
-const needle = require('needle');
+import HttpApi from "../http/HttpApi";
 
 export default class FeedlyApi {
 
@@ -25,28 +24,16 @@ export default class FeedlyApi {
     }
 
     entertainmentsFeedly(token: Token): Promise<Item[]> {
-        const options = {headers: {'Authorization': 'OAuth ' + token.currentToken}};
+        const http = new HttpApi(this.baseUrl, {headers: {Authorization: 'OAuth ' + token.currentToken}});
 
-        return new Promise((resolve, reject) => {
-            const profileUrl = this.baseUrl + '/v3/profile';
+        return http.get('/v3/profile')
+            .then((profile: Profile) => http.get(this.buildContentPath(profile.id)))
+            .then((contents: Contents) => contents.items);
+    }
 
-            needle('get', profileUrl, options)
-                .then((response: any) => response.body as Profile)
-                .then((profile: Profile) => {
-                    const contentUrl = this.baseUrl + '/v3/streams/contents'
-                        + '?streamId='
-                        + 'user/' + profile.id + '/category/global.all'
-                        + '&unreadOnly=true';
-
-                    needle('get', contentUrl, options)
-                        .then((response: any) => response.body as Contents)
-                        .then((contents: Contents) => resolve(contents.items))
-                        .catch(() => {
-                            reject('Unable to load entertainments from Feedly');
-                        });
-                }).catch(() => {
-                reject('Unable to load user informations from Feedly');
-            });
-        });
+    private buildContentPath(profileId: string): string {
+        return '/v3/streams/contents'
+            + '?streamId=user/' + profileId + '/category/global.all'
+            + '&unreadOnly=true';
     }
 }
