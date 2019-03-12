@@ -21,11 +21,7 @@ export default class FeedlyApi {
             this.baseUrl + '/subscriptions',
             'authorization_code');
 
-        return new Promise((resolve, reject) => {
-            generateTokenWithCode(oauthConf)
-                .then(resolve)
-                .catch(reject);
-        });
+        return generateTokenWithCode(oauthConf);
     }
 
     entertainmentsFeedly(token: Token): Promise<Item[]> {

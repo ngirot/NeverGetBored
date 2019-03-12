@@ -19,11 +19,7 @@ export default class TodoistApi {
             '0d0bb3b20ee743a184a305d24000fbad',
             'data:read');
 
-        return new Promise((resolve, reject) => {
-            generateTokenWithCode(oauthConf)
-                .then(resolve)
-                .catch(reject);
-        });
+        return generateTokenWithCode(oauthConf);
     }
 
     entertainmentsTodoist(token: Token): Promise<Item[]> {
