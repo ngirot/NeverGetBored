@@ -19,4 +19,13 @@ export default class HttpApi {
                 return response.body as T;
             });
     }
+
+    public post<T, V>(path: string, payload: T, options?: Options): Promise<V> {
+        const localOptions = options ? options : this.options;
+
+        return needle('post', this.baseUrl + path, payload, localOptions)
+            .then((response: any) => {
+                return response.body as V;
+            });
+    }
 }

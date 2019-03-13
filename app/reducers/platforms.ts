@@ -1,5 +1,5 @@
 import {IAction} from "../actions/helpers";
-import {connect, loaded, loading} from '../actions/platform';
+import {connect, loaded, loading, removedEntertainment} from '../actions/platform';
 import {Provider} from "../utils/Provider";
 import {Configuration, save, TokenConfiguration} from "../utils/config";
 import {loadedConfiguration} from "../actions/configuration";
@@ -67,6 +67,12 @@ export default function platform(state: PlatformState = new PlatformState([], []
         const newEntertainments = state.entertainments.filter(e => e.provider !== action.payload.provider);
         newEntertainments.push(...action.payload.entertainments);
         return new PlatformState(newEntertainments, newList);
+    }
+
+    if (removedEntertainment.test(action)) {
+        const remove = action.payload;
+        const newList = state.entertainments.filter((e: Entertainment) => !(e.id === remove.id && e.provider === remove.provider));
+        return new PlatformState(newList, state.providers);
     }
 
     if (loading.test(action)) {

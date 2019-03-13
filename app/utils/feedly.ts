@@ -13,6 +13,10 @@ export function entertainmentsFeedly(token: Token): Promise<Entertainment[]> {
         .then(convertItemToEntertainment);
 }
 
+export function markAsRead(entertainment: Entertainment, token: Token): Promise<boolean> {
+    return new FeedlyApi().markAsRead(entertainment.id, token);
+}
+
 function convertItemToEntertainment(items: Item[]): Entertainment[] {
     return items.map((item: Item) => {
         const url = item.alternate && item.alternate[0] ? item.alternate[0].href : undefined;

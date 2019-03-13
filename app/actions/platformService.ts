@@ -1,6 +1,6 @@
 import {entertainmentsTwitch, generateTokenTwitch} from "../utils/twitch";
 import {entertainmentsTodoist, generateTokenTodoist} from "../utils/todoist";
-import {connect, ConnectionAction, EntertainmentLoaded, loaded, loading} from "./platform";
+import {connect, ConnectionAction, EntertainmentLoaded, loaded, loading, removedEntertainment} from "./platform";
 import {Provider} from "../utils/Provider";
 import {Entertainment, ProviderState} from "../reducers/platforms";
 import {entertainmentsFeedly, generateTokenFeedly} from "../utils/feedly";
@@ -71,4 +71,10 @@ function loadEntertainments(provider: Provider, dispatch: Function, loadingFunct
         console.log('Streams', e);
         dispatch(loaded(new EntertainmentLoaded(provider, e)));
     });
+}
+
+export function removeContent(entertainment: Entertainment) {
+    return (dispatch: Function) => {
+        dispatch(removedEntertainment(entertainment));
+    };
 }

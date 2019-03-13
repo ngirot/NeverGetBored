@@ -26,3 +26,4 @@ export class EntertainmentLoaded {
 export const connect = actionCreator<ConnectionAction>('CONNECT_TO_PROVIDER');
 export const loading = actionCreator<Provider>('LOADING_ENTERTAINMENT_FROM_PROVIDER');
 export const loaded = actionCreator<EntertainmentLoaded>('LOADED_ENTERTAINMENT_FROM_PROVIDER');
+export const removedEntertainment = actionCreator<Entertainment>('REMOVED_ENTERTAINMENT');

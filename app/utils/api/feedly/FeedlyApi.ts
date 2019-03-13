@@ -5,6 +5,8 @@ import Profile from "./Profile";
 import Contents from "./Contents";
 import Item from "./Item";
 import HttpApi from "../http/HttpApi";
+import Marker from "./Marker";
+import Options from "../http/Options";
 
 export default class FeedlyApi {
 
@@ -24,16 +26,35 @@ export default class FeedlyApi {
     }
 
     entertainmentsFeedly(token: Token): Promise<Item[]> {
-        const http = new HttpApi(this.baseUrl, {headers: {Authorization: 'OAuth ' + token.currentToken}});
+        const http = new HttpApi(this.baseUrl, this.buildOptions(token));
 
         return http.get('/v3/profile')
             .then((profile: Profile) => http.get(this.buildContentPath(profile.id)))
             .then((contents: Contents) => contents.items);
     }
 
+    markAsRead(id: string, token: Token): Promise<boolean> {
+        const http = new HttpApi(this.baseUrl, this.buildOptions(token));
+
+        const marker: Marker = {action: 'markAsRead', type: 'entries', entryIds: [id]};
+        console.log('Mark as read => ', marker);
+
+        return http.post('/v3/markers', marker)
+            .then((r: any) => {
+                return true;
+            })
+            .catch((err: any) => {
+                return false;
+            });
+    }
+
     private buildContentPath(profileId: string): string {
         return '/v3/streams/contents'
             + '?streamId=user/' + profileId + '/category/global.all'
             + '&unreadOnly=true';
+    }
+
+    private buildOptions(token: Token): Options {
+        return {headers: {Authorization: 'OAuth ' + token.currentToken, 'Content-Type': 'application/json'}};
     }
 }
