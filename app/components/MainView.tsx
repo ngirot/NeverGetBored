@@ -32,11 +32,11 @@ class MainView extends React.Component<Props> {
                 <div className={styles.intro}>
                     <div className={"row"}>
                         <div className={"cell-8 offset-2"}>
-                            <ConnectButton serviceName="Twitch" iconClass={"fa fa-twitch"}
+                            <ConnectButton serviceName="Twitch" iconPath={'resources/logos/twitch.svg'}
                                            type={Provider.TWITCH}/>
-                            <ConnectButton serviceName="Todoist" iconClass={"fa fa-check-square "}
+                            <ConnectButton serviceName="Todoist" iconPath={'resources/logos/todoist.svg'}
                                            type={Provider.TODOIST}/>
-                            <ConnectButton serviceName={"Feedly"} iconClass={"fa fa-rss"}
+                            <ConnectButton serviceName={"Feedly"} iconPath={'resources/logos/feedly.svg'}
                                            type={Provider.FEEDLY}/>
                         </div>
                         <div className={"cell-2 " + styles.actions}>

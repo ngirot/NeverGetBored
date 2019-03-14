@@ -7,9 +7,11 @@ import {connectToProvider} from "../actions/platformService";
 import {Provider} from "../utils/Provider";
 import Token from "../utils/Token";
 
+const styles = require('./ConnectButton.scss');
+
 export interface OwnProps {
     serviceName: string;
-    iconClass: string;
+    iconPath: string;
     type: Provider;
 }
 
@@ -29,7 +31,7 @@ class ConnectButton extends React.Component<Props> {
         return (
             <button onClick={() => this.props.onConnect(this.props.token)}
                     className={"rounded image-button " + (this.props.token ? 'success' : '')}>
-                <span className={this.props.iconClass + " icon"}/>
+                <img src={this.props.iconPath} className={styles.providericon}/>
                 <span className={"caption"}>
                     {this.props.serviceName}
                     &nbsp;
