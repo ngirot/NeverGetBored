@@ -6,6 +6,7 @@ import {Entertainment, ProviderState} from "../reducers/platforms";
 import {entertainmentsFeedly, generateTokenFeedly} from "../utils/feedly";
 import Token from "../utils/Token";
 import {DispatcherFunction} from "./helpers";
+import {addToken} from "../utils/config";
 
 export function connectToProvider(provider: Provider): DispatcherFunction {
     console.log('Try to connect to ' + provider);
@@ -16,6 +17,7 @@ export function connectToProvider(provider: Provider): DispatcherFunction {
         c().then(((token: Token) => {
             console.log('Token generated', token);
             dispatch(connect(new ConnectionAction(provider, token)));
+            addToken(provider, token);
             loadEntertainments(provider, dispatch, l, token);
         }));
     };

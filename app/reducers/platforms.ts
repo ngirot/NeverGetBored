@@ -1,7 +1,6 @@
 import {IAction} from "../actions/helpers";
 import {connect, loaded, loading, removedEntertainment} from '../actions/platform';
 import {Provider} from "../utils/Provider";
-import {Configuration, save, TokenConfiguration} from "../utils/config";
 import {loadedConfiguration} from "../actions/configuration";
 import Token from "../utils/Token";
 
@@ -51,8 +50,6 @@ export default function platform(state: PlatformState = new PlatformState([], []
         const listWithoutProvider = state.providers.filter(p => p.provider !== action.payload.provider);
         listWithoutProvider.push(new ProviderState(action.payload.provider, false, action.payload.token));
 
-        save(convert(listWithoutProvider));
-
         return new PlatformState(state.entertainments, listWithoutProvider);
     }
 
@@ -87,30 +84,8 @@ export default function platform(state: PlatformState = new PlatformState([], []
     }
 
     if (loadedConfiguration.test(action)) {
-        const providerState = action.payload.tokens.map(conf =>
-            new ProviderState(Provider[conf.provider as keyof typeof Provider], false, conf.token));
-        return new PlatformState(state.entertainments, providerState);
+        return new PlatformState(state.entertainments, action.payload);
     }
 
     return state;
-}
-
-function convert(state: ProviderState[]) {
-    const tokens = state
-        .filter(p => p.token)
-        .map(p => {
-            let tokenConfiguration = new TokenConfiguration();
-            tokenConfiguration.provider = Provider[p.provider];
-            if (p.token) {
-                tokenConfiguration.token = p.token;
-            }
-
-            return tokenConfiguration;
-
-        });
-
-    const conf = new Configuration();
-    conf.tokens = tokens;
-
-    return conf;
 }

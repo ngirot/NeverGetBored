@@ -1,34 +1,36 @@
 import Token from "./Token";
+import {Provider} from "./Provider";
+import ConfigurationApi from "./api/configuration/ConfigurationApi";
+import ProviderConfiguration from "./api/configuration/ProviderConfiguration";
+import {ProviderState} from "../reducers/platforms";
 
-const electron = require('electron');
-const app = electron.remote.app;
+export function loadProviders(): ProviderState[] {
+    const api = new ConfigurationApi();
 
-import * as fs from "fs";
-
-const encoding = 'UTF-8';
-
-export class TokenConfiguration {
-    token: Token;
-    provider: string;
+    return api.load()
+        .providers
+        .map((providerConfiguration: ProviderConfiguration) => {
+            return new ProviderState(Provider[providerConfiguration.name as keyof typeof Provider], false, providerConfiguration.token);
+        });
 }
 
-export class Configuration {
-    tokens: TokenConfiguration[] = [];
-}
+export function addToken(provider: Provider, token: Token) {
+    const providerName: string = Provider[provider];
+    const api = new ConfigurationApi();
 
-export function save(configuration: Configuration) {
-    fs.writeFileSync(configurationFile(), JSON.stringify(configuration), {encoding});
-}
+    const conf = api.load();
 
-export function load(): Configuration {
-    const configFile = configurationFile();
-    if (fs.existsSync(configFile)) {
-        return JSON.parse(fs.readFileSync(configurationFile(), {encoding}));
-    } else {
-        return new Configuration();
-    }
-}
+    const newProviders = conf.providers.filter((providerConfiguration: ProviderConfiguration) => {
+        return providerConfiguration.name !== providerName;
+    });
+    newProviders.push({
+        name: providerName,
+        token: token
+    });
 
-function configurationFile(): string {
-    return app.getPath('userData') + '/tokens.json';
+    const newConfiguration = {
+        providers: newProviders
+    };
+
+    api.save(newConfiguration);
 }

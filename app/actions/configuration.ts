@@ -1,10 +1,11 @@
 import {actionCreator} from "./helpers";
-import {Configuration, load} from "../utils/config";
+import {ProviderState} from "../reducers/platforms";
+import {loadProviders} from "../utils/config";
 
-export const loadedConfiguration = actionCreator<Configuration>('LOADED_CONFIGURATION');
+export const loadedConfiguration = actionCreator<ProviderState[]>('LOADED_CONFIGURATION');
 
 export function loadConfiguration(): Function {
     return (dispatch: Function) => {
-        dispatch(loadedConfiguration(load()));
+        dispatch(loadedConfiguration(loadProviders()));
     };
 }

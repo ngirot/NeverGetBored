@@ -37,15 +37,10 @@ export default class FeedlyApi {
         const http = new HttpApi(this.baseUrl, this.buildOptions(token));
 
         const marker: Marker = {action: 'markAsRead', type: 'entries', entryIds: [id]};
-        console.log('Mark as read => ', marker);
 
         return http.post('/v3/markers', marker)
-            .then((r: any) => {
-                return true;
-            })
-            .catch((err: any) => {
-                return false;
-            });
+            .then(() => true)
+            .catch(() => false);
     }
 
     private buildContentPath(profileId: string): string {
