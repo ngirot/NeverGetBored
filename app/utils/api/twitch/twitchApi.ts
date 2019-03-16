@@ -7,12 +7,9 @@ const api = require('twitch-api-v5');
 export default class TwitchApi {
     private readonly token: Token;
 
-    constructor(token: Token) {
-        this.token = token;
-    }
-
-    public register(clientId: string) {
+    constructor(clientId: string, token: Token) {
         api.clientID = clientId;
+        this.token = token;
     }
 
     public entertainmentsTwitch(): Promise<Stream[]> {

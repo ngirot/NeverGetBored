@@ -20,8 +20,7 @@ export function generateTokenTwitch(): Promise<Token> {
 }
 
 export function entertainmentsTwitch(token: Token): Promise<Entertainment[]> {
-    const api = new TwitchApi(token);
-    api.register(twitchClientId);
+    const api = new TwitchApi(twitchClientId, token);
     return api.entertainmentsTwitch()
         .then((streams: Stream[]) => streams.map(convertStreamToEntertainment));
 }

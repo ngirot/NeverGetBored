@@ -33,6 +33,21 @@ export function generateTokenWithToken(configuration: OauthTokenConfiguration): 
         );
 }
 
+export function refresh(configuration: OauthCodeConfiguration, token: Token): Promise<Token> {
+    const payload = {
+        refresh_token: token.refreshToken,
+        client_id: configuration.clientId,
+        client_secret: configuration.secretId,
+        grant_type: configuration.grantType
+    };
+
+    return needle('post', configuration.tokenUrl, payload)
+        .then(function (resp: OauthResponseToken) {
+            const expiration = moment().add(resp.expires_in, 'seconds');
+            return new Token(resp.access_token, resp.refresh_token, expiration.toDate());
+        });
+}
+
 export function generateTokenWithCode(configuration: OauthCodeConfiguration): Promise<Token> {
 
     const window = createOauthWindow();

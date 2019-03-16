@@ -23,9 +23,9 @@ class EntertainmentTile extends React.Component<OwnProps> {
             case Provider.TWITCH:
                 return <TwitchTile entertainment={entertainment}/>;
             case Provider.TODOIST:
-                return <TodoistTile entertainment={entertainment}/>
+                return <TodoistTile entertainment={entertainment}/>;
             case Provider.FEEDLY:
-                return<FeedlyTile entertainment={entertainment}/>
+                return<FeedlyTile entertainment={entertainment}/>;
             default:
                 console.log('default');
                 return <DefaultTile entertainment={entertainment}/>;

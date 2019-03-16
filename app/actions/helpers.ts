@@ -32,7 +32,7 @@ export const actionCreator = <T>(type: string): IActionCreator<T> => {
             return action.type === type;
         }
     });
-}
+};
 
 export const actionCreatorVoid = (type: string): IActionCreatorVoid => {
     return Object.assign((): any => ({type}), {
@@ -41,4 +41,4 @@ export const actionCreatorVoid = (type: string): IActionCreatorVoid => {
             return action.type === type;
         }
     });
-}
+};
