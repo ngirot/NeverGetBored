@@ -1,4 +1,4 @@
 export default class Headers {
-    public Authorization?: string;
-    public 'Content-Type'?: string;
+    public readonly Authorization?: string;
+    public readonly 'Content-Type'?: string;
 }

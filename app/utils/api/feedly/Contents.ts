@@ -1,6 +1,6 @@
 import Item from "./Item";
 
 export default class Contents {
-    public id: string;
-    public items: Item[];
+    public readonly id: string;
+    public readonly items: Item[];
 }

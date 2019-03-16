@@ -6,14 +6,4 @@ export default class OauthCodeConfiguration {
     public readonly secretId: string;
     public readonly scope: string;
     public readonly grantType?: string;
-
-    constructor(codeUrl: string, tokenUrl: string, redirectUrl: string, clientId: string, secretId: string, scope: string, grantType?: string) {
-        this.codeUrl = codeUrl;
-        this.tokenUrl = tokenUrl;
-        this.redirectUrl = redirectUrl;
-        this.clientId = clientId;
-        this.secretId = secretId;
-        this.scope = scope;
-        this.grantType = grantType;
-    }
 }

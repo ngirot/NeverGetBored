@@ -1,5 +1,5 @@
 export default class OauthResponseToken {
-    public access_token: string;
-    public refresh_token?: string;
-    public expires_in?: number;
+    public readonly access_token: string;
+    public readonly refresh_token?: string;
+    public readonly expires_in?: number;
 }

@@ -1,28 +1,29 @@
 import Token from "../../Token";
 import OauthCodeConfiguration from "../oauth/OauthCodeConfiguration";
-import {generateTokenWithCode} from "../oauth/OauthApi";
 import Profile from "./Profile";
 import Contents from "./Contents";
 import Item from "./Item";
 import HttpApi from "../http/HttpApi";
 import Marker from "./Marker";
 import Options from "../http/Options";
+import OauthApi from "../oauth/OauthApi";
 
 export default class FeedlyApi {
 
     private readonly baseUrl = 'https://cloud.feedly.com';
 
     generateTokenFeedly(): Promise<Token> {
-        const oauthConf = new OauthCodeConfiguration(
-            this.baseUrl + '/v3/auth/auth',
-            this.baseUrl + '/v3/auth/token',
-            'http://localhost',
-            'boutroue',
-            'FE012EGICU4ZOBDRBEOVAJA1JZYH',
-            this.baseUrl + '/subscriptions',
-            'authorization_code');
+        const oauthConf: OauthCodeConfiguration = {
+            codeUrl: this.baseUrl + '/v3/auth/auth',
+            tokenUrl: this.baseUrl + '/v3/auth/token',
+            redirectUrl: 'http://localhost',
+            clientId: 'boutroue',
+            secretId: 'FE012EGICU4ZOBDRBEOVAJA1JZYH',
+            scope: this.baseUrl + '/subscriptions',
+            grantType: 'authorization_code'
+        };
 
-        return generateTokenWithCode(oauthConf);
+        return new OauthApi().generateTokenWithCode(oauthConf);
     }
 
     entertainmentsFeedly(token: Token): Promise<Item[]> {

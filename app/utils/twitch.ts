@@ -1,7 +1,5 @@
 import {Entertainment} from "../reducers/platforms";
 import Token from "./Token";
-import OauthTokenConfiguration from "./api/oauth/OauthTokenConfiguration";
-import {generateTokenWithToken} from "./api/oauth/OauthApi";
 import TwitchApi from "./api/twitch/twitchApi";
 import Stream from "./api/twitch/Stream";
 import {Provider} from "./Provider";
@@ -9,19 +7,12 @@ import {Provider} from "./Provider";
 const twitchClientId = 'uviersrira44oauqh1n6bdw8h0f0jw';
 
 export function generateTokenTwitch(): Promise<Token> {
-    let configuration = new OauthTokenConfiguration(
-        twitchClientId,
-        "t71vqgy5y4gmjimrfpr2yr2lixcumx",
-        "https://id.twitch.tv/oauth2/authorize",
-        "http://localhost",
-        'openid');
-
-    return generateTokenWithToken(configuration);
+    return new TwitchApi(twitchClientId).generateTokenTwitch();
 }
 
 export function entertainmentsTwitch(token: Token): Promise<Entertainment[]> {
-    const api = new TwitchApi(twitchClientId, token);
-    return api.entertainmentsTwitch()
+    const api = new TwitchApi(twitchClientId);
+    return api.entertainmentsTwitch(token)
         .then((streams: Stream[]) => streams.map(convertStreamToEntertainment));
 }
 

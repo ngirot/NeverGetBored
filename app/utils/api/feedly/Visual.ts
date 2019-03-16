@@ -1,3 +1,3 @@
 export default class Visual {
-    public url: string;
+    public readonly url: string;
 }

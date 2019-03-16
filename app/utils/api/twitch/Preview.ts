@@ -1,6 +1,6 @@
 export default class Preview {
-    public large: string;
-    public medium: string;
-    public small: string;
-    public template: string;
+    public readonly large: string;
+    public readonly medium: string;
+    public readonly small: string;
+    public readonly template: string;
 }

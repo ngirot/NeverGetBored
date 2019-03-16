@@ -2,23 +2,24 @@ import Token from "../../Token";
 import SyncResult from "./SyncResult";
 import Item from "./Item";
 import OauthCodeConfiguration from "../oauth/OauthCodeConfiguration";
-import {generateTokenWithCode} from "../oauth/OauthApi";
 import HttpApi from "../http/HttpApi";
+import OauthApi from "../oauth/OauthApi";
 
 export default class TodoistApi {
 
     private readonly baseUrl = 'https://todoist.com';
 
     generateTokenTodoist(): Promise<Token> {
-        const oauthConf = new OauthCodeConfiguration(
-            this.baseUrl + '/oauth/authorize',
-            this.baseUrl + '/oauth/access_token',
-            'http://localhost',
-            'db3bc2e9c84941d1b7d8ef510055c4e7',
-            '0d0bb3b20ee743a184a305d24000fbad',
-            'data:read');
+        const oauthConf: OauthCodeConfiguration = {
+            codeUrl: this.baseUrl + '/oauth/authorize',
+            tokenUrl: this.baseUrl + '/oauth/access_token',
+            redirectUrl: 'http://localhost',
+            clientId: 'db3bc2e9c84941d1b7d8ef510055c4e7',
+            secretId: '0d0bb3b20ee743a184a305d24000fbad',
+            scope: 'data:read'
+        };
 
-        return generateTokenWithCode(oauthConf);
+        return new OauthApi().generateTokenWithCode(oauthConf);
     }
 
     entertainmentsTodoist(token: Token): Promise<Item[]> {

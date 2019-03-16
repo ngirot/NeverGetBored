@@ -1,5 +1,5 @@
 export default class Marker {
-    public action: string;
-    public type: string;
-    public entryIds: string[] = [];
+    public readonly action: string;
+    public readonly type: string;
+    public readonly entryIds: string[] = [];
 }

@@ -1,4 +1,4 @@
 export default class Alternate {
-    public href: string;
-    public type: string;
+    public readonly href: string;
+    public readonly type: string;
 }
