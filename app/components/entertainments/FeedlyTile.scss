@@ -1,16 +1,18 @@
-.tile {
-  background-color: #2bb24c !important;
-}
+:local {
+  .tile {
+    background-color: #2bb24c !important;
+  }
 
-.sourcename {
-  background-color: rgba(29, 29, 29, .5) !important;
-}
+  .sourcename {
+    background-color: rgba(29, 29, 29, .5) !important;
+  }
 
-.feedname {
-  background-color: rgba(29, 29, 29, .7) !important;
-}
+  .feedname {
+    background-color: rgba(29, 29, 29, .7) !important;
+  }
 
-.thumbnail {
-  max-width:100%;
-  height:auto;
+  .thumbnail {
+    max-width:100%;
+    height:auto;
+  }
 }

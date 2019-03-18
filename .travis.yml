@@ -39,8 +39,9 @@ before_script:
 
 script:
 - node --version
-- yarn package
-- yarn test
+- npm run build
+- npm test
+- npm run package
 
 after_script: greenkeeper-lockfile-upload
 
