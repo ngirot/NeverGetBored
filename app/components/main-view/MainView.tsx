@@ -1,13 +1,13 @@
 import * as React from 'react';
 
-import {Provider} from "../utils/Provider";
-import {emptyFunction} from "../utils/connectUtil";
-import ReloadButton from "./ReloadButton";
-import EntertainmentList from "./EntertainmentList";
-import ConnectButton from "./ConnectButton";
 import {connect} from "react-redux";
-import {loadConfiguration} from "../actions/configuration";
 import * as Redux from "redux";
+import {loadConfiguration} from "../../actions/configuration";
+import ConnectButton from "./providers/ConnectButton";
+import {Provider} from "../../utils/Provider";
+import ReloadButton from "./entertainments/ReloadButton";
+import EntertainmentList from "./entertainments/EntertainmentList";
+import {emptyFunction} from "../../utils/connectUtil";
 
 const styles = require('./MainView.scss');
 

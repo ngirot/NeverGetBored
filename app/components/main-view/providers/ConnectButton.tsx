@@ -2,10 +2,10 @@ import * as React from 'react';
 import * as Redux from 'redux';
 
 import {connect} from "react-redux";
-import {IState} from "../reducers";
-import {connectToProvider} from "../actions/platformService";
-import {Provider} from "../utils/Provider";
-import Token from "../utils/Token";
+import {IState} from "../../../reducers";
+import Token from "../../../utils/Token";
+import {connectToProvider} from "../../../actions/platformService";
+import {Provider} from "../../../utils/Provider";
 
 const styles = require('./ConnectButton.scss');
 

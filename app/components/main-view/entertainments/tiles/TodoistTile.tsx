@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {Entertainment} from "../../reducers/platforms";
-import {emptyConnect} from "../../utils/connectUtil";
+import {Entertainment} from "../../../../reducers/platforms";
+import {emptyConnect} from "../../../../utils/connectUtil";
 
 const styles = require('./TodoistTile.scss');
 

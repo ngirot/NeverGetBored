@@ -1,9 +1,9 @@
 import * as React from "react";
-import {IState} from "../reducers";
 import * as Redux from "redux";
-import {reloadAll} from "../actions/platformService";
 import {connect} from "react-redux";
-import {ProviderState} from "../reducers/platforms";
+import {IState} from "../../../reducers";
+import {reloadAll} from "../../../actions/platformService";
+import {ProviderState} from "../../../reducers/platforms";
 
 interface StateProps {
     providerStates: ProviderState[];

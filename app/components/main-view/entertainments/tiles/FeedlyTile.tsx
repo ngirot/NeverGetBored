@@ -1,13 +1,13 @@
 import * as React from 'react';
-import {Entertainment} from "../../reducers/platforms";
-import {openEntertainment} from "../../actions/entertainmentService";
 import {connect} from "react-redux";
-import {removeContent} from "../../actions/platformService";
-import {markAsRead} from "../../utils/feedly";
-import Token from "../../utils/Token";
-import {IState} from "../../reducers";
-import {Provider} from "../../utils/Provider";
 import * as Redux from "redux";
+import {Entertainment} from "../../../../reducers/platforms";
+import Token from "../../../../utils/Token";
+import {IState} from "../../../../reducers";
+import {Provider} from "../../../../utils/Provider";
+import {openEntertainment} from "../../../../actions/entertainmentService";
+import {markAsRead} from "../../../../utils/feedly";
+import {removeContent} from "../../../../actions/platformService";
 
 const styles = require('./FeedlyTile.scss');
 

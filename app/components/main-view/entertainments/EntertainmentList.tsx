@@ -1,10 +1,10 @@
 import * as React from 'react';
 
 import {connect} from "react-redux";
-import {IState} from "../reducers";
-import {Entertainment} from "../reducers/platforms";
-import {openEntertainment} from "../actions/entertainmentService";
-import EntertainmentTile from "./entertainments/EntertainmentTile";
+import EntertainmentTile from "./tiles/EntertainmentTile";
+import {IState} from "../../../reducers";
+import {Entertainment} from "../../../reducers/platforms";
+import {openEntertainment} from "../../../actions/entertainmentService";
 
 const styles = require('./EntertainmentList.scss');
 

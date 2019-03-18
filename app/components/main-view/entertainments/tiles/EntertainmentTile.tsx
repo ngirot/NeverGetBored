@@ -1,11 +1,11 @@
 import * as React from 'react';
-import {Entertainment} from "../../reducers/platforms";
 import DefaultTile from "./DefaultTile";
-import {Provider} from "../../utils/Provider";
 import TwitchTile from "./TwitchTile";
-import {emptyConnect} from "../../utils/connectUtil";
 import TodoistTile from "./TodoistTile";
 import FeedlyTile from "./FeedlyTile";
+import {Entertainment} from "../../../../reducers/platforms";
+import {Provider} from "../../../../utils/Provider";
+import {emptyConnect} from "../../../../utils/connectUtil";
 
 export interface OwnProps {
     entertainment: Entertainment;
