@@ -4,4 +4,8 @@
     height: 1.2rem;
     width: auto;
   }
+
+  button.notconnected img.providericon {
+    filter: invert(100%);
+  }
 }

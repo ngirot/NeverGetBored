@@ -30,7 +30,7 @@ class ConnectButton extends React.Component<Props> {
     render() {
         return (
             <button onClick={() => this.props.onConnect(this.props.token)}
-                    className={"rounded image-button " + (this.props.token ? 'success' : '')}>
+                    className={"rounded image-button " + (this.props.token ? 'success' : styles.notconnected)}>
                 <img alt={'logo of ' + this.props.serviceName} src={this.props.iconPath} className={styles.providericon}/>
                 <span className={"caption"}>
                     {this.props.serviceName}
