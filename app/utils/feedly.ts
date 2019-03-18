@@ -19,7 +19,18 @@ export function markAsRead(entertainment: Entertainment, token: Token): Promise<
 
 function convertItemToEntertainment(items: Item[]): Entertainment[] {
     return items.map((item: Item) => {
-        const url = item.alternate && item.alternate[0] ? item.alternate[0].href : undefined;
-        return new Entertainment(Provider.FEEDLY, item.id, item.title, item.origin.title, url, item.visual.url);
+        const url = extractUrl(item);
+        const thumbnail = extractThumbnail(item);
+        return new Entertainment(Provider.FEEDLY, item.id, item.title, item.origin.title, url, thumbnail);
     });
+}
+
+function extractUrl(item: Item): string | undefined {
+    return item.alternate && item.alternate[0] ? item.alternate[0].href : undefined;
+}
+
+function extractThumbnail(item: Item): string | undefined {
+    const thumbnail = item.thumbnail && item.thumbnail[0] ? item.thumbnail[0].url : undefined;
+    const visual = item.visual ? item.visual.url : undefined;
+    return thumbnail ? thumbnail : visual;
 }
