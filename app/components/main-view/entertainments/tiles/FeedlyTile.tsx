@@ -32,6 +32,7 @@ class FeedlyTile extends React.Component<Props> {
         return (
             <div data-role="tile" data-size="wide" onClick={() => this.props.open(e, token)}
                  className={"d-flex flex-justify-center flex-align-center " + styles.tile}>
+                <img className={"tile-logo"} src={'resources/logos/feedly.svg'} alt={"Feedly logo"}/>
                 <span className={"branding-bar " + styles.feedname}>{e.title}</span>
                 <span className={"badge-top " + styles.sourcename}>{e.user}</span>
                 <img alt={e.title} src={e.previewUrl} className={styles.thumbnail}/>

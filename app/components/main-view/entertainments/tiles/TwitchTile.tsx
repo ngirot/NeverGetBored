@@ -26,6 +26,7 @@ class TwitchTile extends React.Component<Props> {
         return (
             <div data-role="tile" data-size="wide" className={styles.tile}
                  onClick={() => this.props.open(e)}>
+                <img className={"tile-logo"} src={'resources/logos/twitch.svg'} alt={"Twitch logo"}/>
                 <span className={"branding-bar " + styles.streamname}>{e.title}</span>
                 <span className={"badge-top " + styles.username}>{e.user}</span>
                 <img alt={e.title} src={e.previewUrl} className={styles.thumbnail}/>
