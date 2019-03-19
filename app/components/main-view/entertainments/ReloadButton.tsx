@@ -1,9 +1,9 @@
 import * as React from "react";
 import * as Redux from "redux";
 import {connect} from "react-redux";
-import {IState} from "../../../reducers";
+import {AppState} from "../../../reducers";
 import {reloadAll} from "../../../actions/platformService";
-import {ProviderState} from "../../../reducers/platforms";
+import ProviderState from "../../../reducers/ProviderState";
 
 interface StateProps {
     providerStates: ProviderState[];
@@ -26,7 +26,7 @@ class ReloadButton extends React.Component<Props> {
     }
 }
 
-function mapStateToProps(state: IState): StateProps {
+function mapStateToProps(state: AppState): StateProps {
     return {
         providerStates: state.platform.providers
     };

@@ -1,13 +1,13 @@
 import * as React from 'react';
 import {connect} from "react-redux";
 import * as Redux from "redux";
-import {Entertainment} from "../../../../reducers/platforms";
-import Token from "../../../../utils/Token";
-import {IState} from "../../../../reducers";
-import {Provider} from "../../../../utils/Provider";
+import Token from "../../../../reducers/Token";
+import {AppState} from "../../../../reducers";
+import {Provider} from "../../../../reducers/Provider";
 import {openEntertainment} from "../../../../actions/entertainmentService";
 import {markAsRead} from "../../../../utils/feedly";
 import {removeContent} from "../../../../actions/platformService";
+import Entertainment from "../../../../reducers/Entertainment";
 
 const styles = require('./FeedlyTile.scss');
 
@@ -40,7 +40,7 @@ class FeedlyTile extends React.Component<Props> {
     }
 }
 
-function mapStateToProps(state: IState): StateProps {
+function mapStateToProps(state: AppState): StateProps {
     const providerState = state.platform.providers.find(p => p.provider === Provider.FEEDLY);
     if (providerState) {
         return {

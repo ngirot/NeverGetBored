@@ -1,8 +1,8 @@
-import {Entertainment} from "../reducers/platforms";
-import Token from "./Token";
+import Token from "../reducers/Token";
 import FeedlyApi from "./api/feedly/FeedlyApi";
 import Item from "./api/feedly/Item";
-import {Provider} from "./Provider";
+import {Provider} from "../reducers/Provider";
+import Entertainment from "../reducers/Entertainment";
 
 export function generateTokenFeedly(): Promise<Token> {
     return new FeedlyApi().generateTokenFeedly();

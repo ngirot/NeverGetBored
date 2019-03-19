@@ -2,10 +2,10 @@ import * as React from 'react';
 import * as Redux from 'redux';
 
 import {connect} from "react-redux";
-import {IState} from "../../../reducers";
-import Token from "../../../utils/Token";
+import {AppState} from "../../../reducers";
+import Token from "../../../reducers/Token";
 import {connectToProvider} from "../../../actions/platformService";
-import {Provider} from "../../../utils/Provider";
+import {Provider} from "../../../reducers/Provider";
 
 const styles = require('./ConnectButton.scss');
 
@@ -54,7 +54,7 @@ class ConnectButton extends React.Component<Props> {
     }
 }
 
-function mapStateToProps(state: IState, ownProps: OwnProps): StateProps {
+function mapStateToProps(state: AppState, ownProps: OwnProps): StateProps {
     const providerState = state.platform.providers.find(p => p.provider === ownProps.type);
 
     if (providerState) {

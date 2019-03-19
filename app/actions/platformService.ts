@@ -1,12 +1,13 @@
 import {entertainmentsTwitch, generateTokenTwitch} from "../utils/twitch";
 import {entertainmentsTodoist, generateTokenTodoist} from "../utils/todoist";
 import {connect, ConnectionAction, EntertainmentLoaded, loaded, loading, removedEntertainment} from "./platform";
-import {Provider} from "../utils/Provider";
-import {Entertainment, ProviderState} from "../reducers/platforms";
+import {Provider} from "../reducers/Provider";
 import {entertainmentsFeedly, generateTokenFeedly} from "../utils/feedly";
-import Token from "../utils/Token";
+import Token from "../reducers/Token";
 import {DispatcherFunction} from "./helpers";
 import {addToken} from "../utils/config";
+import Entertainment from "../reducers/Entertainment";
+import ProviderState from "../reducers/ProviderState";
 
 export function connectToProvider(provider: Provider): DispatcherFunction {
     console.log('Try to connect to ' + provider);

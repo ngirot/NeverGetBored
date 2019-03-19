@@ -1,13 +1,14 @@
 import {combineReducers, Reducer} from 'redux';
 import {routerReducer as routing} from 'react-router-redux';
-import platform, {PlatformState} from "./platforms";
+import PlatformState from "./PlatformState";
+import platformsReducer from "./platformsReducer";
 
 const rootReducer = combineReducers({
-    platform,
+    platform: platformsReducer,
     routing: routing as Reducer<any>
 });
 
-export interface IState {
+export interface AppState {
     platform: PlatformState;
 }
 

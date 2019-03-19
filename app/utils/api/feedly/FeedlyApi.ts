@@ -1,4 +1,4 @@
-import Token from "../../Token";
+import Token from "../../../reducers/Token";
 import OauthCodeConfiguration from "../oauth/OauthCodeConfiguration";
 import Profile from "./Profile";
 import Contents from "./Contents";

@@ -4,10 +4,10 @@ import {connect} from "react-redux";
 import * as Redux from "redux";
 import {loadConfiguration} from "../../actions/configuration";
 import ConnectButton from "./providers/ConnectButton";
-import {Provider} from "../../utils/Provider";
+import {Provider} from "../../reducers/Provider";
 import ReloadButton from "./entertainments/ReloadButton";
 import EntertainmentList from "./entertainments/EntertainmentList";
-import {emptyFunction} from "../../utils/connectUtil";
+import {emptyFunction} from "../utils";
 
 const styles = require('./MainView.scss');
 

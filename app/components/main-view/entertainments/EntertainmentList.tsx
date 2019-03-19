@@ -2,9 +2,9 @@ import * as React from 'react';
 
 import {connect} from "react-redux";
 import EntertainmentTile from "./tiles/EntertainmentTile";
-import {IState} from "../../../reducers";
-import {Entertainment} from "../../../reducers/platforms";
+import {AppState} from "../../../reducers";
 import {openEntertainment} from "../../../actions/entertainmentService";
+import Entertainment from "../../../reducers/Entertainment";
 
 const styles = require('./EntertainmentList.scss');
 
@@ -32,7 +32,7 @@ class EntertainmentList extends React.Component<Props> {
     }
 }
 
-function mapStateToProps(state: IState): StateProps {
+function mapStateToProps(state: AppState): StateProps {
     return {
         entertainments: state.platform.entertainments
     };

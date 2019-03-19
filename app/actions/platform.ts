@@ -1,7 +1,7 @@
 import {actionCreator} from "./helpers";
-import {Entertainment} from "../reducers/platforms";
-import {Provider} from "../utils/Provider";
-import Token from "../utils/Token";
+import {Provider} from "../reducers/Provider";
+import Token from "../reducers/Token";
+import Entertainment from "../reducers/Entertainment";
 
 export class ConnectionAction {
     public readonly provider: Provider;

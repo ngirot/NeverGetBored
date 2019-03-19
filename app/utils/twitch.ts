@@ -1,8 +1,8 @@
-import {Entertainment} from "../reducers/platforms";
-import Token from "./Token";
+import Token from "../reducers/Token";
 import TwitchApi from "./api/twitch/twitchApi";
 import Stream from "./api/twitch/Stream";
-import {Provider} from "./Provider";
+import {Provider} from "../reducers/Provider";
+import Entertainment from "../reducers/Entertainment";
 
 const twitchClientId = 'uviersrira44oauqh1n6bdw8h0f0jw';
 

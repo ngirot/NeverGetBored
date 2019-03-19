@@ -1,4 +1,4 @@
-import Token from "../../Token";
+import Token from "../../../reducers/Token";
 import SyncResult from "./SyncResult";
 import Item from "./Item";
 import OauthCodeConfiguration from "../oauth/OauthCodeConfiguration";

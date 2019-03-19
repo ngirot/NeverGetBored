@@ -1,4 +1,4 @@
-import Token from "../../Token";
+import Token from "../../../reducers/Token";
 import StreamResult from "./StreamResult";
 import Stream from "./Stream";
 import OauthTokenConfiguration from "../oauth/OauthTokenConfiguration";

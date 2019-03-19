@@ -1,6 +1,6 @@
 import uuid = require("uuid");
 import moment = require("moment");
-import Token from "../../Token";
+import Token from "../../../reducers/Token";
 import OauthCodeConfiguration from "./OauthCodeConfiguration";
 import OauthTokenConfiguration from "./OauthTokenConfiguration";
 import OauthResponseToken from "./OauthResponseToken";
