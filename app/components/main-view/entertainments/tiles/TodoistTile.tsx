@@ -12,7 +12,7 @@ class TodoistTile extends React.Component<OwnProps> {
     render() {
         const e = this.props.entertainment;
         return (
-            <div data-role="tile" className={"d-flex flex-justify-center flex-align-center " + styles.tile}>
+            <div data-role="tile" data-size="wide" className={"d-flex flex-justify-center flex-align-center " + styles.tile}>
                 <img className={"tile-logo"} src={'resources/logos/todoist.svg'} alt={"Todoist logo"}/>
                 <p>{e.title}</p>
             </div>
