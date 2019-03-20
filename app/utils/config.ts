@@ -10,7 +10,9 @@ export function loadProviders(): ProviderState[] {
     return api.load()
         .providers
         .map((providerConfiguration: ProviderConfiguration) => {
-            return new ProviderState(Provider[providerConfiguration.name as keyof typeof Provider], false, providerConfiguration.token);
+            const newToken = new Token(providerConfiguration.token.currentToken,
+                providerConfiguration.token.refreshToken, providerConfiguration.token.expiration);
+            return new ProviderState(Provider[providerConfiguration.name as keyof typeof Provider], false, newToken);
         });
 }
 

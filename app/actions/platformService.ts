@@ -70,9 +70,19 @@ function loadFunction(provider: Provider): (token: Token) => Promise<Entertainme
 }
 
 function refreshTokenFunction(provider: Provider): (token: Token) => Promise<RefreshToken> {
+    const buildRefreshFunction = (f: (token: Token) => Promise<RefreshToken>): ((token: Token) => Promise<RefreshToken>) => {
+        return (token: Token): Promise<RefreshToken> => {
+            if (token.isExpired()) {
+                return f(token);
+            } else {
+                return Promise.resolve({refreshed: false, token: token});
+            }
+        };
+    }
+
     switch (provider) {
         case Provider.FEEDLY:
-            return refreshToken;
+            return buildRefreshFunction(refreshToken);
         default:
             return (token: Token) => Promise.resolve({refreshed: false, token: token});
     }
@@ -85,7 +95,8 @@ function loadEntertainments(provider: Provider, dispatch: Function, loadingFunct
         .then((refresh: RefreshToken) => {
             if (refresh.refreshed) {
                 console.log('Save refreshed token', refresh.token);
-                addToken(provider, token);
+                addToken(provider, refresh.token);
+                dispatch(connect(new ConnectionAction(provider, refresh.token)));
             }
             return refresh.token;
         })
