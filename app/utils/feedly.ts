@@ -3,9 +3,18 @@ import FeedlyApi from "./api/feedly/FeedlyApi";
 import Item from "./api/feedly/Item";
 import {Provider} from "../reducers/Provider";
 import Entertainment from "../reducers/Entertainment";
+import RefreshToken from "../reducers/RefreshToken";
 
 export function generateTokenFeedly(): Promise<Token> {
     return new FeedlyApi().generateTokenFeedly();
+}
+
+export function refreshToken(token: Token): Promise<RefreshToken> {
+    return new FeedlyApi().refreshToken(token)
+        .then((newToken: Token) => {
+            console.log('Refreshed', newToken);
+            return {refreshed: true, token: newToken};
+        });
 }
 
 export function entertainmentsFeedly(token: Token): Promise<Entertainment[]> {

@@ -2,12 +2,13 @@ import {entertainmentsTwitch, generateTokenTwitch} from "../utils/twitch";
 import {entertainmentsTodoist, generateTokenTodoist} from "../utils/todoist";
 import {connect, ConnectionAction, EntertainmentLoaded, loaded, loading, removedEntertainment} from "./platform";
 import {Provider} from "../reducers/Provider";
-import {entertainmentsFeedly, generateTokenFeedly} from "../utils/feedly";
+import {entertainmentsFeedly, generateTokenFeedly, refreshToken} from "../utils/feedly";
 import Token from "../reducers/Token";
 import {DispatcherFunction} from "./helpers";
 import {addToken} from "../utils/config";
 import Entertainment from "../reducers/Entertainment";
 import ProviderState from "../reducers/ProviderState";
+import RefreshToken from "../reducers/RefreshToken";
 
 export function connectToProvider(provider: Provider): DispatcherFunction {
     console.log('Try to connect to ' + provider);
@@ -68,12 +69,31 @@ function loadFunction(provider: Provider): (token: Token) => Promise<Entertainme
     }
 }
 
+function refreshTokenFunction(provider: Provider): (token: Token) => Promise<RefreshToken> {
+    switch (provider) {
+        case Provider.FEEDLY:
+            return refreshToken;
+        default:
+            return (token: Token) => Promise.resolve({refreshed: false, token: token});
+    }
+
+}
+
 function loadEntertainments(provider: Provider, dispatch: Function, loadingFunction: (token: Token) => Promise<Entertainment[]>, token: Token) {
     dispatch(loading(provider));
-    loadingFunction(token).then((e) => {
-        console.log('Streams', e);
-        dispatch(loaded(new EntertainmentLoaded(provider, e)));
-    });
+    refreshTokenFunction(provider)(token)
+        .then((refresh: RefreshToken) => {
+            if (refresh.refreshed) {
+                console.log('Save refreshed token', refresh.token);
+                addToken(provider, token);
+            }
+            return refresh.token;
+        })
+        .then(loadingFunction)
+        .then((e) => {
+            console.log('Streams', e);
+            dispatch(loaded(new EntertainmentLoaded(provider, e)));
+        });
 }
 
 export function removeContent(entertainment: Entertainment) {

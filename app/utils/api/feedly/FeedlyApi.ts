@@ -12,18 +12,22 @@ export default class FeedlyApi {
 
     private readonly baseUrl = 'https://cloud.feedly.com';
 
-    generateTokenFeedly(): Promise<Token> {
-        const oauthConf: OauthCodeConfiguration = {
-            codeUrl: this.baseUrl + '/v3/auth/auth',
-            tokenUrl: this.baseUrl + '/v3/auth/token',
-            redirectUrl: 'http://localhost',
-            clientId: 'boutroue',
-            secretId: 'FE012EGICU4ZOBDRBEOVAJA1JZYH',
-            scope: this.baseUrl + '/subscriptions',
-            grantType: 'authorization_code'
-        };
+    private readonly oauthConf: OauthCodeConfiguration = {
+        codeUrl: this.baseUrl + '/v3/auth/auth',
+        tokenUrl: this.baseUrl + '/v3/auth/token',
+        redirectUrl: 'http://localhost',
+        clientId: 'boutroue',
+        secretId: 'FE012EGICU4ZOBDRBEOVAJA1JZYH',
+        scope: this.baseUrl + '/subscriptions',
+        grantType: 'authorization_code'
+    };
 
-        return new OauthApi().generateTokenWithCode(oauthConf);
+    generateTokenFeedly(): Promise<Token> {
+        return new OauthApi().generateTokenWithCode(this.oauthConf);
+    }
+
+    refreshToken(token: Token): Promise<Token> {
+        return new OauthApi().refresh(this.oauthConf, token);
     }
 
     entertainmentsFeedly(token: Token): Promise<Item[]> {

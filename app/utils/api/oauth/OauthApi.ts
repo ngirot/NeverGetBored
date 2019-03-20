@@ -40,10 +40,11 @@ export default class OauthApi {
             refresh_token: token.refreshToken,
             client_id: configuration.clientId,
             client_secret: configuration.secretId,
-            grant_type: configuration.grantType
+            grant_type: 'refresh_token'
         };
 
         return needle('post', configuration.tokenUrl, payload)
+            .then((resp: any) => resp.body)
             .then(function (resp: OauthResponseToken) {
                 const expiration = moment().add(resp.expires_in, 'seconds');
                 return new Token(resp.access_token, resp.refresh_token, expiration.toDate());
@@ -105,9 +106,8 @@ export default class OauthApi {
     }
 
     private postTokenUrl(url: string): Promise<OauthResponseToken> {
-        return needle('post', url).then((response: any) => {
-            return response.body;
-        });
+        return needle('post', url)
+            .then((response: any) => response.body);
     }
 
     private createOauthWindow() {
