@@ -29,15 +29,27 @@ class FeedlyTile extends React.Component<Props> {
     render() {
         const e = this.props.entertainment;
         const token = this.props.token;
-        return (
-            <div data-role="tile" data-size="wide" onClick={() => this.props.open(e, token)}
-                 className={"d-flex flex-justify-center flex-align-center " + styles.tile}>
-                <img className={"tile-logo"} src={'resources/logos/feedly.svg'} alt={"Feedly logo"}/>
-                <span className={"branding-bar " + styles.feedname}>{e.title}</span>
-                <span className={"badge-top " + styles.sourcename}>{e.user}</span>
-                <img alt={e.title} src={e.previewUrl} className={styles.thumbnail}/>
-            </div>
-        );
+        const logo = <img className={"tile-logo"} src={'resources/logos/feedly.svg'} alt={"Feedly logo"}/>;
+
+        if (e.previewUrl) {
+            return (
+                <div data-role="tile" data-size="wide" onClick={() => this.props.open(e, token)}
+                     className={"d-flex flex-justify-center flex-align-center " + styles.tile}>
+                    {logo}
+                    <span className={"branding-bar " + styles.feedname}>{e.title}</span>
+                    <span className={"badge-top " + styles.sourcename}>{e.user}</span>
+                    <img alt={e.title} src={e.previewUrl} className={styles.thumbnail}/>
+                </div>
+            );
+        } else {
+            return (
+                <div data-role="tile" data-size="wide"
+                     className={"d-flex flex-justify-center flex-align-center " + styles.tile}>
+                    {logo}
+                    <p>{e.title}</p>
+                </div>
+            );
+        }
     }
 }
 
