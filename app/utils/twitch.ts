@@ -18,5 +18,9 @@ export function entertainmentsTwitch(token: Token): Promise<Entertainment[]> {
 
 function convertStreamToEntertainment(stream: Stream): Entertainment {
     return new Entertainment(Provider.TWITCH, stream._id, stream.channel.status, stream.channel.display_name,
-        stream.channel.url, stream.preview.large);
+        stream.channel.url, disableCache(stream.preview.large));
+}
+
+function disableCache(url: string) {
+    return url + "?nocache=" + new Date().getTime();
 }
