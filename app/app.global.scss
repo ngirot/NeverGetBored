@@ -10,3 +10,39 @@ img.tile-logo {
   top: 0;
   left: 0;
 }
+
+.tile-app.transform-bottom.tile-wide,
+.tile-large.transform-bottom.tile-wide,
+.tile-medium.transform-bottom.tile-wide,
+.tile-small.transform-bottom.tile-wide,
+.tile-wide.transform-bottom.tile-wide {
+  transform: scale(0.9) !important;
+  transform-origin: center !important;
+}
+
+.tile-app.transform-top.tile-wide,
+.tile-large.transform-top.tile-wide,
+.tile-medium.transform-top.tile-wide,
+.tile-small.transform-top.tile-wide,
+.tile-wide.transform-top.tile-wide {
+  transform: scale(0.9) !important;
+  transform-origin: center !important;
+}
+
+.tile-app.transform-left.tile-wide,
+.tile-large.transform-left.tile-wide,
+.tile-medium.transform-left.tile-wide,
+.tile-small.transform-left.tile-wide,
+.tile-wide.transform-left.tile-wide {
+  transform: scale(0.9) !important;
+  transform-origin: center !important;
+}
+
+.tile-app.transform-right.tile-wide,
+.tile-large.transform-right.tile-wide,
+.tile-medium.transform-right.tile-wide,
+.tile-small.transform-right.tile-wide,
+.tile-wide.transform-right.tile-wide {
+  transform: scale(0.9) !important;
+  transform-origin: center !important;
+}
