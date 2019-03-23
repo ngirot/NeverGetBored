@@ -88,7 +88,6 @@ export default class OauthApi {
                             }
                         })
                         .catch(function (err: any) {
-                            console.error('e => ', err);
                             window.destroy();
                             reject(err);
                         });

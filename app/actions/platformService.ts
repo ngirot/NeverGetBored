@@ -1,6 +1,14 @@
 import {entertainmentsTwitch, generateTokenTwitch} from "../utils/twitch";
 import {entertainmentsTodoist, generateTokenTodoist} from "../utils/todoist";
-import {connect, ConnectionAction, EntertainmentLoaded, loaded, loading, removedEntertainment} from "./platform";
+import {
+    connect,
+    connectFailed,
+    ConnectionAction,
+    EntertainmentLoaded,
+    loaded,
+    loading,
+    removedEntertainment
+} from "./platform";
 import {Provider} from "../reducers/Provider";
 import {entertainmentsFeedly, generateTokenFeedly, refreshToken} from "../utils/feedly";
 import Token from "../reducers/Token";
@@ -12,16 +20,17 @@ import RefreshToken from "../reducers/RefreshToken";
 
 export function connectToProvider(provider: Provider): DispatcherFunction {
     console.log('Try to connect to ' + provider);
-    const c = connectFunction(provider);
-    const l = loadFunction(provider);
-
     return (dispatch: Function) => {
-        c().then(((token: Token) => {
-            console.log('Token generated', token);
-            dispatch(connect(new ConnectionAction(provider, token)));
-            addToken(provider, token);
-            loadEntertainments(provider, dispatch, l, token);
-        }));
+        connectFunction(provider)()
+            .then(((token: Token) => {
+                console.log('Token generated', token);
+                dispatch(connect(new ConnectionAction(provider, token)));
+                addToken(provider, token);
+            }))
+            .catch((err) => {
+                console.log('Unable to connect to provider: ' + provider, err);
+                dispatch(connectFailed(provider));
+            });
     };
 }
 

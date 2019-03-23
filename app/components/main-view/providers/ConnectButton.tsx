@@ -16,8 +16,10 @@ export interface OwnProps {
 }
 
 interface StateProps {
-    token?: Token;
+    connected: boolean;
+    error: boolean;
     loading: boolean;
+    token?: Token;
 }
 
 interface DispatchProps {
@@ -30,23 +32,36 @@ class ConnectButton extends React.Component<Props> {
     render() {
         return (
             <button onClick={() => this.props.onConnect(this.props.token)}
-                    className={"rounded image-button " + (this.props.token ? 'success' : styles.notconnected)}>
-                <img alt={'logo of ' + this.props.serviceName} src={this.props.iconPath} className={styles.providericon}/>
+                    className={"rounded image-button " + this.style()}>
+                <img alt={'logo of ' + this.props.serviceName} src={this.props.iconPath}
+                     className={styles.providericon}/>
                 <span className={"caption"}>
                     {this.props.serviceName}
                     &nbsp;
-                    {this.icon(this.props.loading, this.props.token)}
+                    {this.icon()}
                 </span>
             </button>
         );
     }
 
-    private icon(loading: boolean, token?: Token) {
-        if (loading) {
+    private style(): string {
+        if (this.props.connected) {
+            return "success";
+        }
+
+        if (this.props.error) {
+            return "alert";
+        }
+
+        return styles.notconnected;
+    }
+
+    private icon() {
+        if (this.props.loading) {
             return <i className={"fa fa-spinner fa-spin"}/>;
         }
 
-        if (token) {
+        if (this.props.connected) {
             return <i className={"fa fa-check"}/>;
         } else {
             return <i className={"fa fa-times"}/>;
@@ -59,11 +74,15 @@ function mapStateToProps(state: AppState, ownProps: OwnProps): StateProps {
 
     if (providerState) {
         return {
+            connected: providerState.token !== undefined,
+            error: providerState.error,
             token: providerState.token,
             loading: providerState.loading
         };
     } else {
         return {
+            connected: false,
+            error: false,
             token: undefined,
             loading: false
         };

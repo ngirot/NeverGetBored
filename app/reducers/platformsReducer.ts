@@ -1,5 +1,5 @@
 import {IAction} from "../actions/helpers";
-import {connect, loaded, loading, removedEntertainment} from '../actions/platform';
+import {connect, connectFailed, loaded, loading, removedEntertainment} from '../actions/platform';
 import {loadedConfiguration} from "../actions/configuration";
 import ProviderState from "./ProviderState";
 import Entertainment from "./Entertainment";
@@ -8,7 +8,14 @@ import PlatformState from "./PlatformState";
 export default function platformsReducer(state: PlatformState = new PlatformState([], []), action: IAction) {
     if (connect.test(action)) {
         const listWithoutProvider = state.providers.filter(p => p.provider !== action.payload.provider);
-        listWithoutProvider.push(new ProviderState(action.payload.provider, false, action.payload.token));
+        listWithoutProvider.push(new ProviderState(action.payload.provider, false, false, action.payload.token));
+
+        return new PlatformState(state.entertainments, listWithoutProvider);
+    }
+
+    if (connectFailed.test(action)) {
+        const listWithoutProvider = state.providers.filter(p => p.provider !== action.payload);
+        listWithoutProvider.push(new ProviderState(action.payload, false, true));
 
         return new PlatformState(state.entertainments, listWithoutProvider);
     }
@@ -16,7 +23,7 @@ export default function platformsReducer(state: PlatformState = new PlatformStat
     if (loaded.test(action)) {
         const newList = state.providers.map(p => {
             if (p.provider === action.payload.provider) {
-                return new ProviderState(p.provider, false, p.token);
+                return new ProviderState(p.provider, false, false, p.token);
             } else {
                 return p;
             }
@@ -35,7 +42,7 @@ export default function platformsReducer(state: PlatformState = new PlatformStat
     if (loading.test(action)) {
         const newList = state.providers.map(p => {
             if (p.provider === action.payload) {
-                return new ProviderState(p.provider, true, p.token);
+                return new ProviderState(p.provider, true, p.error, p.token);
             } else {
                 return p;
             }
