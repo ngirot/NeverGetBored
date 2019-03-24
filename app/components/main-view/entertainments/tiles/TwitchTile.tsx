@@ -2,8 +2,8 @@ import * as React from 'react';
 
 import {connect} from "react-redux";
 import {emptyFunction} from "../../../utils";
-import {openEntertainment} from "../../../../actions/entertainmentService";
 import Entertainment from "../../../../reducers/Entertainment";
+import {openEntertainmentUrl} from "../../../../utils/browser";
 
 const styles = require('./TwitchTile.scss');
 
@@ -38,7 +38,7 @@ class TwitchTile extends React.Component<Props> {
 function mapDispatchToProps(): DispatchProps {
     return {
         open: (entertainment: Entertainment) => {
-            openEntertainment(entertainment);
+            openEntertainmentUrl(entertainment);
         }
     };
 }

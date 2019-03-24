@@ -3,8 +3,8 @@ import * as React from 'react';
 import {connect} from "react-redux";
 import EntertainmentTile from "./tiles/EntertainmentTile";
 import {AppState} from "../../../reducers";
-import {openEntertainment} from "../../../actions/entertainmentService";
 import Entertainment from "../../../reducers/Entertainment";
+import {emptyFunction} from "../../utils";
 
 const styles = require('./EntertainmentList.scss');
 
@@ -12,11 +12,7 @@ interface StateProps {
     entertainments: Entertainment[];
 }
 
-interface DispatchProps {
-    open: (entertainment: Entertainment) => void;
-}
-
-type Props = StateProps & DispatchProps;
+type Props = StateProps;
 
 class EntertainmentList extends React.Component<Props> {
     render() {
@@ -38,12 +34,4 @@ function mapStateToProps(state: AppState): StateProps {
     };
 }
 
-function mapDispatchToProps(): DispatchProps {
-    return {
-        open: (entertainment: Entertainment) => {
-            openEntertainment(entertainment);
-        }
-    };
-}
-
-export default connect<StateProps, DispatchProps>(mapStateToProps, mapDispatchToProps)(EntertainmentList);
+export default connect<StateProps>(mapStateToProps, emptyFunction)(EntertainmentList);
