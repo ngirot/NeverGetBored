@@ -4,8 +4,8 @@ import * as Redux from 'redux';
 import {connect} from "react-redux";
 import {AppState} from "../../../reducers";
 import Token from "../../../reducers/Token";
-import {connectToProvider} from "../../../actions/platformService";
 import {Provider} from "../../../reducers/Provider";
+import {connectToProvider} from "../../../domain/actions/platform/connect";
 
 const styles = require('./ConnectButton.scss');
 

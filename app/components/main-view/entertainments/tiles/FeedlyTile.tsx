@@ -5,9 +5,9 @@ import Token from "../../../../reducers/Token";
 import {AppState} from "../../../../reducers";
 import {Provider} from "../../../../reducers/Provider";
 import {markAsRead} from "../../../../utils/feedly";
-import {removeContent} from "../../../../actions/platformService";
 import Entertainment from "../../../../reducers/Entertainment";
 import {openEntertainmentUrl} from "../../../../utils/browser";
+import {removeContent} from "../../../../domain/actions/entertainment/remove";
 
 const styles = require('./FeedlyTile.scss');
 
