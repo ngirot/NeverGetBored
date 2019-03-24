@@ -17,6 +17,7 @@ import {addToken} from "../utils/config";
 import Entertainment from "../reducers/Entertainment";
 import ProviderState from "../reducers/ProviderState";
 import RefreshToken from "../reducers/RefreshToken";
+import {errorMessage} from "../utils/notification";
 
 export function connectToProvider(provider: Provider): DispatcherFunction {
     console.log('Try to connect to ' + provider);
@@ -29,6 +30,7 @@ export function connectToProvider(provider: Provider): DispatcherFunction {
             }))
             .catch((err) => {
                 console.log('Unable to connect to provider: ' + provider, err);
+                errorMessage("Unable to connect to " + provider, err);
                 dispatch(connectFailed(provider));
             });
     };
@@ -87,7 +89,7 @@ function refreshTokenFunction(provider: Provider): (token: Token) => Promise<Ref
                 return Promise.resolve({refreshed: false, token: token});
             }
         };
-    }
+    };
 
     switch (provider) {
         case Provider.FEEDLY:

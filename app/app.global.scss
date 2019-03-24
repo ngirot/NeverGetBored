@@ -1,5 +1,7 @@
 @import "~font-awesome/css/font-awesome.css";
 @import "~metro4/build/css/metro-all.min.css";
+@import "~noty/lib/noty.css";
+@import "~noty/lib/themes/relax.css";
 
 img.tile-logo {
   max-width: 2rem;
@@ -9,6 +11,15 @@ img.tile-logo {
   opacity: 0.7;
   top: 0;
   left: 0;
+}
+
+.notification-header {
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.notification-body {
+  font-size: 0.9em;
 }
 
 .tile-app.transform-bottom.tile-wide,

@@ -167,6 +167,7 @@
     "metro4": "^4.2.39",
     "moment": "^2.24.0",
     "needle": "^2.2.4",
+    "noty": "^3.2.0-beta",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-redux": "^5.0.1",
