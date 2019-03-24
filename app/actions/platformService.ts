@@ -115,6 +115,9 @@ function loadEntertainments(provider: Provider, dispatch: Function, loadingFunct
         .then((e) => {
             console.log('Streams', e);
             dispatch(loaded(new EntertainmentLoaded(provider, e)));
+        })
+        .catch((err) => {
+            errorMessage("Failed to load entertainments for " + provider, err);
         });
 }
 
