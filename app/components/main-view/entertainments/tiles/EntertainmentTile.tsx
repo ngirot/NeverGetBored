@@ -3,9 +3,9 @@ import DefaultTile from "./DefaultTile";
 import TwitchTile from "./TwitchTile";
 import TodoistTile from "./TodoistTile";
 import FeedlyTile from "./FeedlyTile";
-import {Provider} from "../../../../reducers/Provider";
 import {emptyConnect} from "../../../utils";
-import Entertainment from "../../../../reducers/Entertainment";
+import Entertainment from "../../../../domain/store/state/Entertainment";
+import {Provider} from "../../../../domain/store/state/Provider";
 
 export interface OwnProps {
     entertainment: Entertainment;

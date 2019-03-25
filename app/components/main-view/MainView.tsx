@@ -3,11 +3,11 @@ import * as React from 'react';
 import {connect} from "react-redux";
 import * as Redux from "redux";
 import ConnectButton from "./providers/ConnectButton";
-import {Provider} from "../../reducers/Provider";
 import ReloadButton from "./entertainments/ReloadButton";
 import EntertainmentList from "./entertainments/EntertainmentList";
 import {emptyFunction} from "../utils";
 import {loadConfiguration} from "../../domain/actions/configuration/loading";
+import {Provider} from "../../domain/store/state/Provider";
 
 const styles = require('./MainView.scss');
 

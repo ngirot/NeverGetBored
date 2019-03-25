@@ -1,8 +1,8 @@
-import Token from "../reducers/Token";
-import {Provider} from "../reducers/Provider";
 import ConfigurationApi from "./api/configuration/ConfigurationApi";
 import ProviderConfiguration from "./api/configuration/ProviderConfiguration";
-import ProviderState from "../reducers/ProviderState";
+import Token from "../domain/store/state/Token";
+import ProviderState from "../domain/store/state/ProviderState";
+import {Provider} from "../domain/store/state/Provider";
 
 export function loadProviders(): ProviderState[] {
     const api = new ConfigurationApi();

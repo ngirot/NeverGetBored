@@ -1,7 +1,7 @@
 import {combineReducers, Reducer} from 'redux';
 import {routerReducer as routing} from 'react-router-redux';
-import PlatformState from "./PlatformState";
 import platformsReducer from "./platformsReducer";
+import PlatformState from "../state/PlatformState";
 
 const rootReducer = combineReducers({
     platform: platformsReducer,

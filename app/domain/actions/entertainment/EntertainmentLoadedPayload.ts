@@ -1,5 +1,5 @@
-import {Provider} from "../../../reducers/Provider";
-import Entertainment from "../../../reducers/Entertainment";
+import Entertainment from "../../store/state/Entertainment";
+import {Provider} from "../../store/state/Provider";
 
 export default class EntertainmentLoaded {
     public readonly provider: Provider;

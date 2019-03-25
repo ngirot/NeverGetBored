@@ -1,12 +1,12 @@
 import {actionCreator, DispatcherFunction, DispatchFunction} from "../helpers";
-import {Provider} from "../../../reducers/Provider";
 import ConnectionSuccessPayload from "./ConnectionSuccessPayload";
-import Token from "../../../reducers/Token";
 import {addToken} from "../../../utils/config";
 import {errorMessage} from "../../../utils/notification";
 import {generateTokenTwitch} from "../../../utils/twitch";
 import {generateTokenTodoist} from "../../../utils/todoist";
 import {generateTokenFeedly} from "../../../utils/feedly";
+import Token from "../../store/state/Token";
+import {Provider} from "../../store/state/Provider";
 
 export const actionConnectToProvider = actionCreator<ConnectionSuccessPayload>('CONNECT_TO_PROVIDER');
 export const actionConnectionToProviderFailed = actionCreator<Provider>('CONNECT_TO_PROVIDER_FAILED');

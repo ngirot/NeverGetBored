@@ -1,9 +1,9 @@
-import {Provider} from "../reducers/Provider";
 import moment = require("moment");
-import Token from "../reducers/Token";
 import TodoistApi from "./api/todoist/TodoistApi";
 import Item from "./api/todoist/Item";
-import Entertainment from "../reducers/Entertainment";
+import Entertainment from "../domain/store/state/Entertainment";
+import Token from "../domain/store/state/Token";
+import {Provider} from "../domain/store/state/Provider";
 
 export function generateTokenTodoist(): Promise<Token> {
     return new TodoistApi().generateTokenTodoist();

@@ -2,8 +2,8 @@ import * as React from 'react';
 
 import {connect} from "react-redux";
 import {emptyFunction} from "../../../utils";
-import Entertainment from "../../../../reducers/Entertainment";
 import {openEntertainmentUrl} from "../../../../utils/browser";
+import Entertainment from "../../../../domain/store/state/Entertainment";
 
 const styles = require('./TwitchTile.scss');
 

@@ -1,9 +1,9 @@
 import * as React from "react";
 import * as Redux from "redux";
 import {connect} from "react-redux";
-import {AppState} from "../../../reducers";
-import ProviderState from "../../../reducers/ProviderState";
 import {reloadAll} from "../../../domain/actions/entertainment/load";
+import {AppState} from "../../../domain/store/reducers";
+import ProviderState from "../../../domain/store/state/ProviderState";
 
 interface StateProps {
     providerStates: ProviderState[];

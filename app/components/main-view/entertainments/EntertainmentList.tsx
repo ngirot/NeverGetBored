@@ -2,9 +2,9 @@ import * as React from 'react';
 
 import {connect} from "react-redux";
 import EntertainmentTile from "./tiles/EntertainmentTile";
-import {AppState} from "../../../reducers";
-import Entertainment from "../../../reducers/Entertainment";
 import {emptyFunction} from "../../utils";
+import Entertainment from "../../../domain/store/state/Entertainment";
+import {AppState} from "../../../domain/store/reducers";
 
 const styles = require('./EntertainmentList.scss');
 

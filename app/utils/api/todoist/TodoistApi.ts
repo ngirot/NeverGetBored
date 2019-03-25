@@ -1,9 +1,9 @@
-import Token from "../../../reducers/Token";
 import SyncResult from "./SyncResult";
 import Item from "./Item";
 import OauthCodeConfiguration from "../oauth/OauthCodeConfiguration";
 import HttpApi from "../http/HttpApi";
 import OauthApi from "../oauth/OauthApi";
+import Token from "../../../domain/store/state/Token";
 
 export default class TodoistApi {
 

@@ -1,11 +1,11 @@
-import ProviderState from "./ProviderState";
-import Entertainment from "./Entertainment";
-import PlatformState from "./PlatformState";
-import {IAction} from "../domain/actions/helpers";
-import {actionLoadedConfiguration} from "../domain/actions/configuration/loading";
-import {actionLoadedEntertainments, actionLoadingEntertainments} from "../domain/actions/entertainment/load";
-import {actionRemovedEntertainment} from "../domain/actions/entertainment/remove";
-import {actionConnectToProvider, actionConnectionToProviderFailed} from "../domain/actions/platform/connect";
+import {actionLoadedConfiguration} from "../../actions/configuration/loading";
+import {actionConnectionToProviderFailed, actionConnectToProvider} from "../../actions/platform/connect";
+import {IAction} from "../../actions/helpers";
+import {actionLoadedEntertainments, actionLoadingEntertainments} from "../../actions/entertainment/load";
+import {actionRemovedEntertainment} from "../../actions/entertainment/remove";
+import Entertainment from "../state/Entertainment";
+import PlatformState from "../state/PlatformState";
+import ProviderState from "../state/ProviderState";
 
 export default function platformsReducer(state: PlatformState = new PlatformState([], []), action: IAction) {
     if (actionConnectToProvider.test(action)) {

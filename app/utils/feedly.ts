@@ -1,9 +1,9 @@
-import Token from "../reducers/Token";
 import FeedlyApi from "./api/feedly/FeedlyApi";
 import Item from "./api/feedly/Item";
-import {Provider} from "../reducers/Provider";
-import Entertainment from "../reducers/Entertainment";
-import RefreshToken from "../reducers/RefreshToken";
+import RefreshToken from "../domain/store/state/RefreshToken";
+import Entertainment from "../domain/store/state/Entertainment";
+import Token from "../domain/store/state/Token";
+import {Provider} from "../domain/store/state/Provider";
 
 export function generateTokenFeedly(): Promise<Token> {
     return new FeedlyApi().generateTokenFeedly();

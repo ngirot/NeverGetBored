@@ -1,5 +1,5 @@
-import {Provider} from "../../../reducers/Provider";
-import Token from "../../../reducers/Token";
+import Token from "../../store/state/Token";
+import {Provider} from "../../store/state/Provider";
 
 export default class ConnectionSucessPayload {
     public readonly provider: Provider;

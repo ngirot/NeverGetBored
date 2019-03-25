@@ -1,18 +1,18 @@
 import {actionCreator, DispatcherFunction, DispatchFunction} from "../helpers";
-import {Provider} from "../../../reducers/Provider";
 import EntertainmentLoadedPayload from "./EntertainmentLoadedPayload";
-import Token from "../../../reducers/Token";
-import Entertainment from "../../../reducers/Entertainment";
-import RefreshToken from "../../../reducers/RefreshToken";
 import {addToken} from "../../../utils/config";
 import {actionConnectToProvider} from "../platform/connect";
 import ConnectionSuccessPayload from "../platform/ConnectionSuccessPayload";
 import {errorMessage} from "../../../utils/notification";
 import {entertainmentsFeedly, refreshToken} from "../../../utils/feedly";
 import EntertainmentLoaded from "./EntertainmentLoadedPayload";
-import ProviderState from "../../../reducers/ProviderState";
 import {entertainmentsTwitch} from "../../../utils/twitch";
 import {entertainmentsTodoist} from "../../../utils/todoist";
+import RefreshToken from "../../store/state/RefreshToken";
+import Entertainment from "../../store/state/Entertainment";
+import Token from "../../store/state/Token";
+import ProviderState from "../../store/state/ProviderState";
+import {Provider} from "../../store/state/Provider";
 
 export const actionLoadingEntertainments = actionCreator<Provider>('LOADING_ENTERTAINMENT_FROM_PROVIDER');
 export const actionLoadedEntertainments = actionCreator<EntertainmentLoadedPayload>('LOADED_ENTERTAINMENT_FROM_PROVIDER');

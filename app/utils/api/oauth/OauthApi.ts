@@ -1,9 +1,9 @@
 import uuid = require("uuid");
 import moment = require("moment");
-import Token from "../../../reducers/Token";
 import OauthCodeConfiguration from "./OauthCodeConfiguration";
 import OauthTokenConfiguration from "./OauthTokenConfiguration";
 import OauthResponseToken from "./OauthResponseToken";
+import Token from "../../../domain/store/state/Token";
 
 const electron = require('electron');
 const BrowserWindow = electron.remote.BrowserWindow;
@@ -58,6 +58,7 @@ export default class OauthApi {
         const state = uuid();
 
         return new Promise((resolve, reject) => {
+            reject('God no');
 
             window.webContents.addListener('will-redirect', function (event: Event, urlAsString: string) {
                 if (urlAsString.startsWith(configuration.redirectUrl)) {

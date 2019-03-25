@@ -1,8 +1,8 @@
-import Token from "../../../reducers/Token";
 import StreamResult from "./StreamResult";
 import Stream from "./Stream";
 import OauthTokenConfiguration from "../oauth/OauthTokenConfiguration";
 import OauthApi from "../oauth/OauthApi";
+import Token from "../../../domain/store/state/Token";
 
 const api = require('twitch-api-v5');
 

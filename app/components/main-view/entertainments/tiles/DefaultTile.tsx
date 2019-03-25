@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {emptyConnect} from "../../../utils";
-import Entertainment from "../../../../reducers/Entertainment";
+import Entertainment from "../../../../domain/store/state/Entertainment";
 
 export interface OwnProps {
     entertainment: Entertainment;

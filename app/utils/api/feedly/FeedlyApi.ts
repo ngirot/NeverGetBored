@@ -1,4 +1,3 @@
-import Token from "../../../reducers/Token";
 import OauthCodeConfiguration from "../oauth/OauthCodeConfiguration";
 import Profile from "./Profile";
 import Contents from "./Contents";
@@ -7,6 +6,7 @@ import HttpApi from "../http/HttpApi";
 import Marker from "./Marker";
 import Options from "../http/Options";
 import OauthApi from "../oauth/OauthApi";
+import Token from "../../../domain/store/state/Token";
 
 export default class FeedlyApi {
 
