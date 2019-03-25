@@ -4,12 +4,13 @@
 NeverGetBored aggregate content from entertainment platforms, and show you everything you can do in one place.
 
 Currently, only this platforms are supported:
-* Twitch
-* Todoist
-* Feedly
+* Twitch: display live streams
+* Todoist: display tasks due to day (or before)
+* Feedly: display all unread feeds
 
 
 ## Build
+Requirements : Node.js >= 8
 
 To package the app:
 ```
