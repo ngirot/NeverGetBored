@@ -4,6 +4,7 @@ import OauthCodeConfiguration from "./OauthCodeConfiguration";
 import OauthTokenConfiguration from "./OauthTokenConfiguration";
 import OauthResponseToken from "./OauthResponseToken";
 import Token from "../../../domain/store/state/Token";
+import * as path from "path";
 
 const electron = require('electron');
 const BrowserWindow = electron.remote.BrowserWindow;
@@ -110,6 +111,7 @@ export default class OauthApi {
 
     private createOauthWindow() {
         return new BrowserWindow({
+            icon: path.join(__dirname, '/logo.png'),
             width: 600,
             height: 800,
             webPreferences: {
