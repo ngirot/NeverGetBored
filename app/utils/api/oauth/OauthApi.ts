@@ -58,8 +58,6 @@ export default class OauthApi {
         const state = uuid();
 
         return new Promise((resolve, reject) => {
-            reject('God no');
-
             window.webContents.addListener('will-redirect', function (event: Event, urlAsString: string) {
                 if (urlAsString.startsWith(configuration.redirectUrl)) {
                     const url = new URL(urlAsString);
