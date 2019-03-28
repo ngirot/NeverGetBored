@@ -4,6 +4,7 @@ import RefreshToken from "../domain/store/state/RefreshToken";
 import Entertainment from "../domain/store/state/Entertainment";
 import Token from "../domain/store/state/Token";
 import {Provider} from "../domain/store/state/Provider";
+import {EntertainmentType} from "../domain/store/state/EntertainmentType";
 
 export function generateTokenFeedly(): Promise<Token> {
     return new FeedlyApi().generateTokenFeedly();
@@ -30,7 +31,7 @@ function convertItemToEntertainment(items: Item[]): Entertainment[] {
     return items.map((item: Item) => {
         const url = extractUrl(item);
         const thumbnail = extractThumbnail(item);
-        return new Entertainment(Provider.FEEDLY, item.id, item.title, item.origin.title, url, thumbnail);
+        return new Entertainment(Provider.FEEDLY, EntertainmentType.PERMANENT, item.id, item.title, item.origin.title, url, thumbnail);
     });
 }
 

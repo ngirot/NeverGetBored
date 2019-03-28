@@ -19,12 +19,34 @@ class EntertainmentList extends React.Component<Props> {
         return (
             <div className={"tiles-grid " + styles.container}>
                 {
-                    this.props.entertainments.map(e => {
-                        return <EntertainmentTile entertainment={e} key={e.id}/>;
-                    })
+                    this.props.entertainments
+                        .sort(this.sorter)
+                        .map(e => {
+                            return <EntertainmentTile entertainment={e} key={e.id}/>;
+                        })
                 }
             </div>
         );
+    }
+
+    private sorter = (a: Entertainment, b: Entertainment): number => {
+        if (a.type !== b.type) {
+            return a.type - b.type;
+        }
+
+        if (a.provider !== b.provider) {
+            return this.compareStrings(a.provider, b.provider);
+        }
+
+        return this.compareStrings(a.id, b.id);
+    }
+
+    private compareStrings = (a: string, b: string): number => {
+        if (a === b) {
+            return 0;
+        }
+
+        return a > b ? -1 : 1;
     }
 }
 

@@ -3,6 +3,7 @@ import Stream from "./api/twitch/Stream";
 import Entertainment from "../domain/store/state/Entertainment";
 import Token from "../domain/store/state/Token";
 import {Provider} from "../domain/store/state/Provider";
+import {EntertainmentType} from "../domain/store/state/EntertainmentType";
 
 const twitchClientId = 'uviersrira44oauqh1n6bdw8h0f0jw';
 
@@ -17,7 +18,7 @@ export function entertainmentsTwitch(token: Token): Promise<Entertainment[]> {
 }
 
 function convertStreamToEntertainment(stream: Stream): Entertainment {
-    return new Entertainment(Provider.TWITCH, stream._id, stream.channel.status, stream.channel.display_name,
+    return new Entertainment(Provider.TWITCH, EntertainmentType.LIVE, stream._id, stream.channel.status, stream.channel.display_name,
         stream.channel.url, disableCache(stream.preview.large));
 }
 
