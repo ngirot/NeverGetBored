@@ -1,9 +1,9 @@
-import ConfigurationFileAdapter from "./utils/ConfigurationFileAdapter"
-import BrowserSystemAdapter from "./utils/BrowserSystemAdapter"
-import FeedlyHttpAdapter from "./utils/FeedlyHttpAdapter"
-import NotificationPopinAdapter from "./utils/NotificationPopinAdapter"
-import TodoistHttpAdapter from "./utils/TodoistHttpAdapter"
-import TwitchHttpAdapter from "./utils/TwitchHttpAdapter"
+import ConfigurationFileAdapter from "./infrastructure/ConfigurationFileAdapter"
+import BrowserSystemAdapter from "./infrastructure/BrowserSystemAdapter"
+import FeedlyHttpAdapter from "./infrastructure/FeedlyHttpAdapter"
+import NotificationPopinAdapter from "./infrastructure/NotificationPopinAdapter"
+import TodoistHttpAdapter from "./infrastructure/TodoistHttpAdapter"
+import TwitchHttpAdapter from "./infrastructure/TwitchHttpAdapter"
 
 export enum Injectable {
     CONFIGURATION, BROWSER, FEEDLY, NOTIFICATION, TODOIST, TWITCH

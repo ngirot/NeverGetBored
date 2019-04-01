@@ -6,8 +6,8 @@ import ConnectButton from "./providers/ConnectButton"
 import ReloadButton from "./entertainments/ReloadButton"
 import EntertainmentList from "./entertainments/EntertainmentList"
 import {emptyFunction} from "../utils"
-import {loadConfiguration} from "../../domain/actions/configuration/loading"
-import {Provider} from "../../domain/store/state/Provider"
+import {loadConfiguration} from "../../../domain/actions/configuration/loading"
+import {Provider} from "../../../domain/store/state/Provider"
 
 const styles = require('./MainView.scss')
 
@@ -32,11 +32,11 @@ class MainView extends React.Component<Props> {
                 <div className={styles.intro}>
                     <div className={"row"}>
                         <div className={"cell-8 offset-2"}>
-                            <ConnectButton serviceName="Twitch" iconPath={'resources/logos/twitch.svg'}
+                            <ConnectButton serviceName="Twitch" iconPath={'presentation/resources/logos/twitch.svg'}
                                            type={Provider.TWITCH}/>
-                            <ConnectButton serviceName="Todoist" iconPath={'resources/logos/todoist.svg'}
+                            <ConnectButton serviceName="Todoist" iconPath={'presentation/resources/logos/todoist.svg'}
                                            type={Provider.TODOIST}/>
-                            <ConnectButton serviceName={"Feedly"} iconPath={'resources/logos/feedly.svg'}
+                            <ConnectButton serviceName={"Feedly"} iconPath={'presentation/resources/logos/feedly.svg'}
                                            type={Provider.FEEDLY}/>
                         </div>
                         <div className={"cell-2 " + styles.actions}>

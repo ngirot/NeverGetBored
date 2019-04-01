@@ -1,0 +1,11 @@
+:local {
+  .providericon {
+    margin-left: 0.5rem;
+    height: 1.2rem;
+    width: auto;
+  }
+
+  button.notconnected img.providericon {
+    filter: invert(100%);
+  }
+}
