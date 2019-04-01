@@ -1,18 +1,19 @@
 import {actionCreator, DispatcherFunction, DispatchFunction} from "../helpers";
 import EntertainmentLoadedPayload from "./EntertainmentLoadedPayload";
-import {addToken} from "../../../utils/config";
+import EntertainmentLoaded from "./EntertainmentLoadedPayload";
 import {actionConnectToProvider} from "../platform/connect";
 import ConnectionSuccessPayload from "../platform/ConnectionSuccessPayload";
-import {errorMessage} from "../../../utils/notification";
-import {entertainmentsFeedly, refreshToken} from "../../../utils/feedly";
-import EntertainmentLoaded from "./EntertainmentLoadedPayload";
-import {entertainmentsTwitch} from "../../../utils/twitch";
-import {entertainmentsTodoist} from "../../../utils/todoist";
 import RefreshToken from "../../store/state/RefreshToken";
 import Entertainment from "../../store/state/Entertainment";
 import Token from "../../store/state/Token";
 import ProviderState from "../../store/state/ProviderState";
 import {Provider} from "../../store/state/Provider";
+import {Configuration} from "../external/Configuration";
+import inject, {Injectable} from "../../../Injector";
+import {Notifi} from "../external/Notifi";
+import {Twitch} from "../external/Twitch";
+import {Todoist} from "../external/Todoist";
+import {Feedly} from "../external/Feedly";
 
 export const actionLoadingEntertainments = actionCreator<Provider>('LOADING_ENTERTAINMENT_FROM_PROVIDER');
 export const actionLoadedEntertainments = actionCreator<EntertainmentLoadedPayload>('LOADED_ENTERTAINMENT_FROM_PROVIDER');
@@ -30,11 +31,14 @@ export function reloadAll(providerStates: ProviderState[]): DispatcherFunction {
 function loadFunction(provider: Provider): (token: Token) => Promise<Entertainment[]> {
     switch (provider) {
         case Provider.TWITCH:
-            return entertainmentsTwitch;
+            const twitch: Twitch = inject(Injectable.TWITCH);
+            return twitch.entertainmentsTwitch;
         case Provider.TODOIST:
-            return entertainmentsTodoist;
+            const todoist: Todoist = inject(Injectable.TODOIST);
+            return todoist.entertainmentsTodoist;
         case Provider.FEEDLY:
-            return entertainmentsFeedly;
+            const feedly: Feedly = inject(Injectable.FEEDLY);
+            return feedly.entertainmentsFeedly;
         default:
             return () => {
                 return new Promise((resolve, reject) => {
@@ -50,7 +54,8 @@ function loadEntertainments(provider: Provider, dispatch: Function, loadingFunct
         .then((refresh: RefreshToken) => {
             if (refresh.refreshed) {
                 console.log('Save refreshed token', refresh.token);
-                addToken(provider, refresh.token);
+                const configuration: Configuration = inject(Injectable.CONFIGURATION);
+                configuration.addToken(provider, refresh.token);
                 dispatch(actionConnectToProvider(new ConnectionSuccessPayload(provider, refresh.token)));
             }
             return refresh.token;
@@ -61,7 +66,8 @@ function loadEntertainments(provider: Provider, dispatch: Function, loadingFunct
             dispatch(actionLoadedEntertainments(new EntertainmentLoaded(provider, e)));
         })
         .catch((err) => {
-            errorMessage("Failed to load entertainments for " + provider, err);
+            const notification: Notifi = inject(Injectable.NOTIFICATION);
+            notification.errorMessage("Failed to load entertainments for " + provider, err);
         });
 }
 
@@ -78,7 +84,8 @@ function refreshTokenFunction(provider: Provider): (token: Token) => Promise<Ref
 
     switch (provider) {
         case Provider.FEEDLY:
-            return buildRefreshFunction(refreshToken);
+            const feedly: Feedly = inject(Injectable.FEEDLY);
+            return buildRefreshFunction(feedly.refreshToken);
         default:
             return (token: Token) => Promise.resolve({refreshed: false, token: token});
     }

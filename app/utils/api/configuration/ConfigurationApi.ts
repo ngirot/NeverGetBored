@@ -4,7 +4,11 @@ import * as fs from "fs";
 const electron = require('electron');
 const app = electron.remote.app;
 
-export default class {
+export default class ConfigurationApi{
+
+    constructor() {
+        console.log('Configuration file: ' + this.configurationFile());
+    }
 
     private readonly encoding = 'UTF-8';
 

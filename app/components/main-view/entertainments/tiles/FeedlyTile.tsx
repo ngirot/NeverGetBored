@@ -1,13 +1,14 @@
 import * as React from 'react';
 import {connect} from "react-redux";
 import * as Redux from "redux";
-import {markAsRead} from "../../../../utils/feedly";
-import {openEntertainmentUrl} from "../../../../utils/browser";
 import {removeContent} from "../../../../domain/actions/entertainment/remove";
 import Entertainment from "../../../../domain/store/state/Entertainment";
 import Token from "../../../../domain/store/state/Token";
 import {AppState} from "../../../../domain/store/reducers";
 import {Provider} from "../../../../domain/store/state/Provider";
+import inject, {Injectable} from "../../../../Injector";
+import {Browser} from "../../../../domain/actions/external/Browser";
+import {Feedly} from "../../../../domain/actions/external/Feedly";
 
 const styles = require('./FeedlyTile.scss');
 
@@ -20,12 +21,16 @@ interface StateProps {
 }
 
 interface DispatchProps {
-    open: (entertainment: Entertainment, token?: Token) => void;
+    open: (browser: Browser, feedly: Feedly, entertainment: Entertainment, token?: Token) => void;
 }
 
 type Props = StateProps & OwnsProps & DispatchProps;
 
 class FeedlyTile extends React.Component<Props> {
+
+    private browser: Browser = inject(Injectable.BROWSER);
+    private feedly: Feedly = inject(Injectable.FEEDLY);
+
     render() {
         const e = this.props.entertainment;
         const token = this.props.token;
@@ -33,7 +38,7 @@ class FeedlyTile extends React.Component<Props> {
 
         if (e.previewUrl) {
             return (
-                <div data-role="tile" data-size="wide" onClick={() => this.props.open(e, token)}
+                <div data-role="tile" data-size="wide" onClick={() => this.props.open(this.browser, this.feedly, e, token)}
                      className={"d-flex flex-justify-center flex-align-center " + styles.tile}>
                     {logo}
                     <span className={"branding-bar " + styles.feedname}>{e.title}</span>
@@ -68,10 +73,10 @@ function mapStateToProps(state: AppState): StateProps {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<any>): DispatchProps {
     return {
-        open: (entertainment: Entertainment, token?: Token) => {
-            openEntertainmentUrl(entertainment);
+        open: (browser: Browser, feedly: Feedly, entertainment: Entertainment, token?: Token) => {
+            browser.openEntertainmentUrl(entertainment);
             if (token) {
-                markAsRead(entertainment, token)
+                feedly.markAsRead(entertainment, token)
                     .then((deleted: boolean) => {
                         if (deleted) {
                             removeContent(entertainment)(dispatch);
