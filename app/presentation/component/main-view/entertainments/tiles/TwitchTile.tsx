@@ -3,7 +3,7 @@ import * as React from 'react'
 import {connect} from "react-redux"
 import {emptyFunction} from "../../../utils"
 import Entertainment from "../../../../../domain/store/state/Entertainment"
-import {Browser} from "../../../../../domain/actions/external/Browser"
+import {Browser} from "../../../../../domain/external/Browser"
 import inject, {Injectable} from "../../../../../Injector"
 
 const styles = require('./TwitchTile.scss')

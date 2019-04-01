@@ -3,7 +3,7 @@ import ProviderConfiguration from "./api/configuration/ProviderConfiguration"
 import Token from "../domain/store/state/Token"
 import ProviderState from "../domain/store/state/ProviderState"
 import {Provider} from "../domain/store/state/Provider"
-import {Configuration} from "../domain/actions/external/Configuration"
+import {Configuration} from "../domain/external/Configuration"
 
 export default class ConfigurationFileAdapter implements Configuration {
 

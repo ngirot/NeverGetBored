@@ -1,6 +1,6 @@
-import Token from "../../store/state/Token"
-import RefreshToken from "../../store/state/RefreshToken"
-import Entertainment from "../../store/state/Entertainment"
+import Token from "../store/state/Token"
+import RefreshToken from "../store/state/RefreshToken"
+import Entertainment from "../store/state/Entertainment"
 
 export interface Feedly {
     generateTokenFeedly(): Promise<Token>

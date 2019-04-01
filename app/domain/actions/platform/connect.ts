@@ -2,12 +2,12 @@ import {actionCreator, DispatcherFunction, DispatchFunction} from "../helpers"
 import ConnectionSuccessPayload from "./ConnectionSuccessPayload"
 import Token from "../../store/state/Token"
 import {Provider} from "../../store/state/Provider"
-import {Configuration} from "../external/Configuration"
+import {Configuration} from "../../external/Configuration"
 import inject, {Injectable} from "../../../Injector"
-import {Notifi} from "../external/Notifi"
-import {Twitch} from "../external/Twitch"
-import {Todoist} from "../external/Todoist"
-import {Feedly} from "../external/Feedly"
+import {Notifi} from "../../external/Notifi"
+import {Twitch} from "../../external/Twitch"
+import {Todoist} from "../../external/Todoist"
+import {Feedly} from "../../external/Feedly"
 
 export const actionConnectToProvider = actionCreator<ConnectionSuccessPayload>('CONNECT_TO_PROVIDER')
 export const actionConnectionToProviderFailed = actionCreator<Provider>('CONNECT_TO_PROVIDER_FAILED')

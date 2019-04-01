@@ -8,12 +8,12 @@ import Entertainment from "../../store/state/Entertainment"
 import Token from "../../store/state/Token"
 import ProviderState from "../../store/state/ProviderState"
 import {Provider} from "../../store/state/Provider"
-import {Configuration} from "../external/Configuration"
+import {Configuration} from "../../external/Configuration"
 import inject, {Injectable} from "../../../Injector"
-import {Notifi} from "../external/Notifi"
-import {Twitch} from "../external/Twitch"
-import {Todoist} from "../external/Todoist"
-import {Feedly} from "../external/Feedly"
+import {Notifi} from "../../external/Notifi"
+import {Twitch} from "../../external/Twitch"
+import {Todoist} from "../../external/Todoist"
+import {Feedly} from "../../external/Feedly"
 
 export const actionLoadingEntertainments = actionCreator<Provider>('LOADING_ENTERTAINMENT_FROM_PROVIDER')
 export const actionLoadedEntertainments = actionCreator<EntertainmentLoadedPayload>('LOADED_ENTERTAINMENT_FROM_PROVIDER')

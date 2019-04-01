@@ -7,8 +7,8 @@ import Token from "../../../../../domain/store/state/Token"
 import {AppState} from "../../../../../domain/store/reducers"
 import {Provider} from "../../../../../domain/store/state/Provider"
 import inject, {Injectable} from "../../../../../Injector"
-import {Browser} from "../../../../../domain/actions/external/Browser"
-import {Feedly} from "../../../../../domain/actions/external/Feedly"
+import {Browser} from "../../../../../domain/external/Browser"
+import {Feedly} from "../../../../../domain/external/Feedly"
 
 const styles = require('./FeedlyTile.scss')
 
