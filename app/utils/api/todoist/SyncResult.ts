@@ -1,6 +1,6 @@
-import Item from "./Item";
+import Item from "./Item"
 
 export default class SyncResult {
-    public readonly items: Item[] = [];
+    public readonly items: Item[] = []
 
 }

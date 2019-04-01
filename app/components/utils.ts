@@ -1,7 +1,7 @@
-import {connect} from "react-redux";
+import {connect} from "react-redux"
 
 export const emptyFunction = () => {
-    return {};
-};
+    return {}
+}
 
-export const emptyConnect = connect(emptyFunction, emptyFunction);
+export const emptyConnect = connect(emptyFunction, emptyFunction)

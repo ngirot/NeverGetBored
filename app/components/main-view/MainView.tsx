@@ -1,29 +1,29 @@
-import * as React from 'react';
+import * as React from 'react'
 
-import {connect} from "react-redux";
-import * as Redux from "redux";
-import ConnectButton from "./providers/ConnectButton";
-import ReloadButton from "./entertainments/ReloadButton";
-import EntertainmentList from "./entertainments/EntertainmentList";
-import {emptyFunction} from "../utils";
-import {loadConfiguration} from "../../domain/actions/configuration/loading";
-import {Provider} from "../../domain/store/state/Provider";
+import {connect} from "react-redux"
+import * as Redux from "redux"
+import ConnectButton from "./providers/ConnectButton"
+import ReloadButton from "./entertainments/ReloadButton"
+import EntertainmentList from "./entertainments/EntertainmentList"
+import {emptyFunction} from "../utils"
+import {loadConfiguration} from "../../domain/actions/configuration/loading"
+import {Provider} from "../../domain/store/state/Provider"
 
-const styles = require('./MainView.scss');
+const styles = require('./MainView.scss')
 
 interface StateProps {
 }
 
 interface DispatchProps {
-    loadConf: () => void;
+    loadConf: () => void
 }
 
-type Props = DispatchProps & StateProps;
+type Props = DispatchProps & StateProps
 
 class MainView extends React.Component<Props> {
 
     componentDidMount() {
-        this.props.loadConf();
+        this.props.loadConf()
     }
 
     render() {
@@ -48,16 +48,16 @@ class MainView extends React.Component<Props> {
                     <EntertainmentList/>
                 </div>
             </div>
-        );
+        )
     }
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<any>): DispatchProps {
     return {
         loadConf: () => {
-            loadConfiguration()(dispatch);
+            loadConfiguration()(dispatch)
         }
-    };
+    }
 }
 
-export default connect<StateProps, DispatchProps>(emptyFunction, mapDispatchToProps)(MainView);
+export default connect<StateProps, DispatchProps>(emptyFunction, mapDispatchToProps)(MainView)

@@ -1,3 +1,3 @@
 export interface Notifi {
-    errorMessage(message: string, stack: string): void;
+    errorMessage(message: string, stack: string): void
 }

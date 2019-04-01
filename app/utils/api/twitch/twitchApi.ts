@@ -1,18 +1,18 @@
-import StreamResult from "./StreamResult";
-import Stream from "./Stream";
-import OauthTokenConfiguration from "../oauth/OauthTokenConfiguration";
-import OauthApi from "../oauth/OauthApi";
-import Token from "../../../domain/store/state/Token";
+import StreamResult from "./StreamResult"
+import Stream from "./Stream"
+import OauthTokenConfiguration from "../oauth/OauthTokenConfiguration"
+import OauthApi from "../oauth/OauthApi"
+import Token from "../../../domain/store/state/Token"
 
-const api = require('twitch-api-v5');
+const api = require('twitch-api-v5')
 
 export default class TwitchApi {
 
-    private readonly clientId: string;
+    private readonly clientId: string
 
     constructor(clientId: string) {
-        this.clientId = clientId;
-        api.clientID = clientId;
+        this.clientId = clientId
+        api.clientID = clientId
     }
 
     public generateTokenTwitch(): Promise<Token> {
@@ -22,9 +22,9 @@ export default class TwitchApi {
             tokenUrl: "https://id.twitch.tv/oauth2/authorize",
             redirectUrl: "http://localhost",
             scope: 'openid'
-        };
+        }
 
-        return new OauthApi().generateTokenWithToken(configuration);
+        return new OauthApi().generateTokenWithToken(configuration)
     }
 
     public entertainmentsTwitch(token: Token): Promise<Stream[]> {
@@ -32,13 +32,13 @@ export default class TwitchApi {
 
             const streamCallback = (error: any, streamResult: StreamResult) => {
                 if (error) {
-                    console.log('Unable to load streams from Twitch', error);
-                    reject('Unable to load streams from Twitch');
+                    console.log('Unable to load streams from Twitch', error)
+                    reject('Unable to load streams from Twitch')
                 }
-                resolve(streamResult.streams);
-            };
+                resolve(streamResult.streams)
+            }
 
-            api.streams.followed({auth: token.currentToken, stream_type: 'live'}, streamCallback);
-        });
+            api.streams.followed({auth: token.currentToken, stream_type: 'live'}, streamCallback)
+        })
     }
 }

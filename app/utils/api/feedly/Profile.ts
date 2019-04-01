@@ -1,3 +1,3 @@
 export default class Profile {
-    public readonly id: string;
+    public readonly id: string
 }

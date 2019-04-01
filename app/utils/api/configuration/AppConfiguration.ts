@@ -1,5 +1,5 @@
-import ProviderConfiguration from "./ProviderConfiguration";
+import ProviderConfiguration from "./ProviderConfiguration"
 
 export default class AppConfiguration {
-    public readonly providers: ProviderConfiguration[] = [];
+    public readonly providers: ProviderConfiguration[] = []
 }

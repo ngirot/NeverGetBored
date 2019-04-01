@@ -1,8 +1,8 @@
-import Token from "../../store/state/Token";
-import Entertainment from "../../store/state/Entertainment";
+import Token from "../../store/state/Token"
+import Entertainment from "../../store/state/Entertainment"
 
 export interface Todoist {
-    generateTokenTodoist(): Promise<Token>;
+    generateTokenTodoist(): Promise<Token>
 
-    entertainmentsTodoist(token: Token): Promise<Entertainment[]>;
+    entertainmentsTodoist(token: Token): Promise<Entertainment[]>
 }

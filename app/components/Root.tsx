@@ -1,15 +1,15 @@
-import * as React from 'react';
-import * as Redux from 'react-redux';
-import {History} from 'history';
+import * as React from 'react'
+import * as Redux from 'react-redux'
+import {History} from 'history'
 
-import {Provider} from 'react-redux';
-import {ConnectedRouter} from 'react-router-redux';
-import {Route, Switch} from "react-router";
-import HomePage from "./HomePage";
+import {Provider} from 'react-redux'
+import {ConnectedRouter} from 'react-router-redux'
+import {Route, Switch} from "react-router"
+import HomePage from "./HomePage"
 
 interface IRootType {
-    store: Redux.Store<any>;
-    history: History;
+    store: Redux.Store<any>
+    history: History
 }
 
 export default function Root({store, history}: IRootType) {
@@ -23,5 +23,5 @@ export default function Root({store, history}: IRootType) {
                 </div>
             </ConnectedRouter>
         </Provider>
-    );
+    )
 }

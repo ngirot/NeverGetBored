@@ -1,3 +1,3 @@
 export default class Thumbnail {
-    url: string;
+    url: string
 }
