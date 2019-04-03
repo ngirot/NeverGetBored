@@ -5,7 +5,7 @@ import Entertainment from "../domain/store/state/Entertainment"
 import Token from "../domain/store/state/Token"
 import {Provider} from "../domain/store/state/Provider"
 import {EntertainmentType} from "../domain/store/state/EntertainmentType"
-import {Feedly} from "../domain/external/Feedly"
+import {Feedly} from "../domain/external/port/Feedly"
 
 export default class FeedlyHttpAdapter implements Feedly {
 

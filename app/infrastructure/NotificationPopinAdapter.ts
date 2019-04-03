@@ -1,5 +1,5 @@
 import Noty = require("noty")
-import {Notifi} from "../domain/external/Notifi"
+import {Notifi} from "../domain/external/port/Notifi"
 
 export default class NotificationPopinAdapter implements Notifi {
     public errorMessage = (message: string, stack: string): void => {

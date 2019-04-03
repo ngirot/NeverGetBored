@@ -5,7 +5,7 @@ import Entertainment from "../domain/store/state/Entertainment"
 import Token from "../domain/store/state/Token"
 import {Provider} from "../domain/store/state/Provider"
 import {EntertainmentType} from "../domain/store/state/EntertainmentType"
-import {Todoist} from "../domain/external/Todoist"
+import {Todoist} from "../domain/external/port/Todoist"
 
 export default class TodoistHttpAdapter implements Todoist {
 
