@@ -4,9 +4,12 @@ import FeedlyHttpAdapter from "./infrastructure/FeedlyHttpAdapter"
 import NotificationPopinAdapter from "./infrastructure/NotificationPopinAdapter"
 import TodoistHttpAdapter from "./infrastructure/TodoistHttpAdapter"
 import TwitchHttpAdapter from "./infrastructure/TwitchHttpAdapter"
+import EntertainmentDispatcher from "./domain/actions/entertainment/EntertainmentDispatcher"
+import {PlatformDispatcher} from "./domain/actions/platform/PlatformDispatcher"
 
 export enum Injectable {
-    CONFIGURATION, BROWSER, FEEDLY, NOTIFICATION, TODOIST, TWITCH
+    CONFIGURATION, BROWSER, FEEDLY, NOTIFICATION, TODOIST, TWITCH,
+    ENTERTAINMENT, PLATFORM
 }
 
 export default function inject(injectable: Injectable): any {
@@ -23,6 +26,10 @@ export default function inject(injectable: Injectable): any {
             return new TodoistHttpAdapter()
         case Injectable.TWITCH:
             return new TwitchHttpAdapter()
+        case Injectable.ENTERTAINMENT:
+            return new EntertainmentDispatcher()
+        case Injectable.PLATFORM:
+            return new PlatformDispatcher()
         default:
             throw new Error('Unable to get injectable for ' + injectable)
     }

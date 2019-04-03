@@ -1,7 +1,6 @@
 import * as React from 'react'
 import {connect} from "react-redux"
 import * as Redux from "redux"
-import {removeContent} from "../../../../../domain/actions/entertainment/remove"
 import Entertainment from "../../../../../domain/store/state/Entertainment"
 import Token from "../../../../../domain/store/state/Token"
 import {AppState} from "../../../../../domain/store/reducers"
@@ -9,6 +8,7 @@ import {Provider} from "../../../../../domain/store/state/Provider"
 import inject, {Injectable} from "../../../../../Injector"
 import {Browser} from "../../../../../domain/external/Browser"
 import {Feedly} from "../../../../../domain/external/Feedly"
+import EntertainmentService from "../../../../external/EntertainmentService"
 
 const styles = require('./FeedlyTile.scss')
 
@@ -72,6 +72,7 @@ function mapStateToProps(state: AppState): StateProps {
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<any>): DispatchProps {
+    const entertainmentService: EntertainmentService = inject(Injectable.ENTERTAINMENT)
     return {
         open: (browser: Browser, feedly: Feedly, entertainment: Entertainment, token?: Token) => {
             browser.openEntertainmentUrl(entertainment)
@@ -79,7 +80,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<any>): DispatchProps {
                 feedly.markAsRead(entertainment, token)
                     .then((deleted: boolean) => {
                         if (deleted) {
-                            removeContent(entertainment)(dispatch)
+                            entertainmentService.remove(dispatch, entertainment)
                         }
                     })
 
