@@ -42,7 +42,7 @@ app.on('ready', () =>
         .then(() => {
             mainWindow = new BrowserWindow({
                 show: false,
-                width: 1024,
+                width: 1050,
                 height: 728,
                 icon: path.join(__dirname, '/logo.png')
             });
