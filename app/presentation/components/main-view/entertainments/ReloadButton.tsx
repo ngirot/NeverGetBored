@@ -3,7 +3,6 @@ import * as Redux from "redux"
 import {connect} from "react-redux"
 import {AppState} from "../../../../domain/store/reducers"
 import ProviderState from "../../../../domain/store/state/ProviderState"
-import EntertainmentService from "../../../external/EntertainmentService"
 import inject, {Injectable} from "../../../../Injector"
 
 interface StateProps {
@@ -34,7 +33,7 @@ function mapStateToProps(state: AppState): StateProps {
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<any>): DispatchProps {
-    const entertainmentService: EntertainmentService = inject(Injectable.ENTERTAINMENT)
+    const entertainmentService = inject(Injectable.ENTERTAINMENT)
     return {
         onReload: (providerStates: ProviderState[]) => {
             entertainmentService.reload(dispatch, providerStates)

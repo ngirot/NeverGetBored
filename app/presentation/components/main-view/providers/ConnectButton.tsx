@@ -5,7 +5,6 @@ import {connect} from "react-redux"
 import Token from "../../../../domain/store/state/Token"
 import {AppState} from "../../../../domain/store/reducers"
 import {Provider} from "../../../../domain/store/state/Provider"
-import PlatformService from "../../../external/PlatformService"
 import inject, {Injectable} from "../../../../Injector"
 
 const styles = require('./ConnectButton.scss')
@@ -91,7 +90,7 @@ function mapStateToProps(state: AppState, ownProps: OwnProps): StateProps {
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<any>, ownProps: OwnProps): DispatchProps {
-    const platformService: PlatformService = inject(Injectable.PLATFORM)
+    const platformService = inject(Injectable.PLATFORM)
     return {
         onConnect: (token?: Token) => {
             if (!token) {

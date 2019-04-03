@@ -8,7 +8,6 @@ import {Provider} from "../../../../../domain/store/state/Provider"
 import inject, {Injectable} from "../../../../../Injector"
 import {Browser} from "../../../../../domain/external/Browser"
 import {Feedly} from "../../../../../domain/external/Feedly"
-import EntertainmentService from "../../../../external/EntertainmentService"
 
 const styles = require('./FeedlyTile.scss')
 
@@ -28,8 +27,8 @@ type Props = StateProps & OwnsProps & DispatchProps
 
 class FeedlyTile extends React.Component<Props> {
 
-    private browser: Browser = inject(Injectable.BROWSER)
-    private feedly: Feedly = inject(Injectable.FEEDLY)
+    private browser = inject(Injectable.BROWSER)
+    private feedly = inject(Injectable.FEEDLY)
 
     render() {
         const e = this.props.entertainment
@@ -72,7 +71,7 @@ function mapStateToProps(state: AppState): StateProps {
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<any>): DispatchProps {
-    const entertainmentService: EntertainmentService = inject(Injectable.ENTERTAINMENT)
+    const entertainmentService = inject(Injectable.ENTERTAINMENT)
     return {
         open: (browser: Browser, feedly: Feedly, entertainment: Entertainment, token?: Token) => {
             browser.openEntertainmentUrl(entertainment)
