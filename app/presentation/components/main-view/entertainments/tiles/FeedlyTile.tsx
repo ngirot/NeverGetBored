@@ -71,7 +71,7 @@ function mapStateToProps(state: AppState): StateProps {
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<any>): DispatchProps {
-    const entertainmentService = inject(Injectable.ENTERTAINMENT)
+    const entertainmentService = inject(Injectable.ENTERTAINMENT_SERVICE)
     return {
         open: (browser: Browser, feedly: Feedly, entertainment: Entertainment, token?: Token) => {
             browser.openEntertainmentUrl(entertainment)

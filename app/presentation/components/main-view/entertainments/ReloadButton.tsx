@@ -33,7 +33,7 @@ function mapStateToProps(state: AppState): StateProps {
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<any>): DispatchProps {
-    const entertainmentService = inject(Injectable.ENTERTAINMENT)
+    const entertainmentService = inject(Injectable.ENTERTAINMENT_SERVICE)
     return {
         onReload: (providerStates: ProviderState[]) => {
             entertainmentService.reload(dispatch, providerStates)

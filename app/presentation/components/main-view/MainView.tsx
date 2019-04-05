@@ -6,8 +6,8 @@ import ConnectButton from "./providers/ConnectButton"
 import ReloadButton from "./entertainments/ReloadButton"
 import EntertainmentList from "./entertainments/EntertainmentList"
 import {emptyFunction} from "../utils"
-import {loadConfiguration} from "../../../domain/actions/configuration/loading"
 import {Provider} from "../../../domain/store/state/Provider"
+import inject, {Injectable} from "../../../Injector"
 
 const styles = require('./MainView.scss')
 
@@ -53,9 +53,10 @@ class MainView extends React.Component<Props> {
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<any>): DispatchProps {
+    const configuration = inject(Injectable.CONFIGURATION_SERVICE)
     return {
         loadConf: () => {
-            loadConfiguration()(dispatch)
+            configuration.load(dispatch)
         }
     }
 }

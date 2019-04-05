@@ -1,12 +1,10 @@
-import {actionCreator, DispatcherFunction, DispatchFunction} from "../helpers"
+import {actionCreator, IActionWithPayload} from "../helpers"
 import ProviderState from "../../store/state/ProviderState"
 import inject, {Injectable} from "../../../Injector"
 
 export const actionLoadedConfiguration = actionCreator<ProviderState[]>('LOADED_CONFIGURATION')
 
-export function loadConfiguration(): DispatcherFunction {
+export function loadConfiguration(): IActionWithPayload<ProviderState[]> {
     const configuration = inject(Injectable.CONFIGURATION)
-    return (dispatch: DispatchFunction) => {
-        dispatch(actionLoadedConfiguration(configuration.loadProviders()))
-    }
+    return actionLoadedConfiguration(configuration.loadProviders())
 }

@@ -77,7 +77,7 @@ function mapStateToProps(state: AppState, ownProps: OwnProps): StateProps {
             connected: providerState.token !== undefined,
             error: providerState.error,
             token: providerState.token,
-            loading: providerState.loading
+            loading: state.platform.reloading
         }
     } else {
         return {
@@ -90,7 +90,7 @@ function mapStateToProps(state: AppState, ownProps: OwnProps): StateProps {
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<any>, ownProps: OwnProps): DispatchProps {
-    const platformService = inject(Injectable.PLATFORM)
+    const platformService = inject(Injectable.PLATFORM_SERVICE)
     return {
         onConnect: (token?: Token) => {
             if (!token) {

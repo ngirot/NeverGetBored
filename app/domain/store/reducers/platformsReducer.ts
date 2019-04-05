@@ -7,53 +7,37 @@ import Entertainment from "../state/Entertainment"
 import PlatformState from "../state/PlatformState"
 import ProviderState from "../state/ProviderState"
 
-export default function platformsReducer(state: PlatformState = new PlatformState([], []), action: IAction) {
+export default function platformsReducer(state: PlatformState = new PlatformState([], [], false), action: IAction) {
     if (actionConnectToProvider.test(action)) {
         const listWithoutProvider = state.providers.filter(p => p.provider !== action.payload.provider)
-        listWithoutProvider.push(new ProviderState(action.payload.provider, false, false, action.payload.token))
+        listWithoutProvider.push(new ProviderState(action.payload.provider, false, action.payload.token))
 
-        return new PlatformState(state.entertainments, listWithoutProvider)
+        return new PlatformState(state.entertainments, listWithoutProvider, false)
     }
 
     if (actionConnectionToProviderFailed.test(action)) {
         const listWithoutProvider = state.providers.filter(p => p.provider !== action.payload)
-        listWithoutProvider.push(new ProviderState(action.payload, false, true))
+        listWithoutProvider.push(new ProviderState(action.payload, true))
 
-        return new PlatformState(state.entertainments, listWithoutProvider)
+        return new PlatformState(state.entertainments, listWithoutProvider, false)
     }
 
     if (actionLoadedEntertainments.test(action)) {
-        const newList = state.providers.map(p => {
-            if (p.provider === action.payload.provider) {
-                return new ProviderState(p.provider, false, false, p.token)
-            } else {
-                return p
-            }
-        })
-        const newEntertainments = state.entertainments.filter(e => e.provider !== action.payload.provider)
-        newEntertainments.push(...action.payload.entertainments)
-        return new PlatformState(newEntertainments, newList)
+        return new PlatformState(action.payload.entertainments, state.providers, false)
     }
 
     if (actionRemovedEntertainment.test(action)) {
         const remove = action.payload
         const newList = state.entertainments.filter((e: Entertainment) => !(e.id === remove.id && e.provider === remove.provider))
-        return new PlatformState(newList, state.providers)
-    }
-
-    if (actionLoadingEntertainments.test(action)) {
-        const newList = state.providers.map(p => {
-            if (p.provider === action.payload) {
-                return new ProviderState(p.provider, true, p.error, p.token)
-            } else {
-                return p
-            }
-        })
-        return new PlatformState(state.entertainments, newList)
+        return new PlatformState(newList, state.providers, false)
     }
 
     if (actionLoadedConfiguration.test(action)) {
-        return new PlatformState(state.entertainments, action.payload)
+        return new PlatformState(state.entertainments, action.payload, false)
+    }
+
+    if (actionLoadingEntertainments.test(action)) {
+        return new PlatformState(state.entertainments, state.providers, true)
     }
 
     return state

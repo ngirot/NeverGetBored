@@ -15,7 +15,7 @@ export default class ConfigurationFileAdapter implements Configuration {
             .map((providerConfiguration: ProviderConfiguration) => {
                 const newToken = new Token(providerConfiguration.token.currentToken,
                     providerConfiguration.token.refreshToken, providerConfiguration.token.expiration)
-                return new ProviderState(Provider[providerConfiguration.name as keyof typeof Provider], false, true, newToken)
+                return new ProviderState(Provider[providerConfiguration.name as keyof typeof Provider], true, newToken)
             })
     }
 

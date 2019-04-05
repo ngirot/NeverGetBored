@@ -14,10 +14,12 @@ import {Todoist} from "./domain/external/port/Todoist"
 import {Twitch} from "./domain/external/port/Twitch"
 import EntertainmentService from "./presentation/external/EntertainmentService"
 import PlatformService from "./presentation/external/PlatformService"
+import ConfigurationService from "./presentation/external/ConfigurationService"
+import ConfigurationDispatcher from "./domain/external/adapter/ConfigurationDispatcher"
 
 export enum Injectable {
     CONFIGURATION, BROWSER, FEEDLY, NOTIFICATION, TODOIST, TWITCH,
-    ENTERTAINMENT, PLATFORM
+    ENTERTAINMENT_SERVICE, PLATFORM_SERVICE, CONFIGURATION_SERVICE
 }
 
 function inject(injectable: Injectable.CONFIGURATION): Configuration
@@ -26,8 +28,9 @@ function inject(injectable: Injectable.FEEDLY): Feedly
 function inject(injectable: Injectable.NOTIFICATION): Notifi
 function inject(injectable: Injectable.TODOIST): Todoist
 function inject(injectable: Injectable.TWITCH): Twitch
-function inject(injectable: Injectable.ENTERTAINMENT): EntertainmentService
-function inject(injectable: Injectable.PLATFORM): PlatformService
+function inject(injectable: Injectable.ENTERTAINMENT_SERVICE): EntertainmentService
+function inject(injectable: Injectable.PLATFORM_SERVICE): PlatformService
+function inject(injectable: Injectable.CONFIGURATION_SERVICE): ConfigurationService
 function inject(injectable: Injectable): any {
     switch (injectable) {
         case Injectable.CONFIGURATION:
@@ -42,10 +45,12 @@ function inject(injectable: Injectable): any {
             return new TodoistHttpAdapter()
         case Injectable.TWITCH:
             return new TwitchHttpAdapter()
-        case Injectable.ENTERTAINMENT:
+        case Injectable.ENTERTAINMENT_SERVICE:
             return new EntertainmentDispatcher()
-        case Injectable.PLATFORM:
+        case Injectable.PLATFORM_SERVICE:
             return new PlatformDispatcher()
+        case Injectable.CONFIGURATION_SERVICE:
+            return new ConfigurationDispatcher()
         default:
             throw new Error('Unable to get injectable for ' + injectable)
     }

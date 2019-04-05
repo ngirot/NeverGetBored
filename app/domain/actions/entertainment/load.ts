@@ -1,31 +1,49 @@
-import {actionCreator, DispatcherFunction, DispatchFunction} from "../helpers"
+import {actionCreator, actionCreatorVoid, IAction, IActionWithPayload} from "../helpers"
 import EntertainmentLoadedPayload from "./EntertainmentLoadedPayload"
-import EntertainmentLoaded from "./EntertainmentLoadedPayload"
-import {actionConnectToProvider} from "../platform/connect"
-import ConnectionSuccessPayload from "../platform/ConnectionSuccessPayload"
-import RefreshToken from "../../store/state/RefreshToken"
 import Entertainment from "../../store/state/Entertainment"
 import Token from "../../store/state/Token"
 import ProviderState from "../../store/state/ProviderState"
 import {Provider} from "../../store/state/Provider"
-import {Configuration} from "../../external/port/Configuration"
 import inject, {Injectable} from "../../../Injector"
 import {Notifi} from "../../external/port/Notifi"
 import {Twitch} from "../../external/port/Twitch"
 import {Todoist} from "../../external/port/Todoist"
 import {Feedly} from "../../external/port/Feedly"
 
-export const actionLoadingEntertainments = actionCreator<Provider>('LOADING_ENTERTAINMENT_FROM_PROVIDER')
+export const actionLoadingEntertainments = actionCreatorVoid('LOADING_ENTERTAINMENT_FROM_PROVIDER')
 export const actionLoadedEntertainments = actionCreator<EntertainmentLoadedPayload>('LOADED_ENTERTAINMENT_FROM_PROVIDER')
 
-export function reloadAll(providerStates: ProviderState[]): DispatcherFunction {
-    return (dispatch: DispatchFunction) => {
-        providerStates.forEach(ps => {
-            if (ps.token) {
-                loadEntertainments(ps.provider, dispatch, loadFunction(ps.provider), ps.token)
+export function initReloading(): IAction {
+    return actionLoadingEntertainments()
+}
+
+export function reloadAll(providerStates: ProviderState[]): Promise<IActionWithPayload<EntertainmentLoadedPayload>> {
+    const promises = providerStates.map((state) => {
+
+        return new Promise(function (resolve) {
+            const loader = loadFunction(state.provider)
+            if (state.token) {
+                loader(state.token)
+                    .then(resolve)
+                    .catch((err) => {
+                        const notification: Notifi = inject(Injectable.NOTIFICATION)
+                        notification.errorMessage("Failed to load entertainments for " + state.provider, err)
+                        resolve([])
+                    })
+            } else {
+                resolve([])
             }
         })
-    }
+    })
+
+    return Promise.all(promises)
+        .then((result: Entertainment[][]) => {
+            return result.reduce((acc, val) => acc.concat(val), [])
+        })
+        .then((entertainments) => {
+            const payload = new EntertainmentLoadedPayload(entertainments)
+            return actionLoadedEntertainments(payload)
+        })
 }
 
 function loadFunction(provider: Provider): (token: Token) => Promise<Entertainment[]> {
@@ -46,48 +64,4 @@ function loadFunction(provider: Provider): (token: Token) => Promise<Entertainme
                 })
             }
     }
-}
-
-function loadEntertainments(provider: Provider, dispatch: Function, loadingFunction: (token: Token) => Promise<Entertainment[]>, token: Token) {
-    dispatch(actionLoadingEntertainments(provider))
-    refreshTokenFunction(provider)(token)
-        .then((refresh: RefreshToken) => {
-            if (refresh.refreshed) {
-                console.log('Save refreshed token', refresh.token)
-                const configuration: Configuration = inject(Injectable.CONFIGURATION)
-                configuration.addToken(provider, refresh.token)
-                dispatch(actionConnectToProvider(new ConnectionSuccessPayload(provider, refresh.token)))
-            }
-            return refresh.token
-        })
-        .then(loadingFunction)
-        .then((e) => {
-            console.log('Streams', e)
-            dispatch(actionLoadedEntertainments(new EntertainmentLoaded(provider, e)))
-        })
-        .catch((err) => {
-            const notification: Notifi = inject(Injectable.NOTIFICATION)
-            notification.errorMessage("Failed to load entertainments for " + provider, err)
-        })
-}
-
-function refreshTokenFunction(provider: Provider): (token: Token) => Promise<RefreshToken> {
-    const buildRefreshFunction = (f: (token: Token) => Promise<RefreshToken>): ((token: Token) => Promise<RefreshToken>) => {
-        return (token: Token): Promise<RefreshToken> => {
-            if (token.isExpired()) {
-                return f(token)
-            } else {
-                return Promise.resolve({refreshed: false, token: token})
-            }
-        }
-    }
-
-    switch (provider) {
-        case Provider.FEEDLY:
-            const feedly: Feedly = inject(Injectable.FEEDLY)
-            return buildRefreshFunction(feedly.refreshToken)
-        default:
-            return (token: Token) => Promise.resolve({refreshed: false, token: token})
-    }
-
 }

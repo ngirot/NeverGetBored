@@ -5,7 +5,9 @@ import {connectToProvider} from "../../actions/platform/connect"
 
 export class PlatformDispatcher implements PlatformService {
     connect(dispatch: DispatchFunction, provider: Provider): void {
-        connectToProvider(provider)(dispatch)
+        connectToProvider(provider)
+            .then(dispatch)
+            .catch(dispatch)
     }
 
 }
