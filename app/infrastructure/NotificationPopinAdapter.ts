@@ -3,6 +3,7 @@ import {Notifi} from "../domain/external/port/Notifi"
 
 export default class NotificationPopinAdapter implements Notifi {
     public errorMessage = (message: string, stack: string): void => {
+        console.log('error: ' + message, stack)
         new Noty({
             type: 'error',
             theme: 'relax',
