@@ -48,7 +48,7 @@ export default class OauthApi {
             .then((resp: any) => resp.body)
             .then(function (resp: OauthResponseToken) {
                 const expiration = moment().add(resp.expires_in, 'seconds')
-                return new Token(resp.access_token, resp.refresh_token, expiration.toDate())
+                return new Token(resp.access_token, token.refreshToken, expiration.toDate())
             })
     }
 
