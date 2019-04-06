@@ -1,4 +1,4 @@
-import {actionCreator, actionCreatorVoid, IAction, IActionWithPayload} from "../helpers"
+import {IActionWithPayload} from "../helpers"
 import EntertainmentLoadedPayload from "./EntertainmentLoadedPayload"
 import Entertainment from "../../store/state/Entertainment"
 import Token from "../../store/state/Token"
@@ -9,13 +9,7 @@ import {Notifi} from "../../external/port/Notifi"
 import {Twitch} from "../../external/port/Twitch"
 import {Todoist} from "../../external/port/Todoist"
 import {Feedly} from "../../external/port/Feedly"
-
-export const actionLoadingEntertainments = actionCreatorVoid('LOADING_ENTERTAINMENT_FROM_PROVIDER')
-export const actionLoadedEntertainments = actionCreator<EntertainmentLoadedPayload>('LOADED_ENTERTAINMENT_FROM_PROVIDER')
-
-export function initReloading(): IAction {
-    return actionLoadingEntertainments()
-}
+import {actionLoadedEntertainments} from "../../external/adapter/EntertainmentDispatcher"
 
 export function reloadAll(providerStates: ProviderState[]): Promise<IActionWithPayload<EntertainmentLoadedPayload>> {
     const promises = providerStates.map((state) => {

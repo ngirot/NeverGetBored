@@ -1,5 +1,3 @@
-import {actionCreator, IActionWithPayload} from "../helpers"
-import ConnectionSuccessPayload from "./ConnectionSuccessPayload"
 import Token from "../../store/state/Token"
 import {Provider} from "../../store/state/Provider"
 import inject, {Injectable} from "../../../Injector"
@@ -7,44 +5,39 @@ import RefreshToken from "../../store/state/RefreshToken"
 import {Feedly} from "../../external/port/Feedly"
 import {Configuration} from "../../external/port/Configuration"
 import ProviderState from "../../store/state/ProviderState"
+import RefreshResult from "./RefreshResult"
 
-export const actionConnectToProvider = actionCreator<ConnectionSuccessPayload>('CONNECT_TO_PROVIDER')
-export const actionConnectionToProviderFailed = actionCreator<Provider>('CONNECT_TO_PROVIDER_FAILED')
-
-export function connectToProvider(provider: Provider): Promise<IActionWithPayload<ConnectionSuccessPayload>> {
+export function connectToProvider(provider: Provider): Promise<Token> {
     const configuration = inject(Injectable.CONFIGURATION)
     console.log('Try to connect to ' + provider)
     return connectFunction(provider)()
         .then(((token: Token) => {
             console.log('Token generated', token)
             configuration.addToken(provider, token)
-            return actionConnectToProvider(new ConnectionSuccessPayload(provider, token))
+            return token
         }))
         .catch((err) => {
             console.log('Unable to connect to provider: ' + provider, err)
             const notification = inject(Injectable.NOTIFICATION)
             notification.errorMessage("Unable to connect to " + provider, err)
-            throw actionConnectionToProviderFailed(provider)
+            throw provider
         })
 }
 
-export function refreshProviders(providers: ProviderState[]): Promise<IActionWithPayload<ConnectionSuccessPayload>[]> {
+export function refreshProviders(providers: ProviderState[]): Promise<RefreshResult[]> {
     const configuration: Configuration = inject(Injectable.CONFIGURATION)
 
     const refreshed = providers.map((providerState) => {
-            if (providerState.token) {
-                return refreshTokenFunction(providerState.provider)(providerState.token).then((refresh: RefreshToken) => {
-                    if (refresh.refreshed) {
-                        console.log('Save refreshed token', refresh.token)
-                        configuration.addToken(providerState.provider, refresh.token)
-                        return [actionConnectToProvider(new ConnectionSuccessPayload(providerState.provider, refresh.token))]
-                    }
-                    return []
-                })
-            } else {
-                return Promise.resolve([])
-            }
-        })
+        if (providerState.token) {
+            return refreshTokenFunction(providerState.provider)(providerState.token).then((refresh: RefreshToken): RefreshResult[] => {
+                console.log('Save refreshed token', refresh.token)
+                configuration.addToken(providerState.provider, refresh.token)
+                return [{token: refresh.token, refreshed: refresh.refreshed, provider: providerState.provider}]
+            })
+        } else {
+            return Promise.resolve([])
+        }
+    })
 
     return Promise.all(refreshed)
         .then((result) => {
