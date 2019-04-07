@@ -1,4 +1,4 @@
-# Entertainment aggregator [![Build Status](https://travis-ci.com/ngirot/NeverGetBored.svg?token=B2eiPqdsYnX3xZnW3qpc&branch=master)](https://travis-ci.com/ngirot/NeverGetBored)
+# Entertainment aggregator [![Build Status](https://travis-ci.org/ngirot/NeverGetBored.svg?branch=master)](https://travis-ci.org/ngirot/NeverGetBored)
 
 ## Introduction
 NeverGetBored aggregate content from entertainment platforms, and show you everything you can do in one place.
