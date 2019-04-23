@@ -28,7 +28,7 @@ class ReloadButton extends React.Component<Props> {
 
     private icon() {
         if (this.props.reload) {
-            return <i className={"fa fa-spinner fa-spin"}/>
+            return <i className={"fa fa-refresh fa-spin"}/>
         } else {
             return <i className={"fa fa-refresh"}/>
         }
