@@ -18,7 +18,6 @@ export interface OwnProps {
 interface StateProps {
     connected: boolean
     error: boolean
-    loading: boolean
     token?: Token
 }
 
@@ -37,8 +36,6 @@ class ConnectButton extends React.Component<Props> {
                      className={styles.providericon}/>
                 <span className={"caption"}>
                     {this.props.serviceName}
-                    &nbsp;
-                    {this.icon()}
                 </span>
             </button>
         )
@@ -55,18 +52,6 @@ class ConnectButton extends React.Component<Props> {
 
         return styles.notconnected
     }
-
-    private icon() {
-        if (this.props.loading) {
-            return <i className={"fa fa-spinner fa-spin"}/>
-        }
-
-        if (this.props.connected) {
-            return <i className={"fa fa-check"}/>
-        } else {
-            return <i className={"fa fa-times"}/>
-        }
-    }
 }
 
 function mapStateToProps(state: AppState, ownProps: OwnProps): StateProps {
@@ -77,14 +62,12 @@ function mapStateToProps(state: AppState, ownProps: OwnProps): StateProps {
             connected: providerState.token !== undefined,
             error: providerState.error,
             token: providerState.token,
-            loading: state.platform.reloading
         }
     } else {
         return {
             connected: false,
             error: false,
             token: undefined,
-            loading: false
         }
     }
 }

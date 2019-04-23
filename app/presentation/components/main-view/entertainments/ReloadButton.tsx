@@ -7,10 +7,11 @@ import inject, {Injectable} from "../../../../Injector"
 
 interface StateProps {
     providerStates: ProviderState[]
+    reload: boolean
 }
 
 interface DispatchProps {
-    onReload: (providerStates: ProviderState[]) => void
+    onReload: (providerStates: ProviderState[], reloading: boolean) => void
 }
 
 type Props = StateProps & DispatchProps
@@ -19,24 +20,35 @@ class ReloadButton extends React.Component<Props> {
     render() {
         return (
             <button className={"button info square rounded"}
-                    onClick={() => this.props.onReload(this.props.providerStates)}>
-                <i className={"fa fa-refresh"}/>
+                    onClick={() => this.props.onReload(this.props.providerStates, this.props.reload)}>
+                {this.icon()}
             </button>
         )
+    }
+
+    private icon() {
+        if (this.props.reload) {
+            return <i className={"fa fa-spinner fa-spin"}/>
+        } else {
+            return <i className={"fa fa-refresh"}/>
+        }
     }
 }
 
 function mapStateToProps(state: AppState): StateProps {
     return {
-        providerStates: state.platform.providers
+        providerStates: state.platform.providers,
+        reload: state.platform.reloading
     }
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<any>): DispatchProps {
     const entertainmentService = inject(Injectable.ENTERTAINMENT_SERVICE)
     return {
-        onReload: (providerStates: ProviderState[]) => {
-            entertainmentService.reload(dispatch, providerStates)
+        onReload: (providerStates: ProviderState[], reloading: boolean) => {
+            if (!reloading) {
+                entertainmentService.reload(dispatch, providerStates)
+            }
         }
     }
 }
