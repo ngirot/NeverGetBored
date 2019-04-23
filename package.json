@@ -63,7 +63,7 @@
     },
     "files": [
       "dist/",
-      "resources/",
+      "presentation/resources/",
       "node_modules/",
       "app.html",
       "main.js",
