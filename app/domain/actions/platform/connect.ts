@@ -30,8 +30,10 @@ export function refreshProviders(providers: ProviderState[]): Promise<RefreshRes
     const refreshed = providers.map((providerState) => {
         if (providerState.token) {
             return refreshTokenFunction(providerState.provider)(providerState.token).then((refresh: RefreshToken): RefreshResult[] => {
-                console.log('Save refreshed token', refresh.token)
-                configuration.addToken(providerState.provider, refresh.token)
+                if (refresh.refreshed) {
+                    console.log('Save refreshed token', refresh.token)
+                    configuration.addToken(providerState.provider, refresh.token)
+                }
                 return [{token: refresh.token, refreshed: refresh.refreshed, provider: providerState.provider}]
             })
         } else {
