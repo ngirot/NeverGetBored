@@ -52,6 +52,7 @@ export default class FeedlyApi {
         return '/v3/streams/contents'
             + '?streamId=user/' + profileId + '/category/global.all'
             + '&unreadOnly=true'
+            + '&count=10000'
     }
 
     private buildOptions(token: Token): Options {
