@@ -5,7 +5,7 @@ NeverGetBored aggregate content from entertainment platforms, and show you every
 
 Currently, only this platforms are supported:
 * Twitch: display live streams
-* Todoist: display tasks due to day (or before)
+* Todoist: display tasks due today (or before)
 * Feedly: display all unread feeds
 
 
