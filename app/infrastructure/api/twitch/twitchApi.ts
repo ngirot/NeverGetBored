@@ -35,6 +35,10 @@ export default class TwitchApi {
                     console.log('Unable to load streams from Twitch', error)
                     reject('Unable to load streams from Twitch')
                 }
+                if (streamResult) {
+                    console.log('Unable to call Twitch', streamResult.message)
+                    reject('Unable to call Twitch: ' + streamResult.message)
+                }
                 resolve(streamResult.streams)
             }
 
