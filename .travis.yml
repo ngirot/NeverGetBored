@@ -3,7 +3,7 @@ sudo: false
 language: node_js
 
 node_js:
-  - 8
+  - "8"
 
 addons:
   apt:
@@ -15,6 +15,24 @@ script:
   - npm run build
   - npm test
   - npm run package
+
+
+before_deploy:
+  - export RELEASE_PKG_DEB_FILE=$(ls release/*.deb)
+  - export RELEASE_PKG_RPM_FILE=$(ls release/*.rpm)
+  - export RELEASE_PKG_APPIMG_FILE=$(ls release/*.AppImage)
+
+deploy:
+  provider: releases
+  api_key:
+    secure: $GITHUB_OAUTH_TOKEN
+  file:
+    - "${RELEASE_PKG_DEB_FILE}"
+    - "${RELEASE_PKG_RPM_FILE}"
+    - "${RELEASE_PKG_APPIMG_FILE}"
+  skip_cleanup: true
+  on:
+    tags: true
 
 env:
   global:
