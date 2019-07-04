@@ -2,6 +2,8 @@ sudo: false
 
 language: node_js
 
+dist: xenial
+
 node_js:
   - "8"
 
@@ -10,17 +12,28 @@ addons:
     packages:
       - rpm
 
+before_install:
+  - sudo dpkg --add-architecture i386
+  - wget -nc https://dl.winehq.org/wine-builds/winehq.key
+  - sudo apt-key add winehq.key
+  - sudo apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ xenial main'
+  - sudo apt-get update
+  - sudo apt-get install --install-recommends winehq-stable
+  - wine --version
+
 script:
   - node --version
   - npm run build
   - npm test
-  - npm run package
+  - npm run package-win
+  - npm run package-linux
 
 
 before_deploy:
   - export RELEASE_PKG_DEB_FILE=$(ls release/*.deb)
   - export RELEASE_PKG_RPM_FILE=$(ls release/*.rpm)
   - export RELEASE_PKG_APPIMG_FILE=$(ls release/*.AppImage)
+  - export RELEASE_PKG_WINDOWS_FILE=$(ls release/*.exe)
 
 deploy:
   provider: releases
@@ -30,6 +43,7 @@ deploy:
     - "${RELEASE_PKG_DEB_FILE}"
     - "${RELEASE_PKG_RPM_FILE}"
     - "${RELEASE_PKG_APPIMG_FILE}"
+    - "${RELEASE_PKG_WINDOWS_FILE}"
   skip_cleanup: true
   on:
     tags: true
