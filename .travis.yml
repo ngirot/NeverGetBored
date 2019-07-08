@@ -38,7 +38,7 @@ before_deploy:
 deploy:
   provider: releases
   api_key:
-    secure: $GITHUB_OAUTH_TOKEN
+    secure: $GH_TOKEN
   file:
     - "${RELEASE_PKG_DEB_FILE}"
     - "${RELEASE_PKG_RPM_FILE}"
