@@ -1,7 +1,7 @@
 {
   "name": "never-get-bored",
   "productName": "NeverGetBored",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Entertainment aggregator",
   "main": "./main.js",
   "author": {
