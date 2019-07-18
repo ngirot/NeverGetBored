@@ -18,7 +18,7 @@ interface DispatchProps {
     loadConf: () => void
 }
 
-type Props = DispatchProps & StateProps
+type Props = DispatchProps
 
 class MainView extends React.Component<Props> {
 

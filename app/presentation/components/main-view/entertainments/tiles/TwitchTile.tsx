@@ -18,7 +18,7 @@ interface DispatchProps {
     open: (entertainment: Entertainment) => void
 }
 
-type Props = StateProps & OwnsProps & DispatchProps
+type Props = OwnsProps & DispatchProps
 
 class TwitchTile extends React.Component<Props> {
     render() {
