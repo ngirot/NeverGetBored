@@ -1,8 +1,6 @@
-const {app, BrowserWindow, Menu, shell} = require('electron');
-var path = require('path');
+const {app, BrowserWindow, Menu} = require('electron');
+const path = require('path');
 
-let menu;
-let template;
 let mainWindow = null;
 
 if (process.env.NODE_ENV === 'production') {
@@ -12,7 +10,6 @@ if (process.env.NODE_ENV === 'production') {
 
 if (process.env.NODE_ENV === 'development') {
     require('electron-debug')(); // eslint-disable-line global-require
-    const path = require('path'); // eslint-disable-line
     const p = path.join(__dirname, '..', 'app', 'node_modules'); // eslint-disable-line
     require('module').globalPaths.push(p); // eslint-disable-line
 }
