@@ -58,12 +58,11 @@ function refreshTokenFunction(provider: Provider): (token: Token) => Promise<Ref
         }
     }
 
-    switch (provider) {
-        case Provider.FEEDLY:
-            const feedly: Feedly = inject(Injectable.FEEDLY)
-            return buildRefreshFunction(feedly.refreshToken)
-        default:
-            return (token: Token) => Promise.resolve({refreshed: false, token: token})
+    if (provider === Provider.FEEDLY) {
+        const feedly: Feedly = inject(Injectable.FEEDLY)
+        return buildRefreshFunction(feedly.refreshToken)
+    } else {
+        return (token: Token) => Promise.resolve({refreshed: false, token: token})
     }
 
 }
