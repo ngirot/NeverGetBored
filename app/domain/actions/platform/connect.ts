@@ -11,11 +11,11 @@ export function connectToProvider(provider: Provider): Promise<Token> {
     const configuration = inject(Injectable.CONFIGURATION)
     console.log('Try to connect to ' + provider)
     return connectFunction(provider)()
-        .then(((token: Token) => {
+        .then((token: Token) => {
             console.log('Token generated', token)
             configuration.addToken(provider, token)
             return token
-        }))
+        })
         .catch((err) => {
             console.log('Unable to connect to provider: ' + provider, err)
             const notification = inject(Injectable.NOTIFICATION)

@@ -1,5 +1,5 @@
-import uuid = require("uuid")
-import moment = require("moment")
+import uuid = require("uuid");
+import moment = require("moment");
 import OauthCodeConfiguration from "./OauthCodeConfiguration"
 import OauthTokenConfiguration from "./OauthTokenConfiguration"
 import OauthResponseToken from "./OauthResponseToken"
@@ -105,8 +105,18 @@ export default class OauthApi {
     }
 
     private postTokenUrl(url: string): Promise<OauthResponseToken> {
-        return needle('post', url)
-            .then((response: any) => response.body)
+        return new Promise((resolve, reject) => {
+            needle('post', url)
+                .then((response: any) => {
+                    if (response.statusCode === 200) {
+                        resolve(response.body)
+                    } else {
+                        reject(response.body.message)
+                    }
+
+                })
+                .catch((err: any) => reject(err))
+        })
     }
 
     private createOauthWindow() {
