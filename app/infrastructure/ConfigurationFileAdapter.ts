@@ -4,6 +4,7 @@ import Token from "../domain/store/state/Token"
 import ProviderState from "../domain/store/state/ProviderState"
 import {Provider} from "../domain/store/state/Provider"
 import {Configuration} from "../domain/external/port/Configuration"
+import AppConfiguration from "./api/configuration/AppConfiguration";
 
 export default class ConfigurationFileAdapter implements Configuration {
 
@@ -33,9 +34,7 @@ export default class ConfigurationFileAdapter implements Configuration {
             token: token
         })
 
-        const newConfiguration = {
-            providers: newProviders
-        }
+        const newConfiguration = new AppConfiguration(conf.version, newProviders)
 
         this.api.save(newConfiguration)
     }

@@ -23,7 +23,7 @@ export default class ConfigurationApi {
         if (fs.existsSync(configFile)) {
             return JSON.parse(fs.readFileSync(configFile, {encoding: this.encoding}))
         } else {
-            return new AppConfiguration()
+            return new AppConfiguration(1, [])
         }
     }
 
