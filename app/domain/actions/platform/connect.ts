@@ -6,6 +6,7 @@ import {Feedly} from "../../external/port/Feedly"
 import {Configuration} from "../../external/port/Configuration"
 import ProviderState from "../../store/state/ProviderState"
 import RefreshResult from "./RefreshResult"
+import {Twitch} from "../../external/port/Twitch"
 
 export function connectToProvider(provider: Provider): Promise<Token> {
     const configuration = inject(Injectable.CONFIGURATION)
@@ -58,13 +59,16 @@ function refreshTokenFunction(provider: Provider): (token: Token) => Promise<Ref
         }
     }
 
-    if (provider === Provider.FEEDLY) {
-        const feedly: Feedly = inject(Injectable.FEEDLY)
-        return buildRefreshFunction(feedly.refreshToken)
-    } else {
-        return (token: Token) => Promise.resolve({refreshed: false, token: token})
+    switch (provider) {
+        case Provider.FEEDLY:
+            const feedly: Feedly = inject(Injectable.FEEDLY)
+            return buildRefreshFunction(feedly.refreshToken)
+        case Provider.TWITCH:
+            const twitch: Twitch = inject(Injectable.TWITCH)
+            return buildRefreshFunction(twitch.refreshToken)
+        default:
+            return (token: Token) => Promise.resolve({refreshed: false, token: token})
     }
-
 }
 
 function connectFunction(provider: Provider): () => Promise<Token> {

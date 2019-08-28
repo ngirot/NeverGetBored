@@ -1,30 +1,35 @@
 import StreamResult from "./StreamResult"
 import Stream from "./Stream"
-import OauthTokenConfiguration from "../oauth/OauthTokenConfiguration"
 import OauthApi from "../oauth/OauthApi"
 import Token from "../../../domain/store/state/Token"
+import OauthCodeConfiguration from "../oauth/OauthCodeConfiguration"
 
 const api = require('twitch-api-v5')
 
 export default class TwitchApi {
 
-    private readonly clientId: string
+    private readonly oauthConf: OauthCodeConfiguration
 
     constructor(clientId: string) {
-        this.clientId = clientId
         api.clientID = clientId
+
+        this.oauthConf = {
+            codeUrl: 'https://id.twitch.tv/oauth2/authorize',
+            tokenUrl: 'https://id.twitch.tv/oauth2/token',
+            redirectUrl: 'http://localhost',
+            clientId: clientId,
+            secretId: 'rit3ytgutf1571hevdgwno68ohsshv',
+            scope: 'openid',
+            grantType: 'authorization_code'
+        }
     }
 
     public generateTokenTwitch(): Promise<Token> {
-        let configuration: OauthTokenConfiguration = {
-            clientId: this.clientId,
-            clientSecret: "t71vqgy5y4gmjimrfpr2yr2lixcumx",
-            tokenUrl: "https://id.twitch.tv/oauth2/authorize",
-            redirectUrl: "http://localhost",
-            scope: 'openid'
-        }
+        return new OauthApi().generateTokenWithCode(this.oauthConf)
+    }
 
-        return new OauthApi().generateTokenWithToken(configuration)
+    refreshToken(token: Token): Promise<Token> {
+        return new OauthApi().refresh(this.oauthConf, token)
     }
 
     public entertainmentsTwitch(token: Token): Promise<Stream[]> {

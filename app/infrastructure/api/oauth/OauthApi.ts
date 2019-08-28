@@ -45,7 +45,9 @@ export default class OauthApi {
         }
 
         return needle('post', configuration.tokenUrl, payload)
-            .then((resp: any) => resp.body)
+            .then((resp: any) => {
+                return resp.body
+            })
             .then(function (resp: OauthResponseToken) {
                 const expiration = moment().add(resp.expires_in, 'seconds')
                 return new Token(resp.access_token, token.refreshToken, expiration.toDate())
@@ -100,6 +102,7 @@ export default class OauthApi {
                 + '&scope=' + configuration.scope
                 + "&redirect_uri=" + configuration.redirectUrl
                 + "&response_type=code"
+
             window.loadURL(baseUrl)
         })
     }
