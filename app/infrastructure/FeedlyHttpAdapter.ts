@@ -23,7 +23,7 @@ export default class FeedlyHttpAdapter implements Feedly {
             })
     }
 
-   public entertainmentsFeedly = (token: Token): Promise<Entertainment[]> => {
+    public entertainmentsFeedly = (token: Token): Promise<Entertainment[]> => {
         return this.api.entertainmentsFeedly(token)
             .then(this.convertItemToEntertainment)
     }
@@ -36,7 +36,8 @@ export default class FeedlyHttpAdapter implements Feedly {
         return items.map((item: Item) => {
             const url = this.extractUrl(item)
             const thumbnail = this.extractThumbnail(item)
-            return new Entertainment(Provider.FEEDLY, EntertainmentType.PERMANENT, item.id, item.title, item.origin.title, url, thumbnail)
+            return new Entertainment(Provider.FEEDLY, EntertainmentType.PERMANENT, item.id, item.published,
+                item.title, item.origin.title, url, thumbnail)
         })
     }
 

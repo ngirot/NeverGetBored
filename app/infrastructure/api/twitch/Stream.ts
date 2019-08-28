@@ -6,4 +6,5 @@ export default class Stream {
     public readonly game: string
     public readonly channel: Channel
     public readonly preview: Preview
+    public readonly viewers: number
 }

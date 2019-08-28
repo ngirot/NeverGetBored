@@ -38,6 +38,10 @@ class EntertainmentList extends React.Component<Props> {
             return this.compareStrings(a.provider, b.provider)
         }
 
+        if (a.order !== b.order) {
+            return b.order - a.order
+        }
+
         return this.compareStrings(a.id, b.id)
     }
 

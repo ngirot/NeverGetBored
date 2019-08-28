@@ -30,11 +30,12 @@ export default class TwitchHttpAdapter implements Twitch {
     }
 
     private convertStreamToEntertainment = (stream: Stream): Entertainment => {
-        return new Entertainment(Provider.TWITCH, EntertainmentType.LIVE, stream._id, stream.channel.status, stream.channel.display_name,
-            stream.channel.url, this.disableCache(stream.preview.large))
+        return new Entertainment(Provider.TWITCH, EntertainmentType.LIVE, stream._id, stream.viewers,
+            stream.channel.status, stream.channel.display_name,
+            stream.channel.url, this.urlWithoutCache(stream.preview.large))
     }
 
-    private disableCache = (url: string) => {
+    private urlWithoutCache = (url: string) => {
         return url + "?nocache=" + new Date().getTime()
     }
 }

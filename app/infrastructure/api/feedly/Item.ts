@@ -10,4 +10,5 @@ export default class Item {
     public readonly visual?: Visual
     public readonly thumbnail: Thumbnail[]
     public readonly alternate: Alternate[]
+    public readonly published: number
 }
