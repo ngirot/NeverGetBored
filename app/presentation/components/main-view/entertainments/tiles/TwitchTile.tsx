@@ -21,7 +21,7 @@ interface DispatchProps {
 type Props = OwnsProps & DispatchProps
 
 class TwitchTile extends React.Component<Props> {
-    render() {
+    render(): JSX.Element {
         const e = this.props.entertainment
 
         const authorName = this.buildAuhtorName(e)

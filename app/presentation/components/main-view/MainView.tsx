@@ -22,11 +22,11 @@ type Props = DispatchProps
 
 class MainView extends React.Component<Props> {
 
-    componentDidMount() {
+    componentDidMount(): void {
         this.props.loadConf()
     }
 
-    render() {
+    render(): JSX.Element {
         return (
             <div className={styles.container} data-tid="container">
                 <div className={styles.intro}>

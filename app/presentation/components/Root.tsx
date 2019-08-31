@@ -12,7 +12,7 @@ interface IRootType {
     history: History
 }
 
-export default function Root({store, history}: IRootType) {
+export default function Root({store, history}: IRootType): JSX.Element {
     return (
         <Provider store={store}>
             <ConnectedRouter history={history}>

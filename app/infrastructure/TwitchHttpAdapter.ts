@@ -7,7 +7,7 @@ import {EntertainmentType} from "../domain/store/state/EntertainmentType"
 import {Twitch} from "../domain/external/port/Twitch"
 import RefreshToken from "../domain/store/state/RefreshToken"
 import Author from "../domain/store/state/Author"
-import Subject from "../domain/store/state/Subject";
+import Subject from "../domain/store/state/Subject"
 
 export default class TwitchHttpAdapter implements Twitch {
 

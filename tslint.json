@@ -18,6 +18,11 @@
     "one-line": [true, "check-else", "check-whitespace", "check-open-brace"],
     "quotemark": [false, "single", "avoid-escape"],
     "semicolon": [true, "never"],
+    "typedef": [
+      true,
+      "call-signature",
+      "parameter"
+    ],
     "typedef-whitespace": [
       true, {
         "call-signature": "nospace",

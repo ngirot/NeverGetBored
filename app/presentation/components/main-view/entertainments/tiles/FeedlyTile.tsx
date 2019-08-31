@@ -30,7 +30,7 @@ class FeedlyTile extends React.Component<Props> {
     private browser = inject(Injectable.BROWSER)
     private feedly = inject(Injectable.FEEDLY)
 
-    render() {
+    render(): JSX.Element {
         const e = this.props.entertainment
         const token = this.props.token
         const logo = this.buildLogo()

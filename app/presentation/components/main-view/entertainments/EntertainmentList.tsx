@@ -15,7 +15,7 @@ interface StateProps {
 type Props = StateProps
 
 class EntertainmentList extends React.Component<Props> {
-    render() {
+    render(): JSX.Element {
         return (
             <div className={"tiles-grid " + styles.container}>
                 {

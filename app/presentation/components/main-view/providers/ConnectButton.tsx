@@ -28,7 +28,7 @@ interface DispatchProps {
 type Props = StateProps & DispatchProps & OwnProps
 
 class ConnectButton extends React.Component<Props> {
-    render() {
+    render(): JSX.Element {
         return (
             <button onClick={() => this.props.onConnect(this.props.token)}
                     className={"rounded image-button " + this.style()}>

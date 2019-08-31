@@ -7,7 +7,7 @@ import {actionLoadedConfiguration} from "../../external/adapter/ConfigurationDis
 import {actionConnectionToProviderFailed, actionConnectToProvider} from "../../external/adapter/PlatformDispatcher"
 import {actionLoadedEntertainments, actionLoadingEntertainments} from "../../external/adapter/EntertainmentDispatcher"
 
-export default function platformsReducer(state: PlatformState = new PlatformState([], [], false), action: IAction) {
+export default function platformsReducer(state: PlatformState = new PlatformState([], [], false), action: IAction): PlatformState {
     if (actionConnectToProvider.test(action)) {
         const listWithoutProvider = state.providers.filter(p => p.provider !== action.payload.provider)
         listWithoutProvider.push(new ProviderState(action.payload.provider, false, action.payload.token))

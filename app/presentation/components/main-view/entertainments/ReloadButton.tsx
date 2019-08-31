@@ -17,7 +17,7 @@ interface DispatchProps {
 type Props = StateProps & DispatchProps
 
 class ReloadButton extends React.Component<Props> {
-    render() {
+    render(): JSX.Element {
         return (
             <button className={"button info square rounded"}
                     onClick={() => this.props.onReload(this.props.providerStates, this.props.reload)}>
@@ -26,7 +26,7 @@ class ReloadButton extends React.Component<Props> {
         )
     }
 
-    private icon() {
+    private icon(): JSX.Element {
         if (this.props.reload) {
             return <i className={"fa fa-refresh fa-spin"}/>
         } else {

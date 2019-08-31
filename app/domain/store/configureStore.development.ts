@@ -5,6 +5,8 @@ import {routerMiddleware, push} from 'react-router-redux'
 import {createLogger} from 'redux-logger'
 import rootReducer from "./reducers"
 
+/* tslint:disable */
+
 declare const window: Window & {
     __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?(a: any): void;
 }

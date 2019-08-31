@@ -3,7 +3,7 @@ import {RouteComponentProps} from 'react-router'
 import MainView from "./main-view/MainView"
 
 export class HomePage extends React.Component<RouteComponentProps<any>, void> {
-    render() {
+    render(): JSX.Element {
         return (
             <MainView/>
         )

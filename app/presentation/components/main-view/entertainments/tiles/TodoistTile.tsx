@@ -9,7 +9,7 @@ export interface OwnProps {
 }
 
 class TodoistTile extends React.Component<OwnProps> {
-    render() {
+    render(): JSX.Element {
         const e = this.props.entertainment
         return (
             <div data-role="tile" data-size="wide" className={"d-flex flex-justify-center flex-align-center " + styles.tile}>

@@ -12,20 +12,18 @@ export interface OwnProps {
 }
 
 class EntertainmentTile extends React.Component<OwnProps> {
-    render() {
-        return (
-            this.tile(this.props.entertainment)
-        )
+    render(): JSX.Element {
+        return this.tile(this.props.entertainment)
     }
 
-    private tile(entertainment: Entertainment) {
+    private tile(entertainment: Entertainment): JSX.Element {
         switch (entertainment.provider) {
             case Provider.TWITCH:
                 return <TwitchTile entertainment={entertainment}/>
             case Provider.TODOIST:
                 return <TodoistTile entertainment={entertainment}/>
             case Provider.FEEDLY:
-                return<FeedlyTile entertainment={entertainment}/>
+                return <FeedlyTile entertainment={entertainment}/>
             default:
                 console.log('default')
                 return <DefaultTile entertainment={entertainment}/>

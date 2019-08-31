@@ -7,7 +7,7 @@ export interface OwnProps {
 }
 
 class DefaultTile extends React.Component<OwnProps> {
-    render() {
+    render(): JSX.Element {
         const e = this.props.entertainment
         return (
             <div data-role="tile" className={"d-flex flex-justify-center flex-align-center"}>

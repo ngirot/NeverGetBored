@@ -1,7 +1,6 @@
 import {Action} from 'redux'
 
 export type DispatchFunction = (action: IAction) => void
-export type DispatcherFunction = (dispatch: DispatchFunction) => void
 
 export interface IAction extends Action {
 }

@@ -4,6 +4,8 @@ import {createBrowserHistory} from 'history'
 import {routerMiddleware} from 'react-router-redux'
 import rootReducer from "./reducers"
 
+/* tslint:disable */
+
 const history = createBrowserHistory()
 const router = routerMiddleware(history)
 const enhancer = applyMiddleware(thunk, router)

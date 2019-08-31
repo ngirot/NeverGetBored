@@ -12,7 +12,7 @@ export default class ConfigurationApi {
 
     private readonly encoding = 'UTF-8'
 
-    public save(appConfiguration: AppConfiguration) {
+    public save(appConfiguration: AppConfiguration): void {
         fs.writeFileSync(this.configurationFile(), JSON.stringify(appConfiguration), {encoding: this.encoding})
         console.log('Configuration saved', appConfiguration)
     }

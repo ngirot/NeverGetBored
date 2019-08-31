@@ -4,7 +4,7 @@ import Token from "../domain/store/state/Token"
 import ProviderState from "../domain/store/state/ProviderState"
 import {Provider} from "../domain/store/state/Provider"
 import {Configuration} from "../domain/external/port/Configuration"
-import AppConfiguration from "./api/configuration/AppConfiguration";
+import AppConfiguration from "./api/configuration/AppConfiguration"
 
 export default class ConfigurationFileAdapter implements Configuration {
 

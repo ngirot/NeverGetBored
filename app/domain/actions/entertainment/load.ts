@@ -14,7 +14,7 @@ import {actionLoadedEntertainments} from "../../external/adapter/EntertainmentDi
 export function reloadAll(providerStates: ProviderState[]): Promise<IActionWithPayload<EntertainmentLoadedPayload>> {
     const promises = providerStates.map((state) => {
 
-        return new Promise(function (resolve) {
+        return new Promise((resolve: any) => {
             const loader = loadFunction(state.provider)
             if (state.token) {
                 loader(state.token)

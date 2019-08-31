@@ -1,5 +1,5 @@
-import uuid = require("uuid");
-import moment = require("moment");
+import uuid = require("uuid")
+import moment = require("moment")
 import OauthCodeConfiguration from "./OauthCodeConfiguration"
 import OauthTokenConfiguration from "./OauthTokenConfiguration"
 import OauthResponseToken from "./OauthResponseToken"
@@ -48,7 +48,7 @@ export default class OauthApi {
             .then((resp: any) => {
                 return resp.body
             })
-            .then(function (resp: OauthResponseToken) {
+            .then((resp: OauthResponseToken) => {
                 const expiration = moment().add(resp.expires_in, 'seconds')
                 return new Token(resp.access_token, token.refreshToken, expiration.toDate())
             })
@@ -61,7 +61,7 @@ export default class OauthApi {
         const state = uuid()
 
         return new Promise((resolve, reject) => {
-            window.webContents.addListener('will-redirect', function (event: Event, urlAsString: string) {
+            window.webContents.addListener('will-redirect', (event: Event, urlAsString: string) => {
                 if (urlAsString.startsWith(configuration.redirectUrl)) {
                     const url = new URL(urlAsString)
                     const code = url.searchParams.get('code')
@@ -80,7 +80,7 @@ export default class OauthApi {
                         + (configuration.grantType ? "&grant_type=" + configuration.grantType : '')
 
                     self.postTokenUrl(tokenUrl)
-                        .then(function (resp: OauthResponseToken) {
+                        .then((resp: OauthResponseToken) => {
                             window.destroy()
                             if (resp.expires_in) {
                                 const expiration = moment().add(resp.expires_in, 'seconds')
@@ -89,7 +89,7 @@ export default class OauthApi {
                                 resolve(new Token(resp.access_token))
                             }
                         })
-                        .catch(function (err: any) {
+                        .catch((err: any) => {
                             window.destroy()
                             reject(err)
                         })
@@ -122,6 +122,7 @@ export default class OauthApi {
         })
     }
 
+    /* tslint:disable */
     private createOauthWindow() {
         return new BrowserWindow({
             icon: path.join(__dirname, '/logo.png'),
