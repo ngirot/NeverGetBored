@@ -27,8 +27,8 @@ type Props = StateProps & OwnsProps & DispatchProps
 
 class FeedlyTile extends React.Component<Props> {
 
-    private browser = inject(Injectable.BROWSER)
-    private feedly = inject(Injectable.FEEDLY)
+    private browser: Browser = inject(Injectable.BROWSER)
+    private feedly: Feedly = inject(Injectable.FEEDLY)
 
     render(): JSX.Element {
         const e = this.props.entertainment

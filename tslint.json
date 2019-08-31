@@ -21,7 +21,9 @@
     "typedef": [
       true,
       "call-signature",
-      "parameter"
+      "parameter",
+      "property-declaration",
+      "member-variable-declaration"
     ],
     "typedef-whitespace": [
       true, {

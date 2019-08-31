@@ -9,7 +9,11 @@ import {Todoist} from "../domain/external/port/Todoist"
 
 export default class TodoistHttpAdapter implements Todoist {
 
-    private readonly api = new TodoistApi()
+    private readonly api: TodoistApi
+
+    constructor() {
+        this.api = new TodoistApi()
+    }
 
     public generateTokenTodoist = (): Promise<Token> => {
         return new TodoistApi().generateTokenTodoist()

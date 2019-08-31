@@ -7,7 +7,11 @@ import Token from "../../../domain/store/state/Token"
 
 export default class TodoistApi {
 
-    private readonly baseUrl = 'https://todoist.com'
+    private readonly baseUrl: string
+
+    constructor() {
+        this.baseUrl = 'https://todoist.com'
+    }
 
     generateTokenTodoist(): Promise<Token> {
         const oauthConf: OauthCodeConfiguration = {

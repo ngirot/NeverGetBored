@@ -8,7 +8,11 @@ import AppConfiguration from "./api/configuration/AppConfiguration"
 
 export default class ConfigurationFileAdapter implements Configuration {
 
-    private readonly api = new ConfigurationApi()
+    private readonly api: ConfigurationApi
+
+    constructor() {
+        this.api = new ConfigurationApi()
+    }
 
     public loadProviders = (): ProviderState[] => {
         return this.api.load()

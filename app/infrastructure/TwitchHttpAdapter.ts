@@ -11,7 +11,11 @@ import Subject from "../domain/store/state/Subject"
 
 export default class TwitchHttpAdapter implements Twitch {
 
-    private readonly twitchClientId = 'uviersrira44oauqh1n6bdw8h0f0jw'
+    private readonly twitchClientId: string
+
+    constructor() {
+        this.twitchClientId = 'uviersrira44oauqh1n6bdw8h0f0jw'
+    }
 
     public generateTokenTwitch = (): Promise<Token> => {
         return new TwitchApi(this.twitchClientId).generateTokenTwitch()

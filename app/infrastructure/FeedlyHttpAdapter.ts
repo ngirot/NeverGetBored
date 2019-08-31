@@ -10,7 +10,11 @@ import Author from "../domain/store/state/Author"
 
 export default class FeedlyHttpAdapter implements Feedly {
 
-    private readonly api = new FeedlyApi()
+    private readonly api: FeedlyApi
+
+    constructor() {
+        this.api = new FeedlyApi()
+    }
 
     public generateTokenFeedly = (): Promise<Token> => {
         return new FeedlyApi().generateTokenFeedly()

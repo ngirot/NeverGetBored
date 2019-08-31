@@ -10,16 +10,21 @@ import Token from "../../../domain/store/state/Token"
 
 export default class FeedlyApi {
 
-    private readonly baseUrl = 'https://cloud.feedly.com'
+    private readonly baseUrl: string
 
-    private readonly oauthConf: OauthCodeConfiguration = {
-        codeUrl: this.baseUrl + '/v3/auth/auth',
-        tokenUrl: this.baseUrl + '/v3/auth/token',
-        redirectUrl: 'http://localhost',
-        clientId: 'boutroue',
-        secretId: 'FE012EGICU4ZOBDRBEOVAJA1JZYH',
-        scope: this.baseUrl + '/subscriptions',
-        grantType: 'authorization_code'
+    private readonly oauthConf: OauthCodeConfiguration
+
+    constructor() {
+        this.baseUrl = 'https://cloud.feedly.com'
+        this.oauthConf = {
+            codeUrl: this.baseUrl + '/v3/auth/auth',
+            tokenUrl: this.baseUrl + '/v3/auth/token',
+            redirectUrl: 'http://localhost',
+            clientId: 'boutroue',
+            secretId: 'FE012EGICU4ZOBDRBEOVAJA1JZYH',
+            scope: this.baseUrl + '/subscriptions',
+            grantType: 'authorization_code'
+        }
     }
 
     generateTokenFeedly(): Promise<Token> {
