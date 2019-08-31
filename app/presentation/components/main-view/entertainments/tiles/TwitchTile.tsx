@@ -4,6 +4,8 @@ import {connect} from "react-redux"
 import {emptyFunction} from "../../../utils"
 import Entertainment from "../../../../../domain/store/state/Entertainment"
 import inject, {Injectable} from "../../../../../Injector"
+import Author from "../../../../../domain/store/state/Author"
+import Subject from "../../../../../domain/store/state/Subject"
 
 const styles = require('./TwitchTile.scss')
 
@@ -24,28 +26,20 @@ class TwitchTile extends React.Component<Props> {
     render(): JSX.Element {
         const e = this.props.entertainment
 
-        const authorName = this.buildAuhtorName(e)
-        const authorAvatar = this.buildAuthorAvatar(e)
-        const gameIcon = this.buildGameIcon(e)
-        const gameName = this.buildGameName(e)
-        const twitchLogo = this.buildTwitchLogo()
-        const preview = this.buildPreview(e)
-        const streamName = this.buildStreamName(e)
-
         return (
             <div data-role="tile" data-size="wide" className={styles.tile}
                  onClick={() => this.props.open(e)} data-effect="hover-slide-down">
                 <div className="slide-front">
-                    {twitchLogo}
-                    {streamName}
-                    {authorName}
-                    {preview}
+                    {this.buildTwitchLogo()}
+                    {this.buildStreamName(e)}
+                    {e.author && this.buildAuhtorName(e.author)}
+                    {this.buildPreview(e)}
                 </div>
                 <div className="slide-back">
-                    {twitchLogo}
-                    {authorAvatar}
-                    {gameIcon}
-                    {gameName}
+                    {this.buildTwitchLogo()}
+                    {e.author && this.buildAuthorAvatar(e.author)}
+                    {e.subject && this.buildGameIcon(e.subject)}
+                    {e.subject && this.buildGameName(e.subject)}
                 </div>
             </div>
         )
@@ -63,38 +57,26 @@ class TwitchTile extends React.Component<Props> {
         return <img className={"tile-logo"} src={'presentation/resources/logos/twitch.svg'} alt={"Twitch logo"}/>
     }
 
-    private buildAuhtorName(e: Entertainment): JSX.Element | null {
-        if (!e.author) {
-            return null
-        }
-        return <span className={"badge-top " + styles.username}>{e.author.name}</span>
+    private buildAuhtorName(author: Author): JSX.Element {
+        return <span className={"badge-top " + styles.username}>{author.name}</span>
     }
 
-    private buildGameName(e: Entertainment): JSX.Element | null {
-        if (!e.subject) {
-            return null
-        }
-        return <span className={"branding-bar " + styles.gamename}>{e.subject.name}</span>
+    private buildGameName(subject: Subject): JSX.Element {
+        return <span className={"branding-bar " + styles.gamename}>{subject.name}</span>
     }
 
-    private buildAuthorAvatar(e: Entertainment): JSX.Element | null {
-        if (!e.author) {
-            return null
-        }
+    private buildAuthorAvatar(author: Author): JSX.Element {
         return <div className={"badge-top " + styles.username + " " + styles.badgeavatar}>
-            <img alt={e.author.name}
-                 src={e.author.avatarUrl}
+            <img alt={author.name}
+                 src={author.avatarUrl}
                  className={styles.avatar}/>
             <br/>
-            <span>{e.author.name}</span>
+            <span>{author.name}</span>
         </div>
     }
 
-    private buildGameIcon(e: Entertainment): JSX.Element | null {
-        if (!e.subject) {
-            return null
-        }
-        return <img alt={e.subject.name} src={e.subject.iconUrl} className={styles.gameicon}/>
+    private buildGameIcon(subject: Subject): JSX.Element {
+        return <img alt={subject.name} src={subject.iconUrl} className={styles.gameicon}/>
     }
 }
 

@@ -8,6 +8,7 @@ import {Provider} from "../../../../../domain/store/state/Provider"
 import inject, {Injectable} from "../../../../../Injector"
 import {Browser} from "../../../../../domain/external/port/Browser"
 import {Feedly} from "../../../../../domain/external/port/Feedly"
+import Author from "../../../../../domain/store/state/Author"
 
 const styles = require('./FeedlyTile.scss')
 
@@ -33,8 +34,6 @@ class FeedlyTile extends React.Component<Props> {
     render(): JSX.Element {
         const e = this.props.entertainment
         const token = this.props.token
-        const logo = this.buildLogo()
-        const author = this.buildAuthor(e)
 
         if (e.previewUrl) {
             return (
@@ -42,15 +41,15 @@ class FeedlyTile extends React.Component<Props> {
                      onClick={() => this.props.open(this.browser, this.feedly, e, token)}
                      className={"d-flex flex-justify-center flex-align-center " + styles.tile}>
                     <div className="slide-front">
-                        {logo}
-                        {author}
-                        <span className={"branding-bar " + styles.feedname}>{e.title}</span>
-                        <img alt={e.title} src={e.previewUrl} className={styles.thumbnail}/>
+                        {this.buildLogo()}
+                        {e.author && this.buildAuthor(e.author)}
+                        {this.buildBottomTitle(e)}
+                        {this.buildPreview(e)}
                     </div>
                     <div className="slide-back d-flex flex-justify-center flex-align-center">
-                        {logo}
-                        {author}
-                        <p>{e.title}</p>
+                        {this.buildLogo()}
+                        {e.author && this.buildAuthor(e.author)}
+                        {this.buildCentralTitle(e)}
                     </div>
                 </div>
             )
@@ -58,19 +57,28 @@ class FeedlyTile extends React.Component<Props> {
             return (
                 <div data-role="tile" data-size="wide"
                      className={"d-flex flex-justify-center flex-align-center " + styles.tile}>
-                    {logo}
-                    <p>{e.title}</p>
-                    {author}
+                    {this.buildLogo()}
+                    {this.buildCentralTitle(e)}
+                    {e.author && this.buildAuthor(e.author)}
                 </div>
             )
         }
     }
 
-    private buildAuthor(e: Entertainment): JSX.Element | null {
-        if (!e.author) {
-            return null
-        }
-        return <span className={"badge-top " + styles.sourcename}>{e.author.name}</span>
+    private buildPreview(e: Entertainment): JSX.Element {
+        return <img alt={e.title} src={e.previewUrl} className={styles.thumbnail}/>
+    }
+
+    private buildBottomTitle(e: Entertainment): JSX.Element {
+        return <span className={"branding-bar " + styles.feedname}>{e.title}</span>
+    }
+
+    private buildCentralTitle(e: Entertainment): JSX.Element {
+        return <p>{e.title}</p>
+    }
+
+    private buildAuthor(author: Author): JSX.Element {
+        return <span className={"badge-top " + styles.sourcename}>{author.name}</span>
     }
 
     private buildLogo(): JSX.Element {
