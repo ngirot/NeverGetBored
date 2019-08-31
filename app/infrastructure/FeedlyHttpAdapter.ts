@@ -6,6 +6,7 @@ import Token from "../domain/store/state/Token"
 import {Provider} from "../domain/store/state/Provider"
 import {EntertainmentType} from "../domain/store/state/EntertainmentType"
 import {Feedly} from "../domain/external/port/Feedly"
+import Author from "../domain/store/state/Author"
 
 export default class FeedlyHttpAdapter implements Feedly {
 
@@ -36,8 +37,9 @@ export default class FeedlyHttpAdapter implements Feedly {
         return items.map((item: Item) => {
             const url = this.extractUrl(item)
             const thumbnail = this.extractThumbnail(item)
+            const author = new Author(item.origin.title)
             return new Entertainment(Provider.FEEDLY, EntertainmentType.PERMANENT, item.id, item.published,
-                item.title, item.origin.title, url, thumbnail)
+                item.title, author, url, thumbnail)
         })
     }
 

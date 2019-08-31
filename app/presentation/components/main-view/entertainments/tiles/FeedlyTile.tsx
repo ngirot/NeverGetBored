@@ -33,16 +33,25 @@ class FeedlyTile extends React.Component<Props> {
     render() {
         const e = this.props.entertainment
         const token = this.props.token
-        const logo = <img className={"tile-logo"} src={'presentation/resources/logos/feedly.svg'} alt={"Feedly logo"}/>
+        const logo = this.buildLogo()
+        const author = this.buildAuthor(e)
 
         if (e.previewUrl) {
             return (
-                <div data-role="tile" data-size="wide" onClick={() => this.props.open(this.browser, this.feedly, e, token)}
+                <div data-role="tile" data-size="wide" data-effect="hover-slide-down"
+                     onClick={() => this.props.open(this.browser, this.feedly, e, token)}
                      className={"d-flex flex-justify-center flex-align-center " + styles.tile}>
-                    {logo}
-                    <span className={"branding-bar " + styles.feedname}>{e.title}</span>
-                    <span className={"badge-top " + styles.sourcename}>{e.user}</span>
-                    <img alt={e.title} src={e.previewUrl} className={styles.thumbnail}/>
+                    <div className="slide-front">
+                        {logo}
+                        {author}
+                        <span className={"branding-bar " + styles.feedname}>{e.title}</span>
+                        <img alt={e.title} src={e.previewUrl} className={styles.thumbnail}/>
+                    </div>
+                    <div className="slide-back d-flex flex-justify-center flex-align-center">
+                        {logo}
+                        {author}
+                        <p>{e.title}</p>
+                    </div>
                 </div>
             )
         } else {
@@ -51,9 +60,21 @@ class FeedlyTile extends React.Component<Props> {
                      className={"d-flex flex-justify-center flex-align-center " + styles.tile}>
                     {logo}
                     <p>{e.title}</p>
+                    {author}
                 </div>
             )
         }
+    }
+
+    private buildAuthor(e: Entertainment): JSX.Element | null {
+        if (!e.author) {
+            return null
+        }
+        return <span className={"badge-top " + styles.sourcename}>{e.author.name}</span>
+    }
+
+    private buildLogo(): JSX.Element {
+        return <img className={"tile-logo"} src={'presentation/resources/logos/feedly.svg'} alt={"Feedly logo"}/>
     }
 }
 

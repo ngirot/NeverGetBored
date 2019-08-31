@@ -3,4 +3,5 @@ export default class Channel {
     public readonly display_name: string
     public readonly url: string
     public readonly logo: string
+    public readonly game: string
 }
