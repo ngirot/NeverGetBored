@@ -62,7 +62,9 @@ class TwitchTile extends React.Component<Props> {
     }
 
     private buildGameName(subject: Subject): JSX.Element {
-        return <span className={"branding-bar " + styles.gamename}>{subject.name}</span>
+        return <div className={"branding-bar " + styles.gamebar}>
+            <span className={styles.gamename}>{subject.name}</span>
+        </div>
     }
 
     private buildAuthorAvatar(author: Author): JSX.Element {

@@ -14,9 +14,15 @@
 
   .gamename {
     background-color: rgba(29, 29, 29, .7) !important;
-    width: auto;
+    display: inline-block;
+    padding-left: 1em;
+    padding-right: 1em;
   }
 
+  .gamebar {
+    text-align: left;
+    padding-left: 0 !important;
+  }
 
   .longtitle {
     background-color: rgba(29, 29, 29, .7) !important;
