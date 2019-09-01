@@ -3,11 +3,16 @@
 ## Introduction
 NeverGetBored aggregate content from entertainment platforms, and show you everything you can do in one place.
 
-Currently, only this platforms are supported:
+![Screenshot](doc/screenshot.png?raw=true "Screenshot")
+
+Currently, those platforms are supported:
 * Twitch: display live streams
 * Todoist: display tasks due today (or before)
 * Feedly: display all unread feeds
 
+## Download
+
+The latest runnable packages can be found in the [Github release tab](https://github.com/ngirot/NeverGetBored/releases)
 
 ## Build
 Requirements : Node.js >= 8
