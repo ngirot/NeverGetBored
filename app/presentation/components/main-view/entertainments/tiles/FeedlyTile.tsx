@@ -41,15 +41,15 @@ class FeedlyTile extends React.Component<Props> {
                      onClick={() => this.props.open(this.browser, this.feedly, e, token)}
                      className={"d-flex flex-justify-center flex-align-center " + styles.tile}>
                     <div className="slide-front">
-                        {this.buildLogo()}
+                        {this.buildPreview(e)}
                         {e.author && this.buildAuthor(e.author)}
                         {this.buildBottomTitle(e)}
-                        {this.buildPreview(e)}
+                        {this.buildLogo()}
                     </div>
                     <div className="slide-back d-flex flex-justify-center flex-align-center">
-                        {this.buildLogo()}
-                        {e.author && this.buildAuthor(e.author)}
                         {this.buildCentralTitle(e)}
+                        {e.author && this.buildAuthor(e.author)}
+                        {this.buildLogo()}
                     </div>
                 </div>
             )
@@ -66,7 +66,7 @@ class FeedlyTile extends React.Component<Props> {
     }
 
     private buildPreview(e: Entertainment): JSX.Element {
-        return <img alt={e.title} src={e.previewUrl} className={styles.thumbnail}/>
+        return <div className={styles.thumbnailcontainer}><img alt={e.title} src={e.previewUrl} className={styles.thumbnail}/></div>
     }
 
     private buildBottomTitle(e: Entertainment): JSX.Element {
