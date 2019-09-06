@@ -29,18 +29,16 @@ export default class TodoistApi {
     entertainmentsTodoist(token: Token): Promise<Item[]> {
         const http = new HttpApi(this.baseUrl)
 
-        const syncPath = '/api/v7/sync?token=' + token.currentToken + '&sync_token=*&resource_types=[%22all%22]'
+        const syncPath = '/api/v8/sync?token=' + token.currentToken + '&sync_token=*&resource_types=[%22all%22]'
         return new Promise((resolve, reject) => {
             // The first call always fail, so I make it fail fast at least...
             http.get(syncPath, {read_timeout: 100, open_timeout: 100})
-                .then((syncResult: SyncResult) => {
-                    resolve(syncResult.items)
-                })
+                .then((syncResult: SyncResult) => syncResult.items)
+                .then(resolve)
                 .catch(() => {
                     http.get(syncPath)
-                        .then((syncResult: SyncResult) => {
-                            resolve(syncResult.items)
-                        })
+                        .then((syncResult: SyncResult) => syncResult.items)
+                        .then(resolve)
                         .catch(reject)
                 })
 

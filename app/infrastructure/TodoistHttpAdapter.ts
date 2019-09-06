@@ -28,9 +28,14 @@ export default class TodoistHttpAdapter implements Todoist {
         const end = moment().endOf('day')
 
         return items
-            .filter(item => item.due_date_utc !== null)
-            .filter(item => moment(item.due_date_utc) < end)
+            .filter(item => item.due !== null)
+            .filter(item => item.due.date !== null)
+            .filter(item => this.asDate(item.due.date) < end)
             .map(item => new Entertainment(Provider.TODOIST, EntertainmentType.TASK, item.id,
-                -moment(item.due_date_utc).unix(), item.content))
+                -this.asDate(item.due.date).unix(), item.content))
+    }
+
+    private asDate(dateAsString: string): moment.Moment {
+        return moment(dateAsString, 'YYYY-MM-DD')
     }
 }
