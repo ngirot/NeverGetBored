@@ -17,7 +17,6 @@ export default class HttpApi {
         return new Promise<T>((resolve, reject) => {
             needle('get', this.baseUrl + path, localOptions)
                 .then((response: any) => {
-                    console.log('response', response)
                     if (this.isValidResponse(response)) {
                         resolve(response.body as T)
                     } else {
