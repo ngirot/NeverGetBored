@@ -17,10 +17,11 @@ export default class ConfigurationFileAdapter implements Configuration {
     public loadProviders = (): ProviderState[] => {
         return this.api.load()
             .providers
+            .filter(configuration => this.extractProvider(configuration.name))
             .map((providerConfiguration: ProviderConfiguration) => {
                 const newToken = new Token(providerConfiguration.token.currentToken,
                     providerConfiguration.token.refreshToken, providerConfiguration.token.expiration)
-                return new ProviderState(Provider[providerConfiguration.name as keyof typeof Provider], true, newToken)
+                return new ProviderState(this.extractProvider(providerConfiguration.name), true, newToken)
             })
     }
 
@@ -41,5 +42,9 @@ export default class ConfigurationFileAdapter implements Configuration {
         const newConfiguration = new AppConfiguration(conf.version, newProviders)
 
         this.api.save(newConfiguration)
+    }
+
+    private extractProvider(name: string): Provider {
+        return Provider[name as keyof typeof Provider]
     }
 }
