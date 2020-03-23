@@ -66,6 +66,9 @@ function refreshTokenFunction(provider: Provider): (token: Token) => Promise<Ref
         case Provider.TWITCH:
             const twitch: Twitch = inject(Injectable.TWITCH)
             return buildRefreshFunction(twitch.refreshToken)
+        case Provider.SPOTIFY:
+            const spotify = inject(Injectable.SPOTIFY)
+            return buildRefreshFunction(spotify.refreshToken)
         default:
             return (token: Token) => Promise.resolve({refreshed: false, token: token})
     }
@@ -82,6 +85,9 @@ function connectFunction(provider: Provider): () => Promise<Token> {
         case Provider.FEEDLY:
             const feedly = inject(Injectable.FEEDLY)
             return feedly.generateTokenFeedly
+        case Provider.SPOTIFY:
+            const spotify = inject(Injectable.SPOTIFY)
+            return spotify.generateTokenSpotify
         default:
             return () => {
                 return new Promise((resolve, reject) => {

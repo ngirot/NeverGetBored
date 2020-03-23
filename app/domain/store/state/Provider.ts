@@ -1,5 +1,6 @@
 export enum Provider {
     TWITCH = "TWITCH",
     TODOIST = "TODOIST",
-    FEEDLY = "FEEDLY"
+    FEEDLY = "FEEDLY",
+    SPOTIFY = "SPOTIFY"
 }

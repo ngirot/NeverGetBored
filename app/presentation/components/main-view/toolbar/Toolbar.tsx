@@ -1,8 +1,8 @@
 import * as React from 'react'
-import ConnectButton from "./buttons/ConnectButton"
 import {emptyConnect} from "../../utils"
 import {Provider} from "../../../../domain/store/state/Provider"
 import DarkModeButton from "../entertainments/DarkModeButton"
+import ConnectButton from "./buttons/ConnectButton"
 import ReloadButton from "./buttons/ReloadButton"
 
 const styles = require('./Toolbar.scss')
@@ -27,6 +27,8 @@ class Toolbar extends React.Component<Props> {
                                    type={Provider.TODOIST}/>
                     <ConnectButton serviceName={"Feedly"} iconPath={'presentation/resources/logos/feedly.svg'}
                                    type={Provider.FEEDLY}/>
+                    <ConnectButton serviceName={"Spotify"} iconPath={'presentation/resources/logos/spotify.svg'}
+                                   type={Provider.SPOTIFY}/>
                 </div>
                 <div className={"cell-2 " + styles.actions}>
                     <DarkModeButton/>

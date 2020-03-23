@@ -82,6 +82,12 @@ export default class OauthApi {
                     self.postTokenUrl(tokenUrl)
                         .then((resp: OauthResponseToken) => {
                             window.destroy()
+
+                            if (resp.access_token == null) {
+                                console.log('No access token in payload', resp)
+                                reject('No access token provided')
+                            }
+
                             if (resp.expires_in) {
                                 const expiration = moment().add(resp.expires_in, 'seconds')
                                 resolve(new Token(resp.access_token, resp.refresh_token, expiration.toDate()))
@@ -109,7 +115,11 @@ export default class OauthApi {
 
     private postTokenUrl(url: string): Promise<OauthResponseToken> {
         return new Promise((resolve, reject) => {
-            needle('post', url)
+            const options = {
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            }
+
+            needle('post', url, {}, options)
                 .then((response: any) => {
                     if (response.statusCode === 200) {
                         resolve(response.body)

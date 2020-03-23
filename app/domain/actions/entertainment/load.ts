@@ -6,9 +6,6 @@ import ProviderState from "../../store/state/ProviderState"
 import {Provider} from "../../store/state/Provider"
 import inject, {Injectable} from "../../../Injector"
 import {Notifi} from "../../external/port/Notifi"
-import {Twitch} from "../../external/port/Twitch"
-import {Todoist} from "../../external/port/Todoist"
-import {Feedly} from "../../external/port/Feedly"
 import {actionLoadedEntertainments} from "../../external/adapter/EntertainmentDispatcher"
 
 export function reloadAll(providerStates: ProviderState[]): Promise<IActionWithPayload<EntertainmentLoadedPayload>> {
@@ -43,14 +40,17 @@ export function reloadAll(providerStates: ProviderState[]): Promise<IActionWithP
 function loadFunction(provider: Provider): (token: Token) => Promise<Entertainment[]> {
     switch (provider) {
         case Provider.TWITCH:
-            const twitch: Twitch = inject(Injectable.TWITCH)
+            const twitch = inject(Injectable.TWITCH)
             return twitch.entertainmentsTwitch
         case Provider.TODOIST:
-            const todoist: Todoist = inject(Injectable.TODOIST)
+            const todoist = inject(Injectable.TODOIST)
             return todoist.entertainmentsTodoist
         case Provider.FEEDLY:
-            const feedly: Feedly = inject(Injectable.FEEDLY)
+            const feedly = inject(Injectable.FEEDLY)
             return feedly.entertainmentsFeedly
+        case Provider.SPOTIFY:
+            const spotify = inject(Injectable.SPOTIFY)
+            return spotify.entertainmentsSpotify
         default:
             return () => {
                 return new Promise((resolve, reject) => {

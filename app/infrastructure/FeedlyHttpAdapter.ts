@@ -17,7 +17,7 @@ export default class FeedlyHttpAdapter implements Feedly {
     }
 
     public generateTokenFeedly = (): Promise<Token> => {
-        return new FeedlyApi().generateTokenFeedly()
+        return this.api.generateTokenFeedly()
     }
 
     public refreshToken = (token: Token): Promise<RefreshToken> => {
