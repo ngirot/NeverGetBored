@@ -5,9 +5,11 @@ import * as Redux from "redux"
 import ConnectButton from "./providers/ConnectButton"
 import ReloadButton from "./entertainments/ReloadButton"
 import EntertainmentList from "./entertainments/EntertainmentList"
-import {emptyFunction} from "../utils"
 import {Provider} from "../../../domain/store/state/Provider"
 import inject, {Injectable} from "../../../Injector"
+import Background from "./backgrounds/Background"
+import {emptyFunction} from "../utils"
+import DarkModeButton from "./entertainments/DarkModeButton"
 
 const styles = require('./MainView.scss')
 
@@ -18,7 +20,7 @@ interface DispatchProps {
     loadConf: () => void
 }
 
-type Props = DispatchProps
+type Props = StateProps & DispatchProps
 
 class MainView extends React.Component<Props> {
 
@@ -29,6 +31,7 @@ class MainView extends React.Component<Props> {
     render(): JSX.Element {
         return (
             <div className={styles.container} data-tid="container">
+                <Background/>
                 <div className={styles.intro}>
                     <div className={"row"}>
                         <div className={"cell-8 offset-2"}>
@@ -40,6 +43,7 @@ class MainView extends React.Component<Props> {
                                            type={Provider.FEEDLY}/>
                         </div>
                         <div className={"cell-2 " + styles.actions}>
+                            <DarkModeButton/>
                             <ReloadButton/>
                         </div>
                     </div>

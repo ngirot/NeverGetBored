@@ -16,10 +16,12 @@ import EntertainmentService from "./presentation/external/EntertainmentService"
 import PlatformService from "./presentation/external/PlatformService"
 import ConfigurationService from "./presentation/external/ConfigurationService"
 import ConfigurationDispatcher from "./domain/external/adapter/ConfigurationDispatcher"
+import ApplicationConfigurationService from "./presentation/external/ApplicationConfigurationService"
+import ApplicationConfigurationDispatcher from "./domain/external/adapter/ApplicationConfigurationDispatcher"
 
 export enum Injectable {
     CONFIGURATION, BROWSER, FEEDLY, NOTIFICATION, TODOIST, TWITCH,
-    ENTERTAINMENT_SERVICE, PLATFORM_SERVICE, CONFIGURATION_SERVICE
+    ENTERTAINMENT_SERVICE, PLATFORM_SERVICE, CONFIGURATION_SERVICE, APP_CONFIGURATION_SERVICE
 }
 
 function inject(injectable: Injectable.CONFIGURATION): Configuration
@@ -31,6 +33,7 @@ function inject(injectable: Injectable.TWITCH): Twitch
 function inject(injectable: Injectable.ENTERTAINMENT_SERVICE): EntertainmentService
 function inject(injectable: Injectable.PLATFORM_SERVICE): PlatformService
 function inject(injectable: Injectable.CONFIGURATION_SERVICE): ConfigurationService
+function inject(injectable: Injectable.APP_CONFIGURATION_SERVICE): ApplicationConfigurationService
 function inject(injectable: Injectable): any {
     switch (injectable) {
         case Injectable.CONFIGURATION:
@@ -51,6 +54,8 @@ function inject(injectable: Injectable): any {
             return new PlatformDispatcher()
         case Injectable.CONFIGURATION_SERVICE:
             return new ConfigurationDispatcher()
+        case Injectable.APP_CONFIGURATION_SERVICE:
+            return new ApplicationConfigurationDispatcher()
         default:
             throw new Error('Unable to get injectable for ' + injectable)
     }

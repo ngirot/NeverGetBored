@@ -3,6 +3,14 @@
 @import "~noty/lib/noty.css";
 @import "~noty/lib/themes/relax.css";
 
+body {
+  transition: 0.5s;
+
+  &.dark {
+    background-color: #121212;
+  }
+}
+
 img.tile-logo {
   max-width: 2rem;
   height: auto;
@@ -56,4 +64,21 @@ img.tile-logo {
 .tile-wide.transform-right.tile-wide {
   transform: scale(0.9) !important;
   transform-origin: center !important;
+}
+
+
+.tile-wide,
+.tile-large,
+.tile-medium,
+.tile-small {
+  transition: 0.5s;
+  transition-property: box-shadow;
+}
+
+.dark .tile-wide,
+.dark .tile-large,
+.dark .tile-medium,
+.dark.tile-small {
+  -webkit-box-shadow: inset 0 0 1px #3d2863 !important;
+  box-shadow: inset 0 0 1px #3d2863 !important;
 }

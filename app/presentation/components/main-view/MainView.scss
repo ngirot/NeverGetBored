@@ -1,3 +1,7 @@
+:global .dark :local .intro {
+  background-color: #3d2863;
+}
+
 :local {
   $intro-size: 3.5rem;
 
@@ -22,6 +26,9 @@
     margin-top: 0;
     padding-top: 0.5rem;
     height: $intro-size;
+
+    transition: 0.5s;
+
   }
 
   .entertainments {
