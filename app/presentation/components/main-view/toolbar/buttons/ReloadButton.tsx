@@ -1,9 +1,9 @@
 import * as React from "react"
 import * as Redux from "redux"
 import {connect} from "react-redux"
-import {AppState} from "../../../../domain/store/reducers"
-import ProviderState from "../../../../domain/store/state/ProviderState"
-import inject, {Injectable} from "../../../../Injector"
+import {AppState} from "../../../../../domain/store/reducers"
+import ProviderState from "../../../../../domain/store/state/ProviderState"
+import inject, {Injectable} from "../../../../../Injector"
 
 interface StateProps {
     providerStates: ProviderState[]

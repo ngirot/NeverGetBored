@@ -9,11 +9,6 @@
     text-align: center;
   }
 
-  button {
-    margin-left: 0.3rem;
-    margin-right: 0.3rem;
-  }
-
   .intro {
     position: fixed;
     top: 0;
@@ -34,10 +29,5 @@
   .entertainments {
     z-index: 1;
     margin-top: $intro-size + 1rem;
-  }
-
-  .actions {
-    text-align: right;
-    padding-right: 2rem;
   }
 }
