@@ -8,12 +8,16 @@ import {Twitch} from "../domain/external/port/Twitch"
 import RefreshToken from "../domain/store/state/RefreshToken"
 import Author from "../domain/store/state/Author"
 import Subject from "../domain/store/state/Subject"
+import ImageDownloader from "./api/http/ImageDownloader"
 
 export default class TwitchHttpAdapter implements Twitch {
 
     private readonly twitchClientId: string
 
+    private readonly imageDownloader: ImageDownloader
+
     constructor() {
+        this.imageDownloader = new ImageDownloader()
         this.twitchClientId = 'uviersrira44oauqh1n6bdw8h0f0jw'
     }
 
@@ -32,16 +36,23 @@ export default class TwitchHttpAdapter implements Twitch {
     public entertainmentsTwitch = (token: Token): Promise<Entertainment[]> => {
         const api = new TwitchApi(this.twitchClientId)
         return api.entertainmentsTwitch(token)
-            .then((streams: Stream[]) => streams.map(this.convertStreamToEntertainment))
+            .then((streams: Stream[]) => Promise.all(streams.map(this.convertStreamToEntertainment)))
     }
 
-    private convertStreamToEntertainment = (stream: Stream): Entertainment => {
+    private convertStreamToEntertainment = (stream: Stream): Promise<Entertainment> => {
+        const previewUrl = this.urlWithoutCache(stream.preview.large)
+
+        return this.imageDownloader.downloadAsBase64(previewUrl)
+            .then((imageData) => this.buildEntertainment(stream, imageData))
+    }
+
+    private buildEntertainment(stream: Stream, imageData?: string): Entertainment {
         const author = new Author(stream.channel.display_name, stream.channel.logo)
         const subject = new Subject(stream.channel.game, this.buildGameIconUrl(stream.channel.game))
 
         return new Entertainment(Provider.TWITCH, EntertainmentType.LIVE, stream._id, stream.viewers,
             stream.channel.status, author,
-            stream.channel.url, this.urlWithoutCache(stream.preview.large), subject)
+            stream.channel.url, imageData, subject)
     }
 
     private buildGameIconUrl(game: string): string {

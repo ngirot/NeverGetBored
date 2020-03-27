@@ -25,7 +25,6 @@ export default class HttpApi {
                 })
                 .catch(reject)
         })
-
     }
 
     public post<T, V>(path: string, payload: T, options?: Options): Promise<V> {
