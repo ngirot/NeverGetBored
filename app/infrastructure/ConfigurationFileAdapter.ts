@@ -39,12 +39,23 @@ export default class ConfigurationFileAdapter implements Configuration {
             token: token
         })
 
-        const newConfiguration = new AppConfiguration(conf.version, newProviders)
+        const newConfiguration = new AppConfiguration(conf.version, conf.darkMode, newProviders)
 
         this.api.save(newConfiguration)
     }
 
+    public loadDarkMode = (): boolean => {
+        return this.api.load().darkMode
+    }
+
     private extractProvider(name: string): Provider {
         return Provider[name as keyof typeof Provider]
+    }
+
+    changeDarkMode(darkMode: boolean): void {
+        const oldConf = this.api.load()
+        const newConf = new AppConfiguration(oldConf.version, darkMode, oldConf.providers)
+
+        this.api.save(newConf)
     }
 }

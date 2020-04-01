@@ -1,7 +1,11 @@
-import ProviderState from "../../store/state/ProviderState"
 import inject, {Injectable} from "../../../Injector"
+import LoadedConfiguration from "./LoadedConfiguration"
 
-export function loadConfiguration(): ProviderState[] {
+export function loadConfiguration(): LoadedConfiguration {
     const configuration = inject(Injectable.CONFIGURATION)
-    return configuration.loadProviders()
+
+    const providers = configuration.loadProviders()
+    const darkMode = configuration.loadDarkMode()
+
+    return new LoadedConfiguration(darkMode, providers)
 }

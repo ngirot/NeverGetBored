@@ -8,9 +8,12 @@ export default class ConfigurationApi {
 
     private readonly encoding: string
 
+    private readonly defaultConfiguration: AppConfiguration
+
     constructor() {
         this.encoding = 'UTF-8'
         console.log('Configuration file: ' + this.configurationFile())
+        this.defaultConfiguration = new AppConfiguration(2, false, [])
     }
 
     public save(appConfiguration: AppConfiguration): void {
@@ -22,9 +25,15 @@ export default class ConfigurationApi {
         const configFile = this.configurationFile()
 
         if (fs.existsSync(configFile)) {
-            return JSON.parse(fs.readFileSync(configFile, {encoding: this.encoding}))
+            let configuration: AppConfiguration = JSON.parse(fs.readFileSync(configFile, {encoding: this.encoding}))
+
+            if (configuration.version === 1) {
+                configuration = new AppConfiguration(2, this.defaultConfiguration.darkMode, configuration.providers)
+            }
+
+            return configuration
         } else {
-            return new AppConfiguration(1, [])
+            return this.defaultConfiguration
         }
     }
 

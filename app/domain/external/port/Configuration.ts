@@ -6,4 +6,8 @@ export interface Configuration {
     loadProviders(): ProviderState[]
 
     addToken(provider: Provider, token: Token): void
+
+    loadDarkMode(): boolean
+
+    changeDarkMode(darkMode: boolean): void
 }

@@ -33,7 +33,7 @@ export default function platformsReducer(state: PlatformState = new PlatformStat
     }
 
     if (actionLoadedConfiguration.test(action)) {
-        return new PlatformState(state.entertainments, action.payload, state.reloading)
+        return new PlatformState(state.entertainments, action.payload.providers, state.reloading)
     }
 
     if (actionLoadingEntertainments.test(action)) {
