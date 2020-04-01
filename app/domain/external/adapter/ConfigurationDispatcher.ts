@@ -1,9 +1,9 @@
 import {actionCreator, DispatchFunction} from "../../actions/helpers"
 import {loadConfiguration} from "../../actions/configuration/loading"
 import ConfigurationService from "../../../presentation/external/ConfigurationService"
-import ProviderState from "../../store/state/ProviderState"
+import LoadedConfiguration from "../../actions/configuration/LoadedConfiguration"
 
-export const actionLoadedConfiguration = actionCreator<ProviderState[]>('LOADED_CONFIGURATION')
+export const actionLoadedConfiguration = actionCreator<LoadedConfiguration>('LOADED_CONFIGURATION')
 
 export default class ConfigurationDispatcher implements ConfigurationService {
     load(dispatch: DispatchFunction): void {
