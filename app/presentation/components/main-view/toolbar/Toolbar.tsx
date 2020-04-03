@@ -2,7 +2,7 @@ import * as React from 'react'
 import ConnectButton from "./buttons/ConnectButton"
 import {emptyConnect} from "../../utils"
 import {Provider} from "../../../../domain/store/state/Provider"
-import DarkModeButton from "../entertainments/DarkModeButton"
+import DarkModeButton from "./buttons/DarkModeButton"
 import ReloadButton from "./buttons/ReloadButton"
 
 const styles = require('./Toolbar.scss')
