@@ -7,6 +7,7 @@ import {Provider} from "../../store/state/Provider"
 import inject, {Injectable} from "../../../Injector"
 import {Notifi} from "../../external/port/Notifi"
 import {actionLoadedEntertainments} from "../../external/adapter/EntertainmentDispatcher"
+import {Github} from "../../external/port/Github"
 
 export function reloadAll(providerStates: ProviderState[]): Promise<IActionWithPayload<EntertainmentLoadedPayload>> {
     const promises = providerStates.map((state) => {
@@ -51,6 +52,9 @@ function loadFunction(provider: Provider): (token: Token) => Promise<Entertainme
         case Provider.SPOTIFY:
             const spotify = inject(Injectable.SPOTIFY)
             return spotify.entertainmentsSpotify
+        case Provider.GITHUB:
+            const github: Github = inject(Injectable.GITHUB)
+            return github.entertainmentsGithub
         default:
             return () => {
                 return new Promise((resolve, reject) => {

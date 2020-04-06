@@ -88,6 +88,9 @@ function connectFunction(provider: Provider): () => Promise<Token> {
         case Provider.SPOTIFY:
             const spotify = inject(Injectable.SPOTIFY)
             return spotify.generateTokenSpotify
+        case Provider.GITHUB:
+            const github = inject(Injectable.GITHUB)
+            return github.generateTokenGithub
         default:
             return () => {
                 return new Promise((resolve, reject) => {

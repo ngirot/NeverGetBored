@@ -10,6 +10,7 @@ Currently, those platforms are supported:
 * Todoist: display tasks due today (or before)
 * Feedly: display all unread feeds
 * Spotify: display not fully played shows' episodes
+* Github: display all unread notifications
 
 ## Download
 

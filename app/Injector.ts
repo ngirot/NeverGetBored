@@ -20,9 +20,11 @@ import ApplicationConfigurationDispatcher from "./domain/external/adapter/Applic
 import SpotifyHttpAdapter from "./infrastructure/SpotifyHttpAdapter"
 import ApplicationConfigurationService from "./presentation/external/ApplicationConfigurationService"
 import {Spotify} from "./domain/external/port/Spotify"
+import {Github} from "./domain/external/port/Github"
+import GithubHttpAdapter from "./infrastructure/GithubHttpAdapter"
 
 export enum Injectable {
-    CONFIGURATION, BROWSER, FEEDLY, NOTIFICATION, TODOIST, TWITCH, SPOTIFY,
+    CONFIGURATION, BROWSER, FEEDLY, NOTIFICATION, TODOIST, TWITCH, SPOTIFY, GITHUB,
     ENTERTAINMENT_SERVICE, PLATFORM_SERVICE, CONFIGURATION_SERVICE, APP_CONFIGURATION_SERVICE
 }
 
@@ -33,6 +35,7 @@ function inject(injectable: Injectable.NOTIFICATION): Notifi
 function inject(injectable: Injectable.TODOIST): Todoist
 function inject(injectable: Injectable.TWITCH): Twitch
 function inject(injectable: Injectable.SPOTIFY): Spotify
+function inject(injectable: Injectable.GITHUB): Github
 function inject(injectable: Injectable.ENTERTAINMENT_SERVICE): EntertainmentService
 function inject(injectable: Injectable.PLATFORM_SERVICE): PlatformService
 function inject(injectable: Injectable.CONFIGURATION_SERVICE): ConfigurationService
@@ -53,6 +56,8 @@ function inject(injectable: Injectable): any {
             return new TwitchHttpAdapter()
         case Injectable.SPOTIFY:
             return new SpotifyHttpAdapter()
+        case Injectable.GITHUB:
+            return new GithubHttpAdapter()
         case Injectable.ENTERTAINMENT_SERVICE:
             return new EntertainmentDispatcher()
         case Injectable.PLATFORM_SERVICE:

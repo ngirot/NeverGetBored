@@ -7,6 +7,7 @@ import {emptyConnect} from "../../../utils"
 import Entertainment from "../../../../../domain/store/state/Entertainment"
 import {Provider} from "../../../../../domain/store/state/Provider"
 import SpotifyTile from "./SpotifyTile"
+import GithubTile from "./GithubTile"
 
 export interface OwnProps {
     entertainment: Entertainment
@@ -27,6 +28,8 @@ class EntertainmentTile extends React.Component<OwnProps> {
                 return <FeedlyTile entertainment={entertainment}/>
             case Provider.SPOTIFY:
                 return <SpotifyTile entertainment={entertainment}/>
+            case Provider.GITHUB:
+                return <GithubTile entertainment={entertainment}/>
             default:
                 console.log('default')
                 return <DefaultTile entertainment={entertainment}/>
