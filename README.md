@@ -9,6 +9,7 @@ Currently, those platforms are supported:
 * Twitch: display live streams
 * Todoist: display tasks due today (or before)
 * Feedly: display all unread feeds
+* Github: display all unread notifications
 
 ## Download
 

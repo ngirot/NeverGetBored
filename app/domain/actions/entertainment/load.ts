@@ -10,6 +10,7 @@ import {Twitch} from "../../external/port/Twitch"
 import {Todoist} from "../../external/port/Todoist"
 import {Feedly} from "../../external/port/Feedly"
 import {actionLoadedEntertainments} from "../../external/adapter/EntertainmentDispatcher"
+import {Github} from "../../external/port/Github"
 
 export function reloadAll(providerStates: ProviderState[]): Promise<IActionWithPayload<EntertainmentLoadedPayload>> {
     const promises = providerStates.map((state) => {
@@ -51,6 +52,9 @@ function loadFunction(provider: Provider): (token: Token) => Promise<Entertainme
         case Provider.FEEDLY:
             const feedly: Feedly = inject(Injectable.FEEDLY)
             return feedly.entertainmentsFeedly
+        case Provider.GITHUB:
+            const github: Github = inject(Injectable.GITHUB)
+            return github.entertainmentsGithub
         default:
             return () => {
                 return new Promise((resolve, reject) => {

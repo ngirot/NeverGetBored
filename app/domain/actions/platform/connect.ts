@@ -82,6 +82,9 @@ function connectFunction(provider: Provider): () => Promise<Token> {
         case Provider.FEEDLY:
             const feedly = inject(Injectable.FEEDLY)
             return feedly.generateTokenFeedly
+        case Provider.GITHUB:
+            const github = inject(Injectable.GITHUB)
+            return github.generateTokenGithub
         default:
             return () => {
                 return new Promise((resolve, reject) => {

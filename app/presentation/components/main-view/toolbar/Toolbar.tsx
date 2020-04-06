@@ -27,6 +27,8 @@ class Toolbar extends React.Component<Props> {
                                    type={Provider.TODOIST}/>
                     <ConnectButton serviceName={"Feedly"} iconPath={'presentation/resources/logos/feedly.svg'}
                                    type={Provider.FEEDLY}/>
+                    <ConnectButton serviceName={"Github"} iconPath={'presentation/resources/logos/github.svg'}
+                                   type={Provider.GITHUB}/>
                 </div>
                 <div className={"cell-2 " + styles.actions}>
                     <DarkModeButton/>
