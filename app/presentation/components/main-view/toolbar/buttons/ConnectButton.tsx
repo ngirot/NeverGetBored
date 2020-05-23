@@ -50,7 +50,7 @@ class ConnectButton extends React.Component<Props> {
             return "alert"
         }
 
-        return styles.notconnected
+        return "light " + styles.notconnected
     }
 }
 
