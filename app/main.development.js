@@ -41,7 +41,10 @@ app.on('ready', () =>
                 show: false,
                 width: 1050,
                 height: 728,
-                icon: path.join(__dirname, '/logo.png')
+                icon: path.join(__dirname, '/logo.png'),
+                webPreferences: {
+                    nodeIntegration: true
+                }
             });
 
             mainWindow.loadURL(`file://${__dirname}/app.html`);
