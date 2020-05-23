@@ -162,7 +162,7 @@
     "electron-oauth-helper": "^3.0.0",
     "electron-oauth2": "^3.0.0",
     "history": "^4.6.1",
-    "jquery": "^3.4.0",
+    "jquery": "^3.5.0",
     "metro4": "^4.2.39",
     "moment": "^2.24.0",
     "needle": "^2.2.4",
