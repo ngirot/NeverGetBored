@@ -1,0 +1,25 @@
+:local {
+  .tile {
+    background-color: #1DB954 !important;
+  }
+
+  .sourcename {
+    background-color: rgba(29, 29, 29, .5) !important;
+  }
+
+  .feedname {
+    background-color: rgba(29, 29, 29, .7) !important;
+    z-index: 10;
+  }
+
+  .thumbnail {
+    max-width: 100%;
+    height: auto;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+}

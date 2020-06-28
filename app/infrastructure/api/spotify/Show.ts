@@ -6,5 +6,6 @@ export default class Show {
     public readonly name: string
     public readonly publisher: string
     public readonly episodes: Episodes
+    public readonly href: string
     public readonly images: Image[]
 }

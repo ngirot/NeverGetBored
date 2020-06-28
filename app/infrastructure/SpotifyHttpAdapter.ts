@@ -7,6 +7,7 @@ import Show from "./api/spotify/Show"
 import {EntertainmentType} from "../domain/store/state/EntertainmentType"
 import Episode from "./api/spotify/Episode"
 import {Provider} from "../domain/store/state/Provider"
+import Author from "../domain/store/state/Author"
 
 export default class SpotifyHttpAdapter implements Spotify {
 
@@ -39,9 +40,25 @@ export default class SpotifyHttpAdapter implements Spotify {
                 return show.episodes.items
                     .map((episode: Episode) => {
                         const order = new Date(episode.release_date).getTime()
-                        return new Entertainment(Provider.SPOTIFY, EntertainmentType.PERMANENT, episode.id, order, episode.name)
+                        const image = this.extractThumbnail(show, episode)
+                        const author = new Author(show.name)
+                        const url = episode.external_urls.spotify
+                        return new Entertainment(Provider.SPOTIFY, EntertainmentType.PERMANENT, episode.id, order, episode.name,
+                            author, url, image)
                     })
             })
             .reduce((acc: [Entertainment], cur: [Entertainment]) => [...acc, ...cur], [])
+    }
+
+    private extractThumbnail = (show: Show, episode: Episode): string | undefined => {
+        if (episode.images && episode.images.length > 0) {
+            return episode.images[0].url
+        }
+
+        if (show.images && show.images.length > 0) {
+            return show.images[0].url
+        }
+
+        return undefined
     }
 }
