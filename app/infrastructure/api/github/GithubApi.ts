@@ -32,10 +32,6 @@ export default class GithubApi {
         const http = new HttpApi(this.baseUrl, options)
 
         return http.get('/notifications')
-            .then(x => {
-                console.log('x', x)
-                return x
-            })
             .then((notifications: Notification[]) => notifications.filter((notification: Notification) => notification.unread))
     }
 }
