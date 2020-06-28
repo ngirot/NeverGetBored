@@ -9,6 +9,7 @@ Currently, those platforms are supported:
 * Twitch: display live streams
 * Todoist: display tasks due today (or before)
 * Feedly: display all unread feeds
+* Spotify: display not fully played shows' episodes
 
 ## Download
 
