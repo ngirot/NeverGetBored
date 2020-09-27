@@ -6,7 +6,7 @@ export default class ImageDownloader {
 
             xhr.onload = () => {
                 const reader = new FileReader()
-                reader.onloadend = () => resolve(reader.result)
+                reader.onloadend = () => resolve(reader.result as string)
                 reader.readAsDataURL(xhr.response)
             }
             xhr.open('GET', url)
