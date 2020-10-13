@@ -52,7 +52,8 @@ export default class TwitchHttpAdapter implements Twitch {
 
         return new Entertainment(Provider.TWITCH, EntertainmentType.LIVE, stream._id, stream.viewers,
             stream.channel.status, author,
-            stream.channel.url, imageData, subject)
+            stream.channel.url, imageData, undefined
+            , subject)
     }
 
     private buildGameIconUrl(game: string): string {

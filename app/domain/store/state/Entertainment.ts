@@ -2,6 +2,7 @@ import {Provider} from "./Provider"
 import {EntertainmentType} from "./EntertainmentType"
 import Author from "./Author"
 import Subject from "./Subject"
+import {Duration} from "moment"
 
 export default class Entertainment {
     public readonly provider: Provider
@@ -12,10 +13,11 @@ export default class Entertainment {
     public readonly title: string
     public readonly url?: string
     public readonly previewUrl?: string
+    public readonly duration?: Duration
     public readonly order: number
 
     public constructor(provider: Provider, type: EntertainmentType, id: string, order: number, title: string,
-                       author?: Author, url?: string, previewUrl?: string, subject?: Subject) {
+                       author?: Author, url?: string, previewUrl?: string, duration?: Duration, subject?: Subject) {
         this.provider = provider
         this.type = type
         this.id = id
@@ -25,5 +27,6 @@ export default class Entertainment {
         this.url = url
         this.previewUrl = previewUrl
         this.subject = subject
+        this.duration = duration
     }
 }

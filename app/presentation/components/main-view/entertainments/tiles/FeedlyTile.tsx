@@ -50,6 +50,7 @@ class FeedlyTile extends React.Component<Props> {
                         {this.buildCentralTitle(e)}
                         {e.author && this.buildAuthor(e.author)}
                         {this.buildLogo()}
+                        {this.buildDuration(e)}
                     </div>
                 </div>
             )
@@ -66,7 +67,8 @@ class FeedlyTile extends React.Component<Props> {
     }
 
     private buildPreview(e: Entertainment): JSX.Element {
-        return <div className={styles.thumbnailcontainer}><img alt={e.title} src={e.previewUrl} className={styles.thumbnail}/></div>
+        return <div className={styles.thumbnailcontainer}><img alt={e.title} src={e.previewUrl}
+                                                               className={styles.thumbnail}/></div>
     }
 
     private buildBottomTitle(e: Entertainment): JSX.Element {
@@ -83,6 +85,16 @@ class FeedlyTile extends React.Component<Props> {
 
     private buildLogo(): JSX.Element {
         return <img className={"tile-logo"} src={'presentation/resources/logos/feedly.svg'} alt={"Feedly logo"}/>
+    }
+
+    private buildDuration(e: Entertainment): JSX.Element {
+        if (e.duration) {
+            return <div className={"badge-bottom " + styles.duration}>
+                {e.duration.humanize()}
+            </div>
+        } else {
+            return <span></span>
+        }
     }
 }
 

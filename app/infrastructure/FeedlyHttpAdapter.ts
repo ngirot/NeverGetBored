@@ -7,13 +7,17 @@ import {Provider} from "../domain/store/state/Provider"
 import {EntertainmentType} from "../domain/store/state/EntertainmentType"
 import {Feedly} from "../domain/external/port/Feedly"
 import Author from "../domain/store/state/Author"
+import YouTubeApi from "./api/youtube/YouTubeApi"
+import {Duration} from "moment"
 
 export default class FeedlyHttpAdapter implements Feedly {
 
     private readonly api: FeedlyApi
+    private readonly youTubeApi: YouTubeApi
 
     constructor() {
         this.api = new FeedlyApi()
+        this.youTubeApi = new YouTubeApi()
     }
 
     public generateTokenFeedly = (): Promise<Token> => {
@@ -30,20 +34,27 @@ export default class FeedlyHttpAdapter implements Feedly {
 
     public entertainmentsFeedly = (token: Token): Promise<Entertainment[]> => {
         return this.api.entertainmentsFeedly(token)
-            .then(this.convertItemToEntertainment)
+            .then(this.convertItemToEntertainment2)
     }
 
     public markAsRead = (entertainment: Entertainment, token: Token): Promise<boolean> => {
         return new FeedlyApi().markAsRead(entertainment.id, token)
     }
 
-    private convertItemToEntertainment = (items: Item[]): Entertainment[] => {
+    private convertItemToEntertainment2 = (items: Item[]): Promise<Entertainment[]> => {
+        return this.extractDuration(items)
+            .then(durations => this.convertItemToEntertainment(items, durations))
+    }
+    private convertItemToEntertainment = (items: Item[], durations: [string, Duration][]): Entertainment[] => {
         return items.map((item: Item) => {
             const url = this.extractUrl(item)
+            const durationFound = durations.find(pair => pair[0] === url)
             const thumbnail = this.extractThumbnail(item)
             const author = new Author(item.origin.title)
+
+            const duration = durationFound ? durationFound[1] : undefined
             return new Entertainment(Provider.FEEDLY, EntertainmentType.PERMANENT, item.id, item.published,
-                item.title, author, url, thumbnail)
+                item.title, author, url, thumbnail, duration)
         })
     }
 
@@ -55,5 +66,16 @@ export default class FeedlyHttpAdapter implements Feedly {
         const thumbnail = item.thumbnail && item.thumbnail[0] ? item.thumbnail[0].url : undefined
         const visual = item.visual ? item.visual.url : undefined
         return thumbnail ? thumbnail : visual
+    }
+
+    private extractDuration = (items: Item[]): Promise<[string, Duration][]> => {
+        const urls = (items.map(this.extractUrl)
+            .filter(url => url !== undefined)) as string[]
+
+        return this.youTubeApi.getDurations(urls)
+            .catch(err => {
+                console.log('Error fetching youtube video durations', err)
+                return []
+            })
     }
 }
