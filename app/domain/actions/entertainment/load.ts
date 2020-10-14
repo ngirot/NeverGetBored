@@ -14,9 +14,14 @@ export function reloadAll(providerStates: ProviderState[]): Promise<IActionWithP
 
         return new Promise((resolve: any) => {
             const loader = loadFunction(state.provider)
+            const start = new Date()
             if (state.token) {
                 loader(state.token)
-                    .then(resolve)
+                    .then(result => {
+                        const duration = new Date().getTime() - start.getTime()
+                        console.log('Fetch duration for ' + state.provider + ' : ' + duration)
+                        resolve(result)
+                    })
                     .catch((err) => {
                         const notification: Notifi = inject(Injectable.NOTIFICATION)
                         notification.errorMessage("Failed to load entertainments for " + state.provider, err)
