@@ -89,9 +89,15 @@ class FeedlyTile extends React.Component<Props> {
 
     private buildDuration(e: Entertainment): JSX.Element {
         if (e.duration) {
+            const durationInMinutes = e.duration.asMinutes()
+            const hours = Math.floor(durationInMinutes / 60)
+            const minutes = Math.round(durationInMinutes % 60).toString(10).padStart(2, '0')
+
+            const formatted = (hours > 0 ? (hours + 'h ') : '') + minutes + 'm'
             return <div className={"badge-bottom " + styles.duration}>
-                {e.duration.humanize()}
+                {formatted}
             </div>
+
         } else {
             return <span></span>
         }
