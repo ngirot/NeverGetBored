@@ -32,7 +32,7 @@ export function refreshProviders(providers: ProviderState[]): Promise<RefreshRes
         if (providerState.token) {
             return refreshTokenFunction(providerState.provider)(providerState.token).then((refresh: RefreshToken): RefreshResult[] => {
                 if (refresh.refreshed) {
-                    console.log('Save refreshed token', refresh.token)
+                    console.log('Save refreshed token (' + providerState.provider + ')', refresh.token)
                     configuration.addToken(providerState.provider, refresh.token)
                 }
                 return [{token: refresh.token, refreshed: refresh.refreshed, provider: providerState.provider}]
