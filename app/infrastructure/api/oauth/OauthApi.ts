@@ -1,40 +1,14 @@
 import uuid = require("uuid")
 import moment = require("moment")
 import OauthCodeConfiguration from "./OauthCodeConfiguration"
-import OauthTokenConfiguration from "./OauthTokenConfiguration"
 import OauthResponseToken from "./OauthResponseToken"
 import Token from "../../../domain/store/state/Token"
 import * as path from "path"
+import {remote} from 'electron'
 
-const electron = require('electron')
-const BrowserWindow = electron.remote.BrowserWindow
-const {OAuth2Provider} = require("electron-oauth-helper")
 const needle = require('needle')
 
 export default class OauthApi {
-
-    public generateTokenWithToken(configuration: OauthTokenConfiguration): Promise<Token> {
-        const window = this.createOauthWindow()
-
-        const config = {
-            client_id: configuration.clientId,
-            client_secret: configuration.clientSecret,
-            authorize_url: configuration.tokenUrl,
-            response_type: "token",
-            redirect_uri: configuration.redirectUrl,
-            scope: configuration.scope
-        }
-
-        const provider = new OAuth2Provider(config)
-
-        return provider.perform(window)
-            .then((token: OauthResponseToken) => {
-                    console.log('Token : ', token)
-                    window.destroy()
-                    return new Token(token.access_token)
-                }
-            )
-    }
 
     refresh(configuration: OauthCodeConfiguration, token: Token): Promise<Token> {
         const payload = {
@@ -152,7 +126,7 @@ export default class OauthApi {
 
     /* tslint:disable */
     private createOauthWindow() {
-        return new BrowserWindow({
+        return new remote.BrowserWindow({
             icon: path.join(__dirname, '/logo.png'),
             width: 600,
             height: 800,
