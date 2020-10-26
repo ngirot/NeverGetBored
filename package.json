@@ -161,7 +161,7 @@
     "electron-debug": "^1.1.0",
     "electron-oauth2": "^3.0.0",
     "history": "^4.10.1",
-    "metro4": "^4.3.10",
+    "metro4": "^4.4.1",
     "moment": "^2.29.0",
     "needle": "^2.5.2",
     "noty": "^3.2.0-beta",

@@ -19,7 +19,7 @@ type Props = StateProps & DispatchProps
 class ReloadButton extends React.Component<Props> {
     render(): JSX.Element {
         return (
-            <button className={"button info square rounded"}
+            <button className={"button info rounded"}
                     onClick={() => this.props.onReload(this.props.providerStates, this.props.reload)}>
                 {this.icon()}
             </button>

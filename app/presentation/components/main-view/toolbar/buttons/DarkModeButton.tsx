@@ -17,7 +17,7 @@ type Props = StateProps & DispatchProps
 class DarkModeButton extends React.Component<Props> {
     render(): JSX.Element {
         return (
-            <button className={"button info square rounded"}
+            <button className={"button info rounded"}
                     onClick={() => this.props.onChangeMode(!this.props.darkMode)}>
                 {this.icon(this.props.darkMode)}
             </button>

@@ -13,7 +13,7 @@
     "postinstall": "npm rebuild --runtime=electron --target=1.6.6 --disturl=https://atom.io/download/atom-shell --build-from-source"
   },
   "dependencies": {
-    "metro4": "^4.3.7",
+    "metro4": "^4.4.1",
     "noty": "^3.2.0-beta"
   }
 }
