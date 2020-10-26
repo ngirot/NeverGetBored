@@ -5,8 +5,12 @@ import moment = require("moment")
 
 export default class YouTubeApi {
 
-    private readonly apiKey: string = "AIzaSyCeOwbJ8dvgZA3kssojXFCEcY8q5O4Oxjw"
+    private readonly apiKey: string
     private readonly apiBaseUrl: string = "https://www.googleapis.com/youtube/v3/"
+
+    constructor(apiKey: string) {
+        this.apiKey = apiKey
+    }
 
     public getDurations = (urls: string[]): Promise<[string, Duration][]> => {
         const videoIds = urls.map(url => [url, this.extractYoutubeId(url)])

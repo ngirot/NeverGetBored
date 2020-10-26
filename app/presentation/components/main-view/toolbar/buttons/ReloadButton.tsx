@@ -8,10 +8,11 @@ import inject, {Injectable} from "../../../../../Injector"
 interface StateProps {
     providerStates: ProviderState[]
     reload: boolean
+    youtubeApiKey: string | null
 }
 
 interface DispatchProps {
-    onReload: (providerStates: ProviderState[], reloading: boolean) => void
+    onReload: (providerStates: ProviderState[], reloading: boolean, youtubeApiKey: string | null) => void
 }
 
 type Props = StateProps & DispatchProps
@@ -20,7 +21,7 @@ class ReloadButton extends React.Component<Props> {
     render(): JSX.Element {
         return (
             <button className={"button info rounded"}
-                    onClick={() => this.props.onReload(this.props.providerStates, this.props.reload)}>
+                    onClick={() => this.props.onReload(this.props.providerStates, this.props.reload, this.props.youtubeApiKey)}>
                 {this.icon()}
             </button>
         )
@@ -38,16 +39,17 @@ class ReloadButton extends React.Component<Props> {
 function mapStateToProps(state: AppState): StateProps {
     return {
         providerStates: state.platform.providers,
-        reload: state.platform.reloading
+        reload: state.platform.reloading,
+        youtubeApiKey: state.configuration.youTubeApiKey
     }
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<any>): DispatchProps {
     const entertainmentService = inject(Injectable.ENTERTAINMENT_SERVICE)
     return {
-        onReload: (providerStates: ProviderState[], reloading: boolean) => {
+        onReload: (providerStates: ProviderState[], reloading: boolean, youtubeApiKey) => {
             if (!reloading) {
-                entertainmentService.reload(dispatch, providerStates)
+                entertainmentService.reload(dispatch, providerStates, youtubeApiKey)
             }
         }
     }

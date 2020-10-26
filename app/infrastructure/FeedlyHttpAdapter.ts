@@ -13,11 +13,9 @@ import {Duration} from "moment"
 export default class FeedlyHttpAdapter implements Feedly {
 
     private readonly api: FeedlyApi
-    private readonly youTubeApi: YouTubeApi
 
     constructor() {
         this.api = new FeedlyApi()
-        this.youTubeApi = new YouTubeApi()
     }
 
     public generateTokenFeedly = (): Promise<Token> => {
@@ -32,17 +30,17 @@ export default class FeedlyHttpAdapter implements Feedly {
             })
     }
 
-    public entertainmentsFeedly = (token: Token): Promise<Entertainment[]> => {
+    public entertainmentsFeedly = (token: Token, youtubeApiKey: string | null): Promise<Entertainment[]> => {
         return this.api.entertainmentsFeedly(token)
-            .then(this.convertItemToEntertainment2)
+            .then(item => this.convertItemToEntertainment2(item, youtubeApiKey))
     }
 
     public markAsRead = (entertainment: Entertainment, token: Token): Promise<boolean> => {
         return new FeedlyApi().markAsRead(entertainment.id, token)
     }
 
-    private convertItemToEntertainment2 = (items: Item[]): Promise<Entertainment[]> => {
-        return this.extractDuration(items)
+    private convertItemToEntertainment2 = (items: Item[], youTubeApiKey: string | null): Promise<Entertainment[]> => {
+        return this.extractDuration(items, youTubeApiKey)
             .then(durations => this.convertItemToEntertainment(items, durations))
     }
     private convertItemToEntertainment = (items: Item[], durations: [string, Duration][]): Entertainment[] => {
@@ -68,11 +66,15 @@ export default class FeedlyHttpAdapter implements Feedly {
         return thumbnail ? thumbnail : visual
     }
 
-    private extractDuration = (items: Item[]): Promise<[string, Duration][]> => {
+    private extractDuration = (items: Item[], youTubeApiKey: string | null): Promise<[string, Duration][]> => {
+        if (!youTubeApiKey) {
+            return Promise.resolve([])
+        }
+
         const urls = (items.map(this.extractUrl)
             .filter(url => url !== undefined)) as string[]
 
-        return this.youTubeApi.getDurations(urls)
+        return new YouTubeApi(youTubeApiKey).getDurations(urls)
             .catch(err => {
                 console.log('Error fetching youtube video durations', err)
                 return []

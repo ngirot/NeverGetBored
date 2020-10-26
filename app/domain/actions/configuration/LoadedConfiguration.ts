@@ -6,8 +6,11 @@ export default class LoadedConfiguration {
 
     public readonly darkMode: boolean
 
-    constructor(darkMode: boolean, providers: ProviderState[]) {
+    public readonly youTubeApiKey: string | null
+
+    constructor(darkMode: boolean, providers: ProviderState[], youTubeApiKey: string | null) {
         this.darkMode = darkMode
         this.providers = providers
+        this.youTubeApiKey = youTubeApiKey
     }
 }

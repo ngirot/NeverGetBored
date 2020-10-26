@@ -7,7 +7,7 @@ export interface Feedly {
 
     refreshToken(token: Token): Promise<RefreshToken>
 
-    entertainmentsFeedly(token: Token): Promise<Entertainment[]>
+    entertainmentsFeedly(token: Token, youtubeApiKey: string | null): Promise<Entertainment[]>
 
     markAsRead(entertainment: Entertainment, token: Token): Promise<boolean>
 

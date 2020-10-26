@@ -7,6 +7,7 @@ import inject, {Injectable} from "../../../Injector"
 import Background from "./backgrounds/Background"
 import {emptyFunction} from "../utils"
 import Toolbar from "./toolbar/Toolbar"
+import ConfigurationPopup from "./popup/ConfigurationPopup"
 
 const styles = require('./MainView.scss')
 
@@ -35,6 +36,7 @@ class MainView extends React.Component<Props> {
                 <div className={styles.entertainments}>
                     <EntertainmentList/>
                 </div>
+                <ConfigurationPopup/>
             </div>
         )
     }

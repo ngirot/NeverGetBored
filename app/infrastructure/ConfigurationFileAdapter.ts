@@ -39,7 +39,7 @@ export default class ConfigurationFileAdapter implements Configuration {
             token: token
         })
 
-        const newConfiguration = new AppConfiguration(conf.version, conf.darkMode, newProviders)
+        const newConfiguration = new AppConfiguration(conf.version, conf.darkMode, newProviders, conf.youTubeApiKey)
 
         this.api.save(newConfiguration)
     }
@@ -48,14 +48,26 @@ export default class ConfigurationFileAdapter implements Configuration {
         return this.api.load().darkMode
     }
 
+    loadYoutubeApiKey(): string | null {
+        return this.api.load().youTubeApiKey
+    }
+
     private extractProvider(name: string): Provider {
         return Provider[name as keyof typeof Provider]
     }
 
     changeDarkMode(darkMode: boolean): void {
         const oldConf = this.api.load()
-        const newConf = new AppConfiguration(oldConf.version, darkMode, oldConf.providers)
+        const newConf = new AppConfiguration(oldConf.version, darkMode, oldConf.providers, oldConf.youTubeApiKey)
 
         this.api.save(newConf)
     }
+
+    changeYouTubeApiKey(youTubeApiKey: string): void {
+        const oldConf = this.api.load()
+        const newConf = new AppConfiguration(oldConf.version, oldConf.darkMode, oldConf.providers, youTubeApiKey)
+
+        this.api.save(newConf)
+    }
+
 }

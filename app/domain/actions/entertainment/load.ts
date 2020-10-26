@@ -9,11 +9,11 @@ import {Notifi} from "../../external/port/Notifi"
 import {actionLoadedEntertainments} from "../../external/adapter/EntertainmentDispatcher"
 import {Github} from "../../external/port/Github"
 
-export function reloadAll(providerStates: ProviderState[]): Promise<IActionWithPayload<EntertainmentLoadedPayload>> {
+export function reloadAll(providerStates: ProviderState[], youtubeApiKey: string | null): Promise<IActionWithPayload<EntertainmentLoadedPayload>> {
     const promises = providerStates.map((state) => {
 
         return new Promise((resolve: any) => {
-            const loader = loadFunction(state.provider)
+            const loader = loadFunction(state.provider, youtubeApiKey)
             const start = new Date()
             if (state.token) {
                 loader(state.token)
@@ -43,7 +43,7 @@ export function reloadAll(providerStates: ProviderState[]): Promise<IActionWithP
         })
 }
 
-function loadFunction(provider: Provider): (token: Token) => Promise<Entertainment[]> {
+function loadFunction(provider: Provider, youtubeApiKey: string | null): (token: Token) => Promise<Entertainment[]> {
     switch (provider) {
         case Provider.TWITCH:
             const twitch = inject(Injectable.TWITCH)
@@ -53,7 +53,7 @@ function loadFunction(provider: Provider): (token: Token) => Promise<Entertainme
             return todoist.entertainmentsTodoist
         case Provider.FEEDLY:
             const feedly = inject(Injectable.FEEDLY)
-            return feedly.entertainmentsFeedly
+            return (token: Token) => feedly.entertainmentsFeedly(token, youtubeApiKey)
         case Provider.SPOTIFY:
             const spotify = inject(Injectable.SPOTIFY)
             return spotify.entertainmentsSpotify

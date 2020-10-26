@@ -9,5 +9,9 @@ export interface Configuration {
 
     loadDarkMode(): boolean
 
+    loadYoutubeApiKey(): string | null
+
     changeDarkMode(darkMode: boolean): void
+
+    changeYouTubeApiKey(youTubeApiKey: string | null): void
 }

@@ -6,6 +6,7 @@ export function loadConfiguration(): LoadedConfiguration {
 
     const providers = configuration.loadProviders()
     const darkMode = configuration.loadDarkMode()
+    const youTubeApiKey = configuration.loadYoutubeApiKey()
 
-    return new LoadedConfiguration(darkMode, providers)
+    return new LoadedConfiguration(darkMode, providers, youTubeApiKey)
 }

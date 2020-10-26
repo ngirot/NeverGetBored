@@ -40,10 +40,10 @@ function mapStateToProps(state: AppState): StateProps {
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<any>): DispatchProps {
-    const entertainmentService = inject(Injectable.APP_CONFIGURATION_SERVICE)
+    const configurationService = inject(Injectable.APP_CONFIGURATION_SERVICE)
     return {
         onChangeMode: (darkMode: boolean) => {
-            entertainmentService.change(dispatch, darkMode)
+            configurationService.change(dispatch, darkMode)
         }
     }
 }

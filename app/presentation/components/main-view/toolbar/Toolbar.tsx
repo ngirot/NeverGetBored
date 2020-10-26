@@ -4,6 +4,7 @@ import {Provider} from "../../../../domain/store/state/Provider"
 import ConnectButton from "./buttons/ConnectButton"
 import DarkModeButton from "./buttons/DarkModeButton"
 import ReloadButton from "./buttons/ReloadButton"
+import ConfigButton from "./buttons/ConfigButton"
 
 const styles = require('./Toolbar.scss')
 
@@ -20,7 +21,7 @@ class Toolbar extends React.Component<Props> {
     render(): JSX.Element {
         return (
             <div className={"row"}>
-                <div className={"cell-8 offset-2"}>
+                <div className={"cell-6 offset-3"}>
                     <ConnectButton serviceName="Twitch" iconPath={'presentation/resources/logos/twitch.svg'}
                                    type={Provider.TWITCH}/>
                     <ConnectButton serviceName="Todoist" iconPath={'presentation/resources/logos/todoist.svg'}
@@ -32,9 +33,10 @@ class Toolbar extends React.Component<Props> {
                     <ConnectButton serviceName={"Github"} iconPath={'presentation/resources/logos/github.svg'}
                                    type={Provider.GITHUB}/>
                 </div>
-                <div className={"cell-2 " + styles.actions}>
+                <div className={"cell-3 " + styles.actions}>
                     <DarkModeButton/>
                     <ReloadButton/>
+                    <ConfigButton/>
                 </div>
             </div>
         )

@@ -14,7 +14,7 @@ export const actionLoadedEntertainments = actionCreator<EntertainmentLoadedPaylo
 
 export default class EntertainmentDispatcher implements EntertainmentService {
 
-    reload(dispatch: DispatchFunction, providerStates: ProviderState[]): void {
+    reload(dispatch: DispatchFunction, providerStates: ProviderState[], youtubeApiKey: string | null): void {
         dispatch(actionLoadingEntertainments())
 
         refreshProviders(providerStates).then((refreshedProviders) => {
@@ -30,7 +30,7 @@ export default class EntertainmentDispatcher implements EntertainmentService {
                 return new ProviderState(refresh.provider, false, refresh.token)
             })
 
-            reloadAll(refreshedStates).then(dispatch)
+            reloadAll(refreshedStates, youtubeApiKey).then(dispatch)
         })
     }
 

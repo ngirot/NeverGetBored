@@ -10,7 +10,7 @@ describe('Spotify', () => {
             yesterday)
 
         const call = api.refreshToken(expiredToken)
-            .then(refreshed => api.entertainmentsFeedly(refreshed.token))
+            .then(refreshed => api.entertainmentsFeedly(refreshed.token, null))
             .then(e => expect(e.length).toBeGreaterThan(0))
             .catch(error => fail("Impossible to fetch Todoist data: " + error))
 
