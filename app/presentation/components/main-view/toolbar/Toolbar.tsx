@@ -2,7 +2,6 @@ import * as React from 'react'
 import {emptyConnect} from "../../utils"
 import {Provider} from "../../../../domain/store/state/Provider"
 import ConnectButton from "./buttons/ConnectButton"
-import DarkModeButton from "./buttons/DarkModeButton"
 import ReloadButton from "./buttons/ReloadButton"
 import ConfigButton from "./buttons/ConfigButton"
 
@@ -34,9 +33,8 @@ class Toolbar extends React.Component<Props> {
                                    type={Provider.GITHUB}/>
                 </div>
                 <div className={"cell-3 " + styles.actions}>
-                    <DarkModeButton/>
-                    <ReloadButton/>
                     <ConfigButton/>
+                    <ReloadButton/>
                 </div>
             </div>
         )
