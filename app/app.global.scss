@@ -82,3 +82,21 @@ img.tile-logo {
   -webkit-box-shadow: inset 0 0 1px #3d2863 !important;
   box-shadow: inset 0 0 1px #3d2863 !important;
 }
+
+.dialog, input, .input, .input-clear-button {
+  transition: 0.5s;
+}
+
+.dark .dialog {
+  color: aliceblue;
+  background-color: #121212;
+}
+
+.dark input, .dark .input {
+  color: aliceblue;
+  background-color: #121212;
+}
+
+.dark .input-clear-button {
+  filter: invert(1);
+}
