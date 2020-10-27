@@ -11,14 +11,11 @@ import ConfigurationPopup from "./popup/ConfigurationPopup"
 
 const styles = require('./MainView.scss')
 
-interface StateProps {
-}
-
 interface DispatchProps {
     loadConf: () => void
 }
 
-type Props = StateProps & DispatchProps
+type Props = DispatchProps
 
 class MainView extends React.Component<Props> {
 
@@ -51,4 +48,4 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<any>): DispatchProps {
     }
 }
 
-export default connect<StateProps, DispatchProps>(emptyFunction, mapDispatchToProps)(MainView)
+export default connect<void, DispatchProps>(emptyFunction, mapDispatchToProps)(MainView)

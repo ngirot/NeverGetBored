@@ -7,13 +7,8 @@ import ConfigButton from "./buttons/ConfigButton"
 
 const styles = require('./Toolbar.scss')
 
-interface StateProps {
+interface Props {
 }
-
-interface DispatchProps {
-}
-
-type Props = StateProps & DispatchProps
 
 class Toolbar extends React.Component<Props> {
 

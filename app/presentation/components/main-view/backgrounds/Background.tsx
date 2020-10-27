@@ -7,10 +7,7 @@ interface StateProps {
     darkMode: boolean
 }
 
-interface DispatchProps {
-}
-
-type Props = StateProps & DispatchProps
+type Props = StateProps
 
 class Background extends React.Component<Props> {
 
@@ -30,4 +27,4 @@ function mapStateToProps(state: AppState): StateProps {
     }
 }
 
-export default connect<StateProps>(mapStateToProps, emptyFunction)(Background)
+export default connect<StateProps, void>(mapStateToProps, emptyFunction)(Background)

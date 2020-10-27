@@ -4,14 +4,11 @@ import {connect} from "react-redux"
 import inject, {Injectable} from "../../../../../Injector"
 import {emptyFunction} from "../../../utils"
 
-interface StateProps {
-}
-
 interface DispatchProps {
     toggleConfiguration: () => void
 }
 
-type Props = StateProps & DispatchProps
+type Props = DispatchProps
 
 class ReloadButton extends React.Component<Props> {
     render(): JSX.Element {
@@ -34,4 +31,4 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<any>): DispatchProps {
     }
 }
 
-export default connect<StateProps, DispatchProps>(emptyFunction, mapDispatchToProps)(ReloadButton)
+export default connect<void, DispatchProps>(emptyFunction, mapDispatchToProps)(ReloadButton)
